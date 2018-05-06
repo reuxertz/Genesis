@@ -28,22 +28,16 @@ public class ClientProxy extends CommonProxy {
     @Override
     public void init(FMLInitializationEvent e) {
         super.init(e);
-
-        // Initialize our input handler so we can listen to keys
-        //KeyBindings.init();
     }
 
     @Override
     public void postInit(FMLPostInitializationEvent e) {
         super.postInit(e);
-        //ModBlocks.initItemModels();
     }
 
     @SubscribeEvent
     public static void registerModels(ModelRegistryEvent event) {
         GenesisRegistry.initModels();
-        BlockRegistry.initModels();
-        ItemRegistry.initModels();
     }
 
 }

@@ -32,9 +32,12 @@ public class Genesis
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event){
 
-        GenesisRegistry.registerContent(new RegistryObject("simpleitem", new SimpleItem("simpleitem")));
-        GenesisRegistry.registerContent(new RegistryObject("simpleblock2", new SimpleBlock("simpleblock2")));
+        GenesisRegistry.registerContent(new RegistryObject("simpleitem", new SimpleItem("simpleitem2")));
 
+        GenesisRegistry.registerContent(new RegistryObject("simpleblock2", new SimpleBlock("simpleblock2")));
+        GenesisRegistry.registerContent(new RegistryObject("simpleblock3", new SimpleBlock("simpleblock3")));
+
+        GenesisRegistry.registerContent(new RegistryObject("ore_copper", new SimpleBlock("ore_copper")));
 
         logger = event.getModLog();
         proxy.preInit(event);
