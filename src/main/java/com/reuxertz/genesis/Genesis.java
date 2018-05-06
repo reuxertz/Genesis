@@ -1,6 +1,7 @@
 package com.reuxertz.genesis;
 
 import com.reuxertz.genesis.block.SimpleBlock;
+import com.reuxertz.genesis.block.SimpleCrop;
 import com.reuxertz.genesis.item.SimpleItem;
 import com.reuxertz.genesis.proxy.CommonProxy;
 import com.reuxertz.genesis.registry.GenesisRegistry;
@@ -38,6 +39,8 @@ public class Genesis
         GenesisRegistry.registerContent(new RegistryObject("simpleblock3", new SimpleBlock("simpleblock3")));
 
         GenesisRegistry.registerContent(new RegistryObject("ore_copper", new SimpleBlock("ore_copper")));
+
+        GenesisRegistry.registerContent(new RegistryObject("crop_garlic", new SimpleCrop("crop_garlic")));
 
         logger = event.getModLog();
         proxy.preInit(event);

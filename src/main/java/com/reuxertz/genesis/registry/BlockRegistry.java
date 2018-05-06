@@ -14,6 +14,8 @@ public class BlockRegistry {
     @GameRegistry.ObjectHolder("genesis:simpleblock3")
     public static SimpleBlockOre simpleBlock3;
     @GameRegistry.ObjectHolder("genesis:ore_copper")
-    public static SimpleBlockOre OreCopper;
+    public static SimpleBlockOre oreCopper;
+    @GameRegistry.ObjectHolder("genesis:crop_garlic")
+    public static SimpleBlockOre cropGarlic;
 
 }

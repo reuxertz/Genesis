@@ -11,7 +11,7 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public abstract class BaseBlock extends Block {
+public abstract class BaseBlock extends Block implements IBaseBlock {
 
     public boolean isSimple = true;
 

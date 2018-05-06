@@ -22,7 +22,6 @@ public class GenesisRegistry
     public static HashMap<String, RegistryObject> registryObjectHashMap = new HashMap<>();
     public static List<RegistryObject> registryObjectList = new ArrayList<>();
 
-
     @SubscribeEvent
     public static void registerItems(RegistryEvent.Register<Item> event) {
 
@@ -30,15 +29,18 @@ public class GenesisRegistry
 
             RegistryObject regobj = registryObjectList.get(i);
 
+            //I feel like this should be here, but it doesn't work with it
 //            if (regobj.isItemRegistered())
 //                continue;
 
             if (regobj.block != null && regobj.item == null &&
                     regobj.block instanceof BaseBlock && ((BaseBlock)regobj.block).isSimple)
             {
-                ItemBlock bl = new ItemBlock(regobj.block);
-                bl.setRegistryName(regobj.block.getUnlocalizedName());
-                bl.setUnlocalizedName(regobj.block.getUnlocalizedName());
+                Block block =(Block)regobj.block;
+
+                ItemBlock bl = new ItemBlock(block);
+                bl.setRegistryName(block.getUnlocalizedName());
+                bl.setUnlocalizedName(block.getUnlocalizedName());
                 regobj.item = bl;
             }
 
@@ -52,7 +54,6 @@ public class GenesisRegistry
         return;
     }
 
-
     @SubscribeEvent
     public static void registerBlocks(RegistryEvent.Register<Block> event) {
 
@@ -62,7 +63,7 @@ public class GenesisRegistry
                     continue;
 
                 RegistryObject regobj = registryObjectList.get(i);
-                event.getRegistry().register(regobj.block);
+                event.getRegistry().register((Block)regobj.block);
                 regobj.registerBlock();
 
             }
