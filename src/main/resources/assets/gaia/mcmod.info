@@ -1,0 +1,16 @@
+[
+{
+  "modid": "gaia",
+  "name": "Gaia",
+  "description": "Brings life to minecraft.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["reuxertz"],
+  "credits": "reuxertz",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]

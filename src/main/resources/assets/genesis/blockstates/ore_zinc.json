@@ -1,0 +1,10 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "genesis:ore_zinc"
+  },
+  "variants": {
+    "normal": [{}],
+    "inventory": [{}]
+  }
+}

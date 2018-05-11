@@ -1,18 +1,23 @@
 package com.reuxertz.genesis.registry;
 
 import com.reuxertz.genesis.api.block.IBaseBlock;
-import com.reuxertz.genesis.api.item.BaseItem;
+import com.reuxertz.genesis.api.items.IBaseItem;
+import net.minecraft.block.Block;
 import net.minecraft.item.Item;
+import net.minecraftforge.fml.common.registry.EntityEntry;
 
 public class RegistryObject {
 
+    public EntityEntry entityEntry;
     public String name;
-    public IBaseBlock block;
+    public String modId;
+    public Block block;
     public Item item;
 
     protected boolean _isItemRegistered;
     protected boolean _isBlockRegistered;
     protected boolean _isModelInitialized;
+    protected boolean _isEntityRegistered;
 
     public boolean isItemRegistered()
     {
@@ -27,19 +32,35 @@ public class RegistryObject {
         return _isModelInitialized;
     }
 
-    protected RegistryObject(String name)
+    public String getUnlocalizedString()
     {
+        return modId + "." + name;
+    }
+
+    protected RegistryObject(String modId, String name)
+    {
+        this.modId = modId;
         this.name = name;
     }
-    public RegistryObject(String name, BaseItem item)
+    public RegistryObject(String modId, String name, Item item)
     {
-        this(name);
+        this(modId, name);
         this.item = item;
+
+        item.setUnlocalizedName(getUnlocalizedString());
+        item.setRegistryName(modId, name);
     }
-    public RegistryObject(String name, IBaseBlock block)
+    public RegistryObject(String modId, String name, Block block)
     {
-        this(name);
+        this(modId, name);
         this.block = block;
+        block.setUnlocalizedName(getUnlocalizedString());
+        block.setRegistryName(modId, name);
+    }
+    public RegistryObject(String modId, String name, EntityEntry entry)
+    {
+        this(modId, name);
+        this.entityEntry = entry;
     }
 
     public void registerItem()
@@ -48,18 +69,22 @@ public class RegistryObject {
     }
     public void registerBlock()
     {
-        _isItemRegistered = true;
+        _isBlockRegistered = true;
+    }
+    public void registerEntity()
+    {
+        _isEntityRegistered = true;
     }
     public void initModel()
     {
         if (isModelInitialized())
             return;
 
-        if (item != null && item instanceof BaseItem)
-            ((BaseItem)item).initModel();
+        if (item != null && item instanceof IBaseItem)
+            ((IBaseItem)item).initModel();
 
-        if (block != null)
-            block.initModel();
+        if (block != null && block instanceof IBaseBlock)
+            ((IBaseBlock)block).initModel();
 
         _isModelInitialized = true;
     }

@@ -1,0 +1,10 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "gaia:block_lead"
+  },
+  "variants": {
+    "normal": [{}],
+    "inventory": [{}]
+  }
+}

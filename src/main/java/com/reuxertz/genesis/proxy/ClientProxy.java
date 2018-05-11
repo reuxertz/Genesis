@@ -1,9 +1,15 @@
 package com.reuxertz.genesis.proxy;
 
 import com.reuxertz.genesis.Genesis;
+import com.reuxertz.genesis.internal.GenesisApiHandler;
 import com.reuxertz.genesis.registry.BlockRegistry;
 import com.reuxertz.genesis.registry.GenesisRegistry;
 import com.reuxertz.genesis.registry.ItemRegistry;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.ItemModelMesher;
+import net.minecraft.client.renderer.RenderItem;
+import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.resources.IReloadableResourceManager;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.obj.OBJLoader;
@@ -18,21 +24,46 @@ import scala.tools.nsc.backend.icode.analysis.TypeFlowAnalysis;
 
 @Mod.EventBusSubscriber(value = Side.CLIENT, modid = Genesis.MODID)
 public class ClientProxy extends CommonProxy {
-    @Override
-    public void preInit(FMLPreInitializationEvent e) {
-        super.preInit(e);
+    public RenderManager renderManager;
+    public RenderItem renderItem;
+    public ItemModelMesher itemModelMesher;
 
-        OBJLoader.INSTANCE.addDomain(Genesis.MODID);
+    @Override
+    public void preInit(FMLPreInitializationEvent event) {
+
+        super.preInit(event);
     }
 
     @Override
-    public void init(FMLInitializationEvent e) {
-        super.init(e);
+    public void init(FMLInitializationEvent event) {
+
+        super.init(event);
     }
 
     @Override
-    public void postInit(FMLPostInitializationEvent e) {
-        super.postInit(e);
+    public void postInit(FMLPostInitializationEvent event) {
+
+        super.postInit(event);
+
+        renderManager = Minecraft.getMinecraft().getRenderManager();
+        renderItem = Minecraft.getMinecraft().getRenderItem();
+        itemModelMesher = renderItem.getItemModelMesher();
+
+        this.registerEntityRenderers();
+        this.registerObjRegRenderers();
+
+        ((IReloadableResourceManager) Minecraft.getMinecraft().getResourceManager()).registerReloadListener(resourceManager -> {
+            GenesisApiHandler.register();
+            Genesis.logger.info("Reloaded API");
+        });
+    }
+
+    // Protected Functions
+    protected void registerObjRegRenderers() {
+    }
+
+    protected void registerEntityRenderers() {
+
     }
 
     @SubscribeEvent
