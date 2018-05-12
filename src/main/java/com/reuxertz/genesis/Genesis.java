@@ -1,18 +1,9 @@
 package com.reuxertz.genesis;
 
 import com.reuxertz.genesis.api.IGenesisPlugin;
-import com.reuxertz.genesis.api.block.BaseBlockOre;
-import com.reuxertz.genesis.api.block.BaseCrop;
 import com.reuxertz.genesis.internal.GenesisApiHandler;
-import com.reuxertz.genesis.api.items.BaseArmor;
-import com.reuxertz.genesis.api.items.material.ArmorMaterial;
-import com.reuxertz.genesis.api.items.material.ToolMaterial;
-import com.reuxertz.genesis.api.items.tools.*;
 import com.reuxertz.genesis.proxy.CommonProxy;
 import com.reuxertz.genesis.registry.*;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.item.*;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -178,7 +169,7 @@ public class Genesis
 //        Genesis.registry.registerContent(new RegistryObject("leggings_studded_steel", new BaseArmor("leggings_studded_steel", ArmorMaterial.STEEL_MATERIAL, 0, EntityEquipmentSlot.LEGS)));
 //        Genesis.registry.registerContent(new RegistryObject("chestplate_studded_steel", new BaseArmor("chestplate_studded_steel", ArmorMaterial.STEEL_MATERIAL, 0, EntityEquipmentSlot.CHEST)));
 //
-//        Genesis.registry.registerContent(new RegistryObject("crop_garlic", new BaseCrop("crop_garlic")));
+//        Genesis.registry.registerContent(new RegistryObject("crop_garlic", new BaseBlockCrop("crop_garlic")));
 
 //        RecipeRegistry.RegisterMetalTools(ItemRegistry.nuggetCopper, ItemRegistry.ingotCopper,
 //                ItemRegistry.pickaxeCopper, ItemRegistry.hoeCopper, ItemRegistry.shovelCopper, ItemRegistry.axeCopper, ItemRegistry.hammerCopper, ItemRegistry.chainCopper);

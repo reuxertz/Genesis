@@ -21,6 +21,7 @@ public class Flora implements IGenesisPlugin
     public String getModID() { return Flora.MODID; }
     public void register(IGenesisRegistry registry)
     {
+        registry.registerCrop("onion");
 
         return;
     }

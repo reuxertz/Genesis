@@ -1,0 +1,6 @@
+{
+  "parent": "block/crop",
+  "textures": {
+    "crop": "flora:blocks/onion_stage2"
+  }
+}

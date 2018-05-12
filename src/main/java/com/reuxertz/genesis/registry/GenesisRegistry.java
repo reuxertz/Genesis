@@ -5,6 +5,8 @@ import com.reuxertz.genesis.api.IGenesisRegistry;
 import com.reuxertz.genesis.api.block.BaseBlock;
 import com.reuxertz.genesis.api.block.BaseBlockMetal;
 import com.reuxertz.genesis.api.block.BaseBlockOre;
+import com.reuxertz.genesis.api.block.BaseBlockCrop;
+import com.reuxertz.genesis.api.items.BaseCropSeed;
 import com.reuxertz.genesis.api.items.BaseItem;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -151,7 +153,6 @@ public class GenesisRegistry implements IGenesisRegistry
         registerArmor(name, "chain");
         registerArmor(name, "studded");
     }
-
     public void registerMetal(String name)
     {
         this.registerMetal(name, true, true, true);
@@ -177,13 +178,19 @@ public class GenesisRegistry implements IGenesisRegistry
 
     }
 
-    public void registerMetalContent(String name, boolean hasOre)
+    public void registerCrop(String name)
     {
-//        if (hasOre)
-//            GenesisRegistry.registerContent(new RegistryObject("ore_" + name, new BaseBlock("ore_" + name, Material.ROCK)));
-//
-//        GenesisRegistry.registerContent(new RegistryObject("nugget_" + name, new BaseBlock("nugget_" + name, Material.ROCK)));
-//        GenesisRegistry.registerContent(new RegistryObject("ingot_" + name, new BaseBlock("ingot_" + name, Material.ROCK)));
-//        GenesisRegistry.registerContent(new RegistryObject("block_" + name, new BaseBlock("block_" + name, Material.ROCK)));
+        BaseBlockCrop blockCrop = new BaseBlockCrop("crop_" + name);
+        Item crop = new BaseItem(name);
+        Item seed = new BaseCropSeed("seed_" + name, blockCrop);
+
+        registerContent(new RegistryObject(modId, name, crop));
+        registerContent(new RegistryObject(modId, "seed_" + name, seed));
+
+        registerContent(new RegistryObject(modId, "crop_" + name, blockCrop));
+
+        blockCrop.setSeed(seed).setCrop(crop);
+
+
     }
 }
