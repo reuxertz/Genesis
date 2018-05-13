@@ -8,13 +8,16 @@ import com.reuxertz.genesis.api.block.BaseBlockOre;
 import com.reuxertz.genesis.api.block.BaseBlockCrop;
 import com.reuxertz.genesis.api.items.BaseCropSeed;
 import com.reuxertz.genesis.api.items.BaseItem;
+import com.reuxertz.genesis.tileentity.BaseTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.EntityEntry;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -71,6 +74,7 @@ public class GenesisRegistry implements IGenesisRegistry
     @SubscribeEvent
     public static void registerBlocks(RegistryEvent.Register<Block> event) {
 
+        GameRegistry.registerTileEntity(BaseTileEntity.class, "baseTileEntity");
         for (int i = 0; i < GenesisRegistry.registryObjectList.size(); i++)
             if (GenesisRegistry.registryObjectList.get(i).block != null) {
                 if (GenesisRegistry.registryObjectList.get(i).isBlockRegistered())
@@ -79,6 +83,9 @@ public class GenesisRegistry implements IGenesisRegistry
                 RegistryObject regobj = registry.registryObjectList.get(i);
                 event.getRegistry().register((Block)regobj.block);
                 regobj.registerBlock();
+
+                if (regobj.tileEntityClass != null)
+                    GameRegistry.registerTileEntity(regobj.tileEntityClass, "tileEntity" + regobj.name);
 
             }
     }
@@ -187,7 +194,7 @@ public class GenesisRegistry implements IGenesisRegistry
         registerContent(new RegistryObject(modId, name, crop));
         registerContent(new RegistryObject(modId, "seed_" + name, seed));
 
-        registerContent(new RegistryObject(modId, "crop_" + name, blockCrop));
+        registerContent(new RegistryObject(modId, "baseTileEntity", blockCrop, BaseTileEntity.class));
 
         blockCrop.setSeed(seed).setCrop(crop);
 

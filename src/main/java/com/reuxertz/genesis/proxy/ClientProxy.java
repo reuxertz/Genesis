@@ -49,8 +49,8 @@ public class ClientProxy extends CommonProxy {
         renderItem = Minecraft.getMinecraft().getRenderItem();
         itemModelMesher = renderItem.getItemModelMesher();
 
-        this.registerEntityRenderers();
-        this.registerObjRegRenderers();
+        registerEntityRenderers();
+        registerObjRegRenderers();
 
         ((IReloadableResourceManager) Minecraft.getMinecraft().getResourceManager()).registerReloadListener(resourceManager -> {
             GenesisApiHandler.register();

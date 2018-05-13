@@ -4,6 +4,7 @@ import com.reuxertz.genesis.api.block.IBaseBlock;
 import com.reuxertz.genesis.api.items.IBaseItem;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 
 public class RegistryObject {
@@ -13,11 +14,19 @@ public class RegistryObject {
     public String modId;
     public Block block;
     public Item item;
+    public Class tileEntityClass;
 
     protected boolean _isItemRegistered;
     protected boolean _isBlockRegistered;
     protected boolean _isModelInitialized;
     protected boolean _isEntityRegistered;
+
+    protected boolean _hasItemBlock;
+
+    public boolean hasItemBlock()
+    {
+        return _hasItemBlock;
+    }
 
     public boolean isItemRegistered()
     {
@@ -37,8 +46,7 @@ public class RegistryObject {
         return modId + "." + name;
     }
 
-    protected RegistryObject(String modId, String name)
-    {
+    protected RegistryObject(String modId, String name) {
         this.modId = modId;
         this.name = name;
     }
@@ -57,10 +65,21 @@ public class RegistryObject {
         block.setUnlocalizedName(getUnlocalizedString());
         block.setRegistryName(modId, name);
     }
+    public RegistryObject(String modId, String name, Block block, Class tileEntityClass)
+    {
+        this(modId, name, block);
+        this.tileEntityClass = tileEntityClass;
+    }
     public RegistryObject(String modId, String name, EntityEntry entry)
     {
         this(modId, name);
         this.entityEntry = entry;
+    }
+
+    public RegistryObject hasItemBlock(boolean hasItemBlock)
+    {
+        _hasItemBlock = hasItemBlock;
+        return this;
     }
 
     public void registerItem()
