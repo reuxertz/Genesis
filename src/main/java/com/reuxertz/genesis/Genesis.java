@@ -4,6 +4,10 @@ import com.reuxertz.genesis.api.IGenesisPlugin;
 import com.reuxertz.genesis.internal.GenesisApiHandler;
 import com.reuxertz.genesis.proxy.CommonProxy;
 import com.reuxertz.genesis.registry.*;
+import com.reuxertz.genesis.render.RendererGroundItem;
+import com.reuxertz.genesis.tileentity.TileEntityGroundItem;
+import net.minecraft.client.renderer.entity.Render;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -35,6 +39,7 @@ public class Genesis
     public void preInit(FMLPreInitializationEvent event){
 
         GenesisApiHandler.loadPlugins(event.getAsmData());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityGroundItem.class, new RendererGroundItem());
 
         //registry.registerContent();
         

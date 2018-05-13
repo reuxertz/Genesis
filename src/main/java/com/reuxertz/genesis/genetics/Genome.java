@@ -32,7 +32,6 @@ public class Genome
 
         return result;
     }
-
     public static String RandomDeletions(String sequence, double numDeletions)
     {
         for (int i = 0 ; i < numDeletions; i++)

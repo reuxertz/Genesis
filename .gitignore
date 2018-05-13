@@ -20,8 +20,4 @@ build
 # other
 eclipse
 run
-src\main\java\com\reuxertz\flora
-src\main\java\com\reuxertz\gaia
-src\main\resources\assets\flora
-src\main\resources\assets\gaia
 

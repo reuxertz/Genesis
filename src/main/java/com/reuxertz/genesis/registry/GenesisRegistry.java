@@ -9,6 +9,7 @@ import com.reuxertz.genesis.api.block.BaseBlockCrop;
 import com.reuxertz.genesis.api.items.BaseCropSeed;
 import com.reuxertz.genesis.api.items.BaseItem;
 import com.reuxertz.genesis.tileentity.BaseTileEntity;
+import com.reuxertz.genesis.tileentity.TileEntityBaseCrop;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
@@ -32,6 +33,7 @@ public class GenesisRegistry implements IGenesisRegistry
 {
     private static HashMap<String, RegistryObject> registryObjectHashMap = new HashMap<>();
     private static List<RegistryObject> registryObjectList = new ArrayList<>();
+    private static List<String> registeredModIds = new ArrayList<>();
 
     private final String modId;
 
@@ -74,7 +76,8 @@ public class GenesisRegistry implements IGenesisRegistry
     @SubscribeEvent
     public static void registerBlocks(RegistryEvent.Register<Block> event) {
 
-        GameRegistry.registerTileEntity(BaseTileEntity.class, "baseTileEntity");
+        GameRegistry.registerTileEntity(TileEntityBaseCrop.class, "genesis:tileEntityBaseCrop");
+
         for (int i = 0; i < GenesisRegistry.registryObjectList.size(); i++)
             if (GenesisRegistry.registryObjectList.get(i).block != null) {
                 if (GenesisRegistry.registryObjectList.get(i).isBlockRegistered())
@@ -85,8 +88,7 @@ public class GenesisRegistry implements IGenesisRegistry
                 regobj.registerBlock();
 
                 if (regobj.tileEntityClass != null)
-                    GameRegistry.registerTileEntity(regobj.tileEntityClass, "tileEntity" + regobj.name);
-
+                    GameRegistry.registerTileEntity(regobj.tileEntityClass, "genesis:tileEntityBaseCrop");
             }
     }
 
@@ -123,8 +125,12 @@ public class GenesisRegistry implements IGenesisRegistry
 
         registryObjectHashMap.put(registryObject.name, registryObject);
         registryObjectList.add(registryObject);
+
+        if (!registeredModIds.contains(registryObject.modId))
+            registeredModIds.add(registryObject.modId);
     }
 
+    //Environment
     public void registerOre(String name)
     {
         registerContent(new RegistryObject(modId, "ore_" + name, new BaseBlockOre("ore_" + name)));
@@ -185,6 +191,7 @@ public class GenesisRegistry implements IGenesisRegistry
 
     }
 
+    //Ecosystem
     public void registerCrop(String name)
     {
         BaseBlockCrop blockCrop = new BaseBlockCrop("crop_" + name);
@@ -194,7 +201,7 @@ public class GenesisRegistry implements IGenesisRegistry
         registerContent(new RegistryObject(modId, name, crop));
         registerContent(new RegistryObject(modId, "seed_" + name, seed));
 
-        registerContent(new RegistryObject(modId, "baseTileEntity", blockCrop, BaseTileEntity.class));
+        registerContent(new RegistryObject(modId, "crop_" + name, blockCrop));
 
         blockCrop.setSeed(seed).setCrop(crop);
 

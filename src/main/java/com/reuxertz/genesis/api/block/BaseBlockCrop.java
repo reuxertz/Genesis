@@ -2,6 +2,8 @@ package com.reuxertz.genesis.api.block;
 
 import com.reuxertz.genesis.api.items.BaseCropSeed;
 import com.reuxertz.genesis.api.items.BaseItem;
+import com.reuxertz.genesis.genetics.Genome;
+import com.reuxertz.genesis.registry.SpeciesRegistry;
 import com.reuxertz.genesis.tileentity.TileEntityBaseCrop;
 import jline.internal.Nullable;
 import net.minecraft.block.BlockCrops;
@@ -17,8 +19,10 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BaseBlockCrop extends BlockCrops implements IBaseBlock, ITileEntityProvider {
+public class BaseBlockCrop extends BlockCrops implements IBaseBlock
+{
 
+    protected String name;
     protected Item seed;
     protected Item crop;
 
@@ -27,6 +31,7 @@ public class BaseBlockCrop extends BlockCrops implements IBaseBlock, ITileEntity
     }
     public BaseBlockCrop(String name, CreativeTabs tab) {
         super();
+        this.name = name;
         setCreativeTab(tab);
     }
 
@@ -58,8 +63,17 @@ public class BaseBlockCrop extends BlockCrops implements IBaseBlock, ITileEntity
         ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, normal);
     }
 
-    @Nullable
-    public TileEntity createNewTileEntity(World world, int meta) {
-        return new TileEntityBaseCrop();
+    @Override
+    public boolean hasTileEntity(IBlockState state)
+    {
+        return true;
+    }
+
+    @Override
+    public TileEntity createTileEntity(World world, IBlockState state) {
+
+        Genome g = SpeciesRegistry.getSpeciesGenome(name);
+
+        return new TileEntityBaseCrop(null);
     }
 }
