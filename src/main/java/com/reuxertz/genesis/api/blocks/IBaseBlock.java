@@ -1,4 +1,4 @@
-package com.reuxertz.genesis.api.block;
+package com.reuxertz.genesis.api.blocks;
 
 public interface IBaseBlock {
 

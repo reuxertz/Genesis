@@ -1,20 +1,26 @@
 package com.reuxertz.genesis.api;
 
+import com.reuxertz.genesis.api.genes.GeneData;
 import com.reuxertz.genesis.registry.RegistryObject;
+
+import java.util.List;
 
 public interface IGenesisRegistry {
 
     //Base
-    void registerContent(RegistryObject registryObject);
+    IGenesisRegistry registerContent(RegistryObject registryObject);
 
     //Metal/Ore registers
-    void registerOre(String name);
-    void registerNugget(String name);
-    void registerIngot(String name);
-    void registerMetalBlock(String name);
-    void registerMetal(String name);
-    void registerMetal(String name, boolean enableRaw, boolean hasNuggetIngot, boolean enableArmorSet);
+    IGenesisRegistry registerOre(String name);
+    IGenesisRegistry registerNugget(String name);
+    IGenesisRegistry registerIngot(String name);
+    IGenesisRegistry registerMetalBlock(String name);
+    IGenesisRegistry registerMetal(String name);
+    IGenesisRegistry registerMetal(String name, boolean enableRaw, boolean hasNuggetIngot, boolean enableArmorSet);
 
     //Plant registers
-    void registerCrop(String name);
+    IGenesisRegistry registerCrop(String name);
+
+    //Ecosystem registers
+    IGenesisRegistry registerSpecies(String name, List<GeneData> genes);
 }

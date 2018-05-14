@@ -1,10 +1,9 @@
 package com.reuxertz.genesis.registry;
 
-import com.reuxertz.genesis.api.block.IBaseBlock;
+import com.reuxertz.genesis.api.blocks.IBaseBlock;
 import com.reuxertz.genesis.api.items.IBaseItem;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 
 public class RegistryObject {

@@ -2,18 +2,18 @@ package com.reuxertz.genesis.registry;
 
 import com.reuxertz.genesis.Genesis;
 import com.reuxertz.genesis.api.IGenesisRegistry;
-import com.reuxertz.genesis.api.block.BaseBlock;
-import com.reuxertz.genesis.api.block.BaseBlockMetal;
-import com.reuxertz.genesis.api.block.BaseBlockOre;
-import com.reuxertz.genesis.api.block.BaseBlockCrop;
+import com.reuxertz.genesis.api.blocks.BaseBlock;
+import com.reuxertz.genesis.api.blocks.BaseBlockMetal;
+import com.reuxertz.genesis.api.blocks.BaseBlockOre;
+import com.reuxertz.genesis.api.blocks.BaseBlockCrop;
+import com.reuxertz.genesis.api.genes.GeneData;
 import com.reuxertz.genesis.api.items.BaseCropSeed;
 import com.reuxertz.genesis.api.items.BaseItem;
-import com.reuxertz.genesis.tileentity.BaseTileEntity;
+import com.reuxertz.genesis.genetics.Genome;
 import com.reuxertz.genesis.tileentity.TileEntityBaseCrop;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -116,38 +116,44 @@ public class GenesisRegistry implements IGenesisRegistry
         return;
     }
 
-    public void registerContent(RegistryObject registryObject)
+    public IGenesisRegistry registerContent(RegistryObject registryObject)
     {
         if (registryObjectHashMap.keySet().contains(registryObject.name) ||
             registryObjectHashMap.values().contains(registryObject)  ||
             registryObjectList.contains(registryObject))
-            return;
+            return this;
 
         registryObjectHashMap.put(registryObject.name, registryObject);
         registryObjectList.add(registryObject);
 
         if (!registeredModIds.contains(registryObject.modId))
             registeredModIds.add(registryObject.modId);
+
+        return this;
     }
 
     //Environment
-    public void registerOre(String name)
+    public IGenesisRegistry registerOre(String name)
     {
         registerContent(new RegistryObject(modId, "ore_" + name, new BaseBlockOre("ore_" + name)));
+        return this;
     }
-    public void registerMetalBlock(String name)
+    public IGenesisRegistry registerMetalBlock(String name)
     {
         registerContent(new RegistryObject(modId, "block_" + name, new BaseBlockMetal("block_" + name)));
+        return this;
     }
-    public void registerIngot(String name)
+    public IGenesisRegistry registerIngot(String name)
     {
         registerContent(new RegistryObject(modId, "ingot_" + name, new BaseBlockMetal("ingot_" + name)));
+        return this;
     }
-    public void registerNugget(String name)
+    public IGenesisRegistry registerNugget(String name)
     {
         registerContent(new RegistryObject(modId, "nugget_" + name, new BaseBlockMetal("nugget_" + name)));
+        return this;
     }
-    public void registerArmor(String name, String type)
+    public IGenesisRegistry registerArmor(String name, String type)
     {
         if (type != null)
             type = type + "_";
@@ -159,18 +165,23 @@ public class GenesisRegistry implements IGenesisRegistry
         registerContent(new RegistryObject(modId, "boots_" + type + name, new BaseBlockMetal("boots_" + name)));
         registerContent(new RegistryObject(modId, "leggings_" + type + name, new BaseBlockMetal("leggings_" + name)));
         registerContent(new RegistryObject(modId, "helmet_" + type + name, new BaseBlockMetal("helmet_" + name)));
+
+        return this;
     }
-    public void registerArmorSet(String name)
+    public IGenesisRegistry registerArmorSet(String name)
     {
         registerArmor(name, null);
         registerArmor(name, "chain");
         registerArmor(name, "studded");
+
+        return this;
     }
-    public void registerMetal(String name)
+    public IGenesisRegistry registerMetal(String name)
     {
         this.registerMetal(name, true, true, true);
+        return this;
     }
-    public void registerMetal(String name, boolean isAlloy, boolean hasNuggetIngot, boolean enableArmorSet)
+    public IGenesisRegistry registerMetal(String name, boolean isAlloy, boolean hasNuggetIngot, boolean enableArmorSet)
     {
         if (!isAlloy) {
             registerOre(name);
@@ -189,10 +200,11 @@ public class GenesisRegistry implements IGenesisRegistry
             registerArmorSet(name);
         }
 
+        return this;
     }
 
-    //Ecosystem
-    public void registerCrop(String name)
+    //Plants
+    public IGenesisRegistry registerCrop(String name)
     {
         BaseBlockCrop blockCrop = new BaseBlockCrop("crop_" + name);
         Item crop = new BaseItem(name);
@@ -205,6 +217,13 @@ public class GenesisRegistry implements IGenesisRegistry
 
         blockCrop.setSeed(seed).setCrop(crop);
 
+        return this;
+    }
 
+    //Ecosystem
+    public IGenesisRegistry registerSpecies(String name, List<GeneData> genes)
+    {
+        SpeciesRegistry.registerSpecies(name, genes);
+        return this;
     }
 }

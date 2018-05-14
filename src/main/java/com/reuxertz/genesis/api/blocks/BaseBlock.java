@@ -1,6 +1,5 @@
-package com.reuxertz.genesis.api.block;
+package com.reuxertz.genesis.api.blocks;
 
-import com.reuxertz.genesis.Genesis;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;

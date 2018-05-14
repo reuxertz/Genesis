@@ -1,19 +1,21 @@
 package com.reuxertz.genesis.registry;
 
+import com.reuxertz.genesis.api.genes.GeneData;
 import com.reuxertz.genesis.genetics.Genome;
 
 import java.util.HashMap;
+import java.util.List;
 
 public class SpeciesRegistry {
 
-    public static HashMap<String, Genome> speciesRegistry = new HashMap<>();
+    public static HashMap<String, List<GeneData>> speciesRegistry = new HashMap<>();
 
-    public static void registerSpecies(String speciesName, Genome genome)
+    public static void registerSpecies(String speciesName, List<GeneData> geneData)
     {
-        speciesRegistry.put(speciesName, genome);
+        speciesRegistry.put(speciesName, geneData);
     }
     public static Genome getSpeciesGenome(String speciesName)
     {
-        return speciesRegistry.get(speciesName);
+        return null;//speciesRegistry.get(speciesName);
     }
 }

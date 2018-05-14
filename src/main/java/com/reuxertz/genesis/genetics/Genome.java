@@ -1,5 +1,7 @@
 package com.reuxertz.genesis.genetics;
 
+import com.reuxertz.genesis.api.genes.GeneData;
+import com.reuxertz.genesis.genetics.genes.GeneHelper;
 import net.minecraft.nbt.NBTTagCompound;
 
 import java.util.*;
@@ -8,26 +10,26 @@ public class Genome
 {
     public static Random Random = new Random();
 
-    public static List<Gene> Translate(String genomeSequence)
+    public static List<GeneData> Translate(String genomeSequence)
     {
-        List<Gene> result = new ArrayList<>();
-        for (int i = 0; i < genomeSequence.length() - (Gene.codonLength - 1); i++)
+        List<GeneData> result = new ArrayList<>();
+        for (int i = 0; i < genomeSequence.length() - (GeneHelper.CodonLength - 1); i++)
         {
             String nextThree = genomeSequence.substring(i, i+3);
-            if (!nextThree.equals(Gene.startCodon))
+            if (!nextThree.equals(GeneHelper.StartCodon))
                 continue;
 
             int remainingLength = genomeSequence.length() - i;
-            if (remainingLength < Gene.geneCodonLength)
+            if (remainingLength < GeneHelper.GeneLength)
                 break;
 
-            String geneSubString = genomeSequence.substring(i, Gene.geneCodonLength);
-            Gene newGene = Gene.Translate(geneSubString);
+            String geneSubString = genomeSequence.substring(i, GeneHelper.GeneLength);
+            GeneData newGeneData = GeneHelper.Translate(geneSubString);
 
-            if (newGene == null)
+            if (newGeneData == null)
                 continue;
 
-            result.add(newGene);
+            result.add(newGeneData);
         }
 
         return result;
@@ -65,10 +67,10 @@ public class Genome
                 if (curProbability < 1 && Random.nextDouble() > curProbability)
                     return sequence;
 
-                int randomLetterIndex = Random.nextInt(Gene.letters.length());
+                int randomLetterIndex = Random.nextInt(GeneHelper.Letters.length());
                 int randomPositionIndex = Random.nextInt(sequence.length());
 
-                String randomLetter = Gene.letters.substring(randomLetterIndex, randomLetterIndex + 1);
+                String randomLetter = GeneHelper.Letters.substring(randomLetterIndex, randomLetterIndex + 1);
 
                 String preSequence = sequence.substring(0, randomPositionIndex);
                 String postSequence = sequence.substring(randomPositionIndex, sequence.length());
@@ -142,18 +144,18 @@ public class Genome
 
         return result;
     }
-    public static List<Gene> FilterDominantGenes(List<Gene> allGenes)
+    public static List<GeneData> FilterDominantGenes(List<GeneData> allGenes)
     {
-        HashMap<String, Gene> resultMap = new HashMap<String, Gene>();
+        HashMap<String, GeneData> resultMap = new HashMap<String, GeneData>();
 
         for (int i = 0; i < allGenes.size(); i++)
         {
-            Gene newGene = allGenes.get(i);
+            GeneData newGene = allGenes.get(i);
             if (!resultMap.containsKey(newGene.codon))
                 resultMap.put(newGene.codon, allGenes.get(i));
             else
             {
-                Gene existingGene = resultMap.get(newGene.codon);
+                GeneData existingGene = resultMap.get(newGene.codon);
                 if (existingGene.dominance <= newGene.dominance)
                 {
                     resultMap.remove(existingGene.codon);
@@ -167,9 +169,9 @@ public class Genome
 
     public String Sequence1;
     public String Sequence2;
-    public List<Gene> Sequence1Genes;
-    public List<Gene> Sequence2Genes;
-    public List<Gene> ExpressedGenes;
+    public List<GeneData> Sequence1Genes;
+    public List<GeneData> Sequence2Genes;
+    public List<GeneData> ExpressedGenes;
 
     public Genome(String sequence)
     {
@@ -188,7 +190,7 @@ public class Genome
         Sequence1Genes = Genome.Translate(Sequence1);
         Sequence2Genes = Genome.Translate(Sequence2);
 
-        List<Gene> allGenes = new ArrayList<Gene>(Sequence1Genes);
+        List<GeneData> allGenes = new ArrayList<GeneData>(Sequence1Genes);
         allGenes.addAll(Sequence2Genes);
 
         ExpressedGenes = FilterDominantGenes(allGenes);

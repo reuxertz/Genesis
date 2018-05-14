@@ -1,17 +1,12 @@
-package com.reuxertz.genesis.api.block;
+package com.reuxertz.genesis.api.blocks;
 
-import com.reuxertz.genesis.api.items.BaseCropSeed;
-import com.reuxertz.genesis.api.items.BaseItem;
 import com.reuxertz.genesis.genetics.Genome;
 import com.reuxertz.genesis.registry.SpeciesRegistry;
 import com.reuxertz.genesis.tileentity.TileEntityBaseCrop;
-import jline.internal.Nullable;
 import net.minecraft.block.BlockCrops;
-import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
@@ -21,7 +16,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BaseBlockCrop extends BlockCrops implements IBaseBlock
 {
-
     protected String name;
     protected Item seed;
     protected Item crop;
