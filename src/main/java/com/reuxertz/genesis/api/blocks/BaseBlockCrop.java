@@ -1,6 +1,6 @@
 package com.reuxertz.genesis.api.blocks;
 
-import com.reuxertz.genesis.genetics.Genome;
+import com.reuxertz.genesis.organisms.Genome;
 import com.reuxertz.genesis.registry.SpeciesRegistry;
 import com.reuxertz.genesis.tileentity.TileEntityBaseCrop;
 import net.minecraft.block.BlockCrops;
@@ -66,8 +66,9 @@ public class BaseBlockCrop extends BlockCrops implements IBaseBlock
     @Override
     public TileEntity createTileEntity(World world, IBlockState state) {
 
-        Genome g = SpeciesRegistry.getSpeciesGenome(name);
+        String shortName = name.substring(name.lastIndexOf("_") + 1, name.length());
+        Genome g = SpeciesRegistry.getSpeciesGenome(shortName);
 
-        return new TileEntityBaseCrop(null);
+        return new TileEntityBaseCrop(g);
     }
 }

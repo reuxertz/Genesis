@@ -1,4 +1,4 @@
-package com.reuxertz.genesis.genetics.genes;
+package com.reuxertz.genesis.organisms;
 
 
 import com.reuxertz.genesis.api.genes.GeneData;
@@ -38,6 +38,7 @@ public class GeneHelper
         HashMap<GeneData.GeneType, String> result = new HashMap<>();
 
         result.put(GeneData.GeneType.MassFactor, "AAA");
+        result.put(GeneData.GeneType.OffspringYieldFactor, "AAC");
 
         return result;
     }
@@ -73,7 +74,7 @@ public class GeneHelper
     public static String ConvertDoubleToCodon(double value)
     {
         String result = "";
-        value *= (CodonCombinations);
+        value *= (CodonCombinations - 1);
 
         int[] a = new int[CodonLength];
         for (int i = 0; i < a.length; i++)
@@ -100,15 +101,15 @@ public class GeneHelper
         double geneDominance = ConvertCodonToDouble(geneString.substring(9, 12));
 
         GeneData.GeneType geneType = CodonToTypeMap.get(typeCodon);
-        //Gene newGene = GeneExpressionMap.get(geneType).Clone(geneValue, geneDominance);
+        GeneData newGene = new GeneData(geneType, geneValue, geneDominance);
 
-        //return newGene;
-        return null;
+        return newGene;
+        //return null;
     }
 
-    public String getGeneString()
+    public static String getGeneString(GeneData geneData)
     {
-        return null;//StartCodon + codon + ConvertDoubleToCodon(value) + ConvertDoubleToCodon(dominance);
+        return StartCodon + TypeToCodonMap.get(geneData.geneType) + ConvertDoubleToCodon(geneData.value) + ConvertDoubleToCodon(geneData.dominance);
     }
 
 }

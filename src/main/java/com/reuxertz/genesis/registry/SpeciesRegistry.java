@@ -1,7 +1,7 @@
 package com.reuxertz.genesis.registry;
 
 import com.reuxertz.genesis.api.genes.GeneData;
-import com.reuxertz.genesis.genetics.Genome;
+import com.reuxertz.genesis.organisms.Genome;
 
 import java.util.HashMap;
 import java.util.List;
@@ -16,6 +16,6 @@ public class SpeciesRegistry {
     }
     public static Genome getSpeciesGenome(String speciesName)
     {
-        return null;//speciesRegistry.get(speciesName);
+        return new Genome(speciesRegistry.get(speciesName));
     }
 }

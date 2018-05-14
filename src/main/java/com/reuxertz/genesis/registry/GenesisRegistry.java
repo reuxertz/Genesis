@@ -9,7 +9,6 @@ import com.reuxertz.genesis.api.blocks.BaseBlockCrop;
 import com.reuxertz.genesis.api.genes.GeneData;
 import com.reuxertz.genesis.api.items.BaseCropSeed;
 import com.reuxertz.genesis.api.items.BaseItem;
-import com.reuxertz.genesis.genetics.Genome;
 import com.reuxertz.genesis.tileentity.TileEntityBaseCrop;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -217,6 +216,13 @@ public class GenesisRegistry implements IGenesisRegistry
 
         blockCrop.setSeed(seed).setCrop(crop);
 
+        return this;
+    }
+
+    //Plants
+    public IGenesisRegistry registerEntity(String name)
+    {
+        //registerContent(new RegistryObject(modId, "crop_" + name, null));
         return this;
     }
 

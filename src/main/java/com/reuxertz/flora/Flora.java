@@ -27,10 +27,8 @@ public class Flora implements IGenesisPlugin
     public void register(IGenesisRegistry registry)
     {
         registry.registerCrop("onion").registerSpecies("onion", Arrays.asList(
-                new GeneData(GeneData.GeneType.MassFactor, 1, 0, .5, 1.5)
+                new GeneData(GeneData.GeneType.MassFactor, 0, 0)
             ));
-
-        List<String> places = Arrays.asList("Buenos Aires", "Córdoba", "La Plata");
 
         return;
     }

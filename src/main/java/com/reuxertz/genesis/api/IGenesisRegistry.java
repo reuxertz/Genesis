@@ -21,6 +21,9 @@ public interface IGenesisRegistry {
     //Plant registers
     IGenesisRegistry registerCrop(String name);
 
+    //Entity registes
+    IGenesisRegistry registerEntity(String name);
+
     //Ecosystem registers
     IGenesisRegistry registerSpecies(String name, List<GeneData> genes);
 }

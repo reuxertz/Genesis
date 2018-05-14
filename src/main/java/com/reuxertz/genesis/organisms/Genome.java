@@ -1,7 +1,6 @@
-package com.reuxertz.genesis.genetics;
+package com.reuxertz.genesis.organisms;
 
 import com.reuxertz.genesis.api.genes.GeneData;
-import com.reuxertz.genesis.genetics.genes.GeneHelper;
 import net.minecraft.nbt.NBTTagCompound;
 
 import java.util.*;
@@ -13,9 +12,9 @@ public class Genome
     public static List<GeneData> Translate(String genomeSequence)
     {
         List<GeneData> result = new ArrayList<>();
-        for (int i = 0; i < genomeSequence.length() - (GeneHelper.CodonLength - 1); i++)
+        for (int i = 0; i < genomeSequence.length() - 3; i++)
         {
-            String nextThree = genomeSequence.substring(i, i+3);
+            String nextThree = genomeSequence.substring(i, i + 3);
             if (!nextThree.equals(GeneHelper.StartCodon))
                 continue;
 
@@ -30,6 +29,7 @@ public class Genome
                 continue;
 
             result.add(newGeneData);
+            i += GeneHelper.GeneLength - 1;
         }
 
         return result;
@@ -151,15 +151,15 @@ public class Genome
         for (int i = 0; i < allGenes.size(); i++)
         {
             GeneData newGene = allGenes.get(i);
-            if (!resultMap.containsKey(newGene.codon))
-                resultMap.put(newGene.codon, allGenes.get(i));
+            if (!resultMap.containsKey("" + newGene.geneType))
+                resultMap.put("" + newGene.geneType, allGenes.get(i));
             else
             {
-                GeneData existingGene = resultMap.get(newGene.codon);
+                GeneData existingGene = resultMap.get("" + newGene.geneType);
                 if (existingGene.dominance <= newGene.dominance)
                 {
-                    resultMap.remove(existingGene.codon);
-                    resultMap.put(newGene.codon, newGene);
+                    resultMap.remove(existingGene.geneType);
+                    resultMap.put("" + newGene.geneType, newGene);
                 }
             }
         }
@@ -185,12 +185,24 @@ public class Genome
         Translate();
     }
 
+    public Genome(List<GeneData> genes)
+    {
+        String sequence = "";
+        for (int i = 0; i < genes.size(); i++)
+            sequence += GeneHelper.getGeneString(genes.get(i));
+
+        Sequence1 = sequence;
+        Sequence2 = sequence;
+
+        Translate();
+    }
+
     public void Translate()
     {
         Sequence1Genes = Genome.Translate(Sequence1);
         Sequence2Genes = Genome.Translate(Sequence2);
 
-        List<GeneData> allGenes = new ArrayList<GeneData>(Sequence1Genes);
+        List<GeneData> allGenes = new ArrayList<>(Sequence1Genes);
         allGenes.addAll(Sequence2Genes);
 
         ExpressedGenes = FilterDominantGenes(allGenes);

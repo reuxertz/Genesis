@@ -1,6 +1,6 @@
 package com.reuxertz.genesis.tileentity;
 
-import com.reuxertz.genesis.genetics.Genome;
+import com.reuxertz.genesis.organisms.Genome;
 import net.minecraft.nbt.NBTTagCompound;
 
 public class TileEntityBaseCrop extends BaseTileEntity {
@@ -15,12 +15,12 @@ public class TileEntityBaseCrop extends BaseTileEntity {
     public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
         super.writeToNBT(nbt);
 
-        //genome.writeToNBT(nbt);
+        genome.writeToNBT(nbt);
         return nbt;
     }
 
     public void readFromNBT(NBTTagCompound nbt) {
-        //super.readFromNBT(nbt);
+        super.readFromNBT(nbt);
         genome = Genome.readFromNBT(nbt);
     }
 }
