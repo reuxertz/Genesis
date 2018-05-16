@@ -6,9 +6,10 @@ import com.reuxertz.genesis.api.blocks.BaseBlock;
 import com.reuxertz.genesis.api.blocks.BaseBlockMetal;
 import com.reuxertz.genesis.api.blocks.BaseBlockOre;
 import com.reuxertz.genesis.api.blocks.BaseBlockCrop;
-import com.reuxertz.genesis.api.genes.GeneData;
+import com.reuxertz.genesis.api.organisms.GeneData;
 import com.reuxertz.genesis.api.items.BaseCropSeed;
 import com.reuxertz.genesis.api.items.BaseItem;
+import com.reuxertz.genesis.api.organisms.OrganismData;
 import com.reuxertz.genesis.tileentity.TileEntityBaseCrop;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -113,6 +114,11 @@ public class GenesisRegistry implements IGenesisRegistry
             GenesisRegistry.registryObjectList.get(i).initModel();
 
         return;
+    }
+
+    public RegistryObject getRegistryObject(String name)
+    {
+        return registryObjectHashMap.get(name);
     }
 
     public IGenesisRegistry registerContent(RegistryObject registryObject)
@@ -227,9 +233,9 @@ public class GenesisRegistry implements IGenesisRegistry
     }
 
     //Ecosystem
-    public IGenesisRegistry registerSpecies(String name, List<GeneData> genes)
+    public IGenesisRegistry registerSpecies(String name, OrganismData organismData, List<GeneData> genes)
     {
-        SpeciesRegistry.registerSpecies(name, genes);
+        SpeciesRegistry.registerSpecies(name, organismData, genes);
         return this;
     }
 }

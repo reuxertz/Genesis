@@ -1,6 +1,7 @@
 package com.reuxertz.genesis.api;
 
-import com.reuxertz.genesis.api.genes.GeneData;
+import com.reuxertz.genesis.api.organisms.GeneData;
+import com.reuxertz.genesis.api.organisms.OrganismData;
 import com.reuxertz.genesis.registry.RegistryObject;
 
 import java.util.List;
@@ -25,5 +26,5 @@ public interface IGenesisRegistry {
     IGenesisRegistry registerEntity(String name);
 
     //Ecosystem registers
-    IGenesisRegistry registerSpecies(String name, List<GeneData> genes);
+    IGenesisRegistry registerSpecies(String name, OrganismData organismData, List<GeneData> genes);
 }

@@ -1,4 +1,4 @@
-package com.reuxertz.genesis.api.genes;
+package com.reuxertz.genesis.api.organisms;
 
 public class GeneData {
 
