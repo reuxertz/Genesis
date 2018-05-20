@@ -9,7 +9,7 @@ import com.reuxertz.genesis.api.blocks.BaseBlockCrop;
 import com.reuxertz.genesis.api.organisms.GeneData;
 import com.reuxertz.genesis.api.items.BaseCropSeed;
 import com.reuxertz.genesis.api.items.BaseItem;
-import com.reuxertz.genesis.api.organisms.OrganismData;
+import com.reuxertz.genesis.api.organisms.SpeciesData;
 import com.reuxertz.genesis.tileentity.TileEntityBaseCrop;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -25,13 +25,14 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.reuxertz.genesis.Genesis.registry;
 
 @Mod.EventBusSubscriber(modid = Genesis.MODID)
 public class GenesisRegistry implements IGenesisRegistry
 {
-    private static HashMap<String, RegistryObject> registryObjectHashMap = new HashMap<>();
+    private static Map<String, RegistryObject> registryObjectHashMap = new HashMap<>();
     private static List<RegistryObject> registryObjectList = new ArrayList<>();
     private static List<String> registeredModIds = new ArrayList<>();
 
@@ -233,9 +234,9 @@ public class GenesisRegistry implements IGenesisRegistry
     }
 
     //Ecosystem
-    public IGenesisRegistry registerSpecies(String name, OrganismData organismData, List<GeneData> genes)
+    public IGenesisRegistry registerSpecies(String name, List<SpeciesData> speciesData, List<GeneData> genes)
     {
-        SpeciesRegistry.registerSpecies(name, organismData, genes);
+        SpeciesRegistry.registerSpecies(name, speciesData, genes);
         return this;
     }
 }

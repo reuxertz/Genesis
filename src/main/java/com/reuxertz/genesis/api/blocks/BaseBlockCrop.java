@@ -9,6 +9,7 @@ import net.minecraft.block.BlockCrops;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -55,6 +56,13 @@ public class BaseBlockCrop extends BlockCrops implements IBaseBlock
         return crop;
     }
 
+    @Override
+    protected boolean canSustainBush(IBlockState state)
+    {
+        return state.getBlock() == Blocks.FARMLAND || state.getBlock() == Blocks.GRASS
+                || state.getBlock() == Blocks.GRASS;
+    }
+
     @SideOnly(Side.CLIENT)
     public void initModel() {
 
@@ -69,7 +77,7 @@ public class BaseBlockCrop extends BlockCrops implements IBaseBlock
         this.checkAndDropBlock(worldIn, pos, state);
 
         TileEntityBaseCrop te = (TileEntityBaseCrop)worldIn.getTileEntity(pos);
-        te.tick(worldIn);
+        te.getOrganism().tick(worldIn, rand);
 
         if (!worldIn.isAreaLoaded(pos, 1)) return; // Forge: prevent loading unloaded chunks when checking neighbor's light
         if (worldIn.getLightFromNeighbors(pos.up()) >= 9)
@@ -102,7 +110,9 @@ public class BaseBlockCrop extends BlockCrops implements IBaseBlock
         Genome g = SpeciesRegistry.getSpeciesGenome(shortName);
 
         Organism o = new Organism(shortName, g, new Metabolism());
+        TileEntityBaseCrop newTileEntity = new TileEntityBaseCrop(o);
+        o.setOrganismContainer(newTileEntity);
 
-        return new TileEntityBaseCrop(o);
+        return newTileEntity;
     }
 }

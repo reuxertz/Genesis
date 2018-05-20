@@ -2,11 +2,9 @@ package com.reuxertz.genesis.api.organisms;
 
 public class GeneData {
 
-    //Gene Types
     public enum GeneType
     {
-        MassFactor,
-        OffspringYieldFactor,
+        MassFactor
     }
 
     public GeneType geneType;

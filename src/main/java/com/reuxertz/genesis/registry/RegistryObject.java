@@ -20,13 +20,6 @@ public class RegistryObject {
     protected boolean _isModelInitialized;
     protected boolean _isEntityRegistered;
 
-    protected boolean _hasItemBlock;
-
-    public boolean hasItemBlock()
-    {
-        return _hasItemBlock;
-    }
-
     public boolean isItemRegistered()
     {
         return _isItemRegistered;
@@ -73,12 +66,6 @@ public class RegistryObject {
     {
         this(modId, name);
         this.entityEntry = entry;
-    }
-
-    public RegistryObject hasItemBlock(boolean hasItemBlock)
-    {
-        _hasItemBlock = hasItemBlock;
-        return this;
     }
 
     public void registerItem()

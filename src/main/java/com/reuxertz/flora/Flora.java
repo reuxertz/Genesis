@@ -4,7 +4,7 @@ import com.reuxertz.genesis.api.GenesisPlugin;
 import com.reuxertz.genesis.api.IGenesisPlugin;
 import com.reuxertz.genesis.api.IGenesisRegistry;
 import com.reuxertz.genesis.api.organisms.GeneData;
-import com.reuxertz.genesis.api.organisms.OrganismData;
+import com.reuxertz.genesis.api.organisms.SpeciesData;
 import net.minecraftforge.fml.common.Mod;
 
 import java.util.Arrays;
@@ -25,9 +25,12 @@ public class Flora implements IGenesisPlugin
     public String getModID() { return Flora.MODID; }
     public void register(IGenesisRegistry registry)
     {
-        registry.registerCrop("onion").registerSpecies("crop_onion", new OrganismData(10),
+        registry.registerCrop("onion").registerSpecies("onion",
                 Arrays.asList(
-                new GeneData(GeneData.GeneType.MassFactor, 0, 0)
+                        new SpeciesData(SpeciesData.SpeciesDataType.AdultMass, 2, .1)
+                ),
+                Arrays.asList(
+                        new GeneData(GeneData.GeneType.MassFactor, 0, 0)
             ));
 
         return;

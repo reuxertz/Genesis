@@ -7,7 +7,7 @@ import java.util.*;
 
 public class Genome
 {
-    public static Random Random = new Random();
+    public static Random random = new Random();
 
     public static List<GeneData> Translate(String genomeSequence)
     {
@@ -15,21 +15,21 @@ public class Genome
         for (int i = 0; i < genomeSequence.length() - 3; i++)
         {
             String nextThree = genomeSequence.substring(i, i + 3);
-            if (!nextThree.equals(GeneHelper.StartCodon))
+            if (!nextThree.equals(GeneHelper.startCodon))
                 continue;
 
             int remainingLength = genomeSequence.length() - i;
-            if (remainingLength < GeneHelper.GeneLength)
+            if (remainingLength < GeneHelper.geneLength)
                 break;
 
-            String geneSubString = genomeSequence.substring(i, GeneHelper.GeneLength);
+            String geneSubString = genomeSequence.substring(i, GeneHelper.geneLength);
             GeneData newGeneData = GeneHelper.Translate(geneSubString);
 
             if (newGeneData == null)
                 continue;
 
             result.add(newGeneData);
-            i += GeneHelper.GeneLength - 1;
+            i += GeneHelper.geneLength - 1;
         }
 
         return result;
@@ -42,10 +42,10 @@ public class Genome
 
             if (curProbability > 0)
             {
-                if (curProbability < 1 && Random.nextDouble() > curProbability)
+                if (curProbability < 1 && random.nextDouble() > curProbability)
                     return sequence;
 
-                int randomPositionIndex = Random.nextInt(sequence.length());
+                int randomPositionIndex = random.nextInt(sequence.length());
 
                 String preSequence = sequence.substring(0, randomPositionIndex);
                 String postSequence = sequence.substring(randomPositionIndex + 1, sequence.length());
@@ -64,13 +64,13 @@ public class Genome
 
             if (curProbability > 0)
             {
-                if (curProbability < 1 && Random.nextDouble() > curProbability)
+                if (curProbability < 1 && random.nextDouble() > curProbability)
                     return sequence;
 
-                int randomLetterIndex = Random.nextInt(GeneHelper.Letters.length());
-                int randomPositionIndex = Random.nextInt(sequence.length());
+                int randomLetterIndex = random.nextInt(GeneHelper.letters.length());
+                int randomPositionIndex = random.nextInt(sequence.length());
 
-                String randomLetter = GeneHelper.Letters.substring(randomLetterIndex, randomLetterIndex + 1);
+                String randomLetter = GeneHelper.letters.substring(randomLetterIndex, randomLetterIndex + 1);
 
                 String preSequence = sequence.substring(0, randomPositionIndex);
                 String postSequence = sequence.substring(randomPositionIndex, sequence.length());
@@ -88,8 +88,8 @@ public class Genome
 
         List<Integer> crossoverIndexes = new ArrayList<Integer>();
 
-        while (Random.nextDouble() < .5) {
-            int index = Random.nextInt(sequence1.length());
+        while (random.nextDouble() < .5) {
+            int index = random.nextInt(sequence1.length());
 
             if (!crossoverIndexes.contains(index))
                 crossoverIndexes.add(index);
@@ -97,7 +97,7 @@ public class Genome
 
         String out1 = "";
         String out2 = "";
-        Boolean swap = Random.nextBoolean();
+        Boolean swap = random.nextBoolean();
 
         int startIndex = 0;
         int stopIndex1 = 0;
@@ -167,11 +167,11 @@ public class Genome
         return new ArrayList(resultMap.values());
     }
 
-    public String Sequence1;
-    public String Sequence2;
-    public List<GeneData> Sequence1Genes;
-    public List<GeneData> Sequence2Genes;
-    public List<GeneData> ExpressedGenes;
+    public String sequence1;
+    public String sequence2;
+    public List<GeneData> sequence1Genes;
+    public List<GeneData> sequence2Genes;
+    public List<GeneData> expressedGenes;
 
     public Genome(String sequence)
     {
@@ -179,8 +179,8 @@ public class Genome
     }
     public Genome(String sequence1, String sequence2)
     {
-        Sequence1 = sequence1;
-        Sequence2 = sequence2;
+        this.sequence1 = sequence1;
+        this.sequence2 = sequence2;
 
         Translate();
     }
@@ -191,31 +191,31 @@ public class Genome
         for (int i = 0; i < genes.size(); i++)
             sequence += GeneHelper.getGeneString(genes.get(i));
 
-        Sequence1 = sequence;
-        Sequence2 = sequence;
+        sequence1 = sequence;
+        sequence2 = sequence;
 
         Translate();
     }
 
     public void Translate()
     {
-        Sequence1Genes = Genome.Translate(Sequence1);
-        Sequence2Genes = Genome.Translate(Sequence2);
+        sequence1Genes = Genome.Translate(sequence1);
+        sequence2Genes = Genome.Translate(sequence2);
 
-        List<GeneData> allGenes = new ArrayList<>(Sequence1Genes);
-        allGenes.addAll(Sequence2Genes);
+        List<GeneData> allGenes = new ArrayList<>(sequence1Genes);
+        allGenes.addAll(sequence2Genes);
 
-        ExpressedGenes = FilterDominantGenes(allGenes);
+        expressedGenes = FilterDominantGenes(allGenes);
     }
 
     public void writeToNBT(NBTTagCompound nbt)
     {
-        nbt.setString("Sequence1", this.Sequence1);
-        nbt.setString("Sequence2", this.Sequence2);
+        nbt.setString("sequence1", this.sequence1);
+        nbt.setString("sequence2", this.sequence2);
     }
 
     public static Genome readFromNBT(NBTTagCompound nbt)
     {
-        return new Genome(nbt.getString("Sequence1"), nbt.getString("Sequence2"));
+        return new Genome(nbt.getString("sequence1"), nbt.getString("sequence2"));
     }
 }

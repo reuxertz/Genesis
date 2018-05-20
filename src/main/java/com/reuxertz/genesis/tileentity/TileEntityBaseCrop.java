@@ -1,21 +1,20 @@
 package com.reuxertz.genesis.tileentity;
 
+import com.reuxertz.genesis.organisms.IOrganismContainer;
 import com.reuxertz.genesis.organisms.Organism;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.world.World;
 
-public class TileEntityBaseCrop extends BaseTileEntity {
+import static com.reuxertz.genesis.util.EnergyHelper.SunlightEnergyPerBlockTick;
 
-    public Organism organism;
+public class TileEntityBaseCrop extends BaseTileEntity implements IOrganismContainer  {
+
+    protected Organism organism;
+
+    public Organism getOrganism() { return organism; }
 
     public TileEntityBaseCrop(Organism organism)
     {
         this.organism = organism;
-    }
-
-    public void tick(World world)
-    {
-        organism.tick(world);
     }
 
     public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
@@ -27,6 +26,28 @@ public class TileEntityBaseCrop extends BaseTileEntity {
 
     public void readFromNBT(NBTTagCompound nbt) {
         super.readFromNBT(nbt);
-        organism = Organism.readFromNBT(nbt);
+        organism = Organism.readFromNBT(this, nbt);
+    }
+
+    public void handleGrowth()
+    {
+        int limit = 9;
+        int light = world.getLightFromNeighbors(pos.up());
+        double lightFactor = (light - limit) / (15 - limit);
+        if (lightFactor > 0)
+        {
+            double lastTickDif = organism.getTickCounter().getLastTickDif();
+            double energyInput = SunlightEnergyPerBlockTick * lastTickDif;
+
+            organism.getMetabolism().addEnergy(energyInput);
+            return;
+        }
+
+        return;
+    }
+
+    public void handleDeath()
+    {
+        world.destroyBlock(pos, false);
     }
 }
