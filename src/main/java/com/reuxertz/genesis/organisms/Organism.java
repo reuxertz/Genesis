@@ -1,5 +1,7 @@
 package com.reuxertz.genesis.organisms;
 
+import com.reuxertz.genesis.api.organisms.GeneData;
+import com.reuxertz.genesis.api.organisms.SpeciesFeature;
 import com.reuxertz.genesis.util.TickCounter;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
@@ -26,6 +28,19 @@ public class Organism {
 
     public Metabolism getMetabolism() { return metabolism; }
     public TickCounter getTickCounter() { return tickCounter; }
+    public double getMass() { return mass; }
+    public boolean isDead() { return metabolism.energy <= 0 || mass <= 0; }
+
+    public double getGrowthStateByMass()
+    {
+//        SpeciesFeature speciesAdultMass = SpeciesRegistry.getSpeciesFeature(name, SpeciesFeature.FeatureTypes.AdultMass);
+//        GeneData speciesAdultMassGene = genome.getGene(GeneData.GeneType.MassFactor);
+
+        double adultMassFactor = GenomeHelper.expressValue(name, SpeciesFeature.FeatureTypes.AdultMass, genome, GeneData.GeneType.MassFactor, GenomeHelper.ExpressionType.PseudoLinear);
+        double growthStage = mass / adultMassFactor;
+
+        return growthStage;
+    }
 
     public Organism(String name, Genome genome, Metabolism metabolism)
     {
@@ -39,12 +54,28 @@ public class Organism {
 
         return;
     }
+    public Organism(String name, Genome genome, Metabolism metabolism, double mass) {
+        this(name, genome, metabolism);
+        this.mass = mass;
+    }
 
-    public void tick(World world, Random rand)
+    public void tick(World world)
     {
-        if (tickCounter.isTicked(world.getTotalWorldTime()))
-            metabolism.tick(world, rand);
+        if (world.isRemote)
+            return;
 
+        int tickCount = tickCounter.getTicks(world.getTotalWorldTime());
+
+        if (tickCount > 0) {
+            metabolism.handleGrowth(world);
+            for (int i = 0; i < tickCount; i++)
+            {
+
+            }
+
+
+            organismContainer.refreshState();
+        }
 
     }
 

@@ -6,5 +6,5 @@ public interface IOrganismContainer {
 
     void handleGrowth();
 
-    void handleDeath();
+    void refreshState();
 }

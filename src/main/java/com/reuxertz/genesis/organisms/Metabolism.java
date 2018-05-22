@@ -1,10 +1,13 @@
 package com.reuxertz.genesis.organisms;
 
+import com.reuxertz.genesis.api.organisms.GeneData;
+import com.reuxertz.genesis.api.organisms.SpeciesFeature;
+import com.reuxertz.genesis.util.EnergyHelper;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-import java.util.Random;
+import static com.reuxertz.genesis.util.EnergyHelper.convertDayToTick;
+import static com.reuxertz.genesis.util.EnergyHelper.EnergyCostToGramExponent;
 
 public class Metabolism {
 
@@ -24,12 +27,6 @@ public class Metabolism {
 
     }
 
-    public void tick(World world, Random rand)
-    {
-        HandleGrowth(world);
-        HandleDeath(world);
-    }
-
     public void writeToNBT(NBTTagCompound nbt)
     {
         nbt.setDouble("energy", energy);
@@ -44,19 +41,18 @@ public class Metabolism {
     }
 
     //This is obviously bad and can definitely be refactored
-    public void HandleGrowth(World world)
+    public void handleGrowth(World world)
     {
+        double mass = organism.mass;
+
         organism.organismContainer.handleGrowth();
 
-        return;
-    }
+        double growthFactorGene = GenomeHelper.expressValue(organism.genome, GeneData.GeneType.GrowthFactor, GenomeHelper.ExpressionType.Sigmoid);
 
-    //This is obviously bad and can definitely be refactored
-    public void HandleDeath(World world)
-    {
-        if (energy <= 0)
-        {
-            organism.organismContainer.handleDeath();
-        }
+        organism.mass += 1;
+
+
+
+        return;
     }
 }

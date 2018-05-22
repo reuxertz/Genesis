@@ -38,6 +38,7 @@ public class GeneHelper
         HashMap<GeneData.GeneType, String> result = new HashMap<>();
 
         result.put(GeneData.GeneType.MassFactor, "AAA");
+        result.put(GeneData.GeneType.GrowthFactor, "AAC");
 
         return result;
     }
@@ -91,6 +92,9 @@ public class GeneHelper
         return lowerBound + ((upperBound - lowerBound) * proportion);
     }
     public static GeneData Translate(String geneString) {
+
+        if (geneString.length() < 12)
+            return null;
 
         String typeCodon = geneString.substring(3, 6);
         if (!codonToTypeMap.containsKey(typeCodon))

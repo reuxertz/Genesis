@@ -172,6 +172,7 @@ public class Genome
     public List<GeneData> sequence1Genes;
     public List<GeneData> sequence2Genes;
     public List<GeneData> expressedGenes;
+    public Map<GeneData.GeneType, GeneData> expressedGenesMap = new HashMap<>();
 
     public Genome(String sequence)
     {
@@ -206,6 +207,14 @@ public class Genome
         allGenes.addAll(sequence2Genes);
 
         expressedGenes = FilterDominantGenes(allGenes);
+
+        for (int i = 0; i < expressedGenes.size(); i++)
+            expressedGenesMap.put(expressedGenes.get(i).geneType, expressedGenes.get(i));
+    }
+
+    public GeneData getGene(GeneData.GeneType type)
+    {
+        return expressedGenesMap.get(type);
     }
 
     public void writeToNBT(NBTTagCompound nbt)

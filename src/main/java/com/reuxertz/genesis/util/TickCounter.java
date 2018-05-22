@@ -23,25 +23,33 @@ public class TickCounter {
         this.randomize = randomize;
     }
 
-    public boolean isTicked(long tick)
+    public int getTicks(long tick)
     {
         if (lastTick < 0)
             lastTick = tick;
 
         long dif = tick - lastTick;
+        lastTickDif = dif;
 
-        if (dif >= wait)
-        {
-            if (randomize)
-                lastTick = tick + (random.nextInt(randomSpread * 2) - randomSpread);
-            else
-                lastTick = tick;
+        int tickCount = 0;
+        long tLastTick = lastTick;
+        while (dif >= wait) {
+            if (dif >= wait) {
+                if (randomize)
+                    tLastTick = tLastTick + wait + (random.nextInt(randomSpread * 2) - randomSpread);
+                else
+                    tLastTick = tLastTick + wait;
 
-            lastTickDif = dif;
+                tickCount++;
+            }
 
-            return true;
+            dif = tick - tLastTick;
         }
 
-        return false;
+        if (tickCount == 0)
+            return 0;
+
+        lastTick = tLastTick;
+        return tickCount;
     }
 }

@@ -4,7 +4,8 @@ public class GeneData {
 
     public enum GeneType
     {
-        MassFactor
+        MassFactor,
+        GrowthFactor
     }
 
     public GeneType geneType;

@@ -57,6 +57,12 @@ public class BaseBlockCrop extends BlockCrops implements IBaseBlock
     }
 
     @Override
+    public int getAge(IBlockState state)
+    {
+        return ((Integer)state.getValue(this.getAgeProperty())).intValue();
+    }
+
+    @Override
     protected boolean canSustainBush(IBlockState state)
     {
         return state.getBlock() == Blocks.FARMLAND || state.getBlock() == Blocks.GRASS
@@ -77,22 +83,22 @@ public class BaseBlockCrop extends BlockCrops implements IBaseBlock
         this.checkAndDropBlock(worldIn, pos, state);
 
         TileEntityBaseCrop te = (TileEntityBaseCrop)worldIn.getTileEntity(pos);
-        te.getOrganism().tick(worldIn, rand);
+        te.getOrganism().tick(worldIn);
 
         if (!worldIn.isAreaLoaded(pos, 1)) return; // Forge: prevent loading unloaded chunks when checking neighbor's light
-        if (worldIn.getLightFromNeighbors(pos.up()) >= 9)
+        if (worldIn.getLightFromNeighbors(pos.up()) >= 9 && false)
         {
             int i = this.getAge(state);
 
             if (i < this.getMaxAge())
             {
                   float f = getGrowthChance(this, worldIn, pos);
-//
-//                if(net.minecraftforge.common.ForgeHooks.onCropsGrowPre(worldIn, pos, state, rand.nextInt((int)(25.0F / f) + 1) == 0))
-//                {
-//                    worldIn.setBlockState(pos, this.withAge(i + 1), 2);
-//                    net.minecraftforge.common.ForgeHooks.onCropsGrowPost(worldIn, pos, state, worldIn.getBlockState(pos));
-//                }
+
+                if(net.minecraftforge.common.ForgeHooks.onCropsGrowPre(worldIn, pos, state, rand.nextInt((int)(25.0F / f) + 1) == 0))
+                {
+                    worldIn.setBlockState(pos, this.withAge(i + 1), 2);
+                    net.minecraftforge.common.ForgeHooks.onCropsGrowPost(worldIn, pos, state, worldIn.getBlockState(pos));
+                }
             }
         }
     }
@@ -109,7 +115,7 @@ public class BaseBlockCrop extends BlockCrops implements IBaseBlock
         String shortName = name.substring(name.lastIndexOf("_") + 1, name.length());
         Genome g = SpeciesRegistry.getSpeciesGenome(shortName);
 
-        Organism o = new Organism(shortName, g, new Metabolism());
+        Organism o = new Organism(shortName, g, new Metabolism(), 10);
         TileEntityBaseCrop newTileEntity = new TileEntityBaseCrop(o);
         o.setOrganismContainer(newTileEntity);
 
