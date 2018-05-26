@@ -3,9 +3,9 @@ package com.reuxertz.genesis.registry;
 import com.reuxertz.genesis.Genesis;
 import com.reuxertz.genesis.api.IGenesisRegistry;
 import com.reuxertz.genesis.api.blocks.BaseBlock;
+import com.reuxertz.genesis.api.blocks.BaseBlockGrowable;
 import com.reuxertz.genesis.api.blocks.BaseBlockMetal;
 import com.reuxertz.genesis.api.blocks.BaseBlockOre;
-import com.reuxertz.genesis.api.blocks.BaseBlockCrop;
 import com.reuxertz.genesis.api.organisms.GeneData;
 import com.reuxertz.genesis.api.items.BaseCropSeed;
 import com.reuxertz.genesis.api.items.BaseItem;
@@ -212,15 +212,16 @@ public class GenesisRegistry implements IGenesisRegistry
     //Plants
     public IGenesisRegistry registerCrop(String name)
     {
-        BaseBlockCrop blockCrop = new BaseBlockCrop("crop_" + name);
+        BaseBlockGrowable blockCrop = new BaseBlockGrowable("crop_" + name);
         Item crop = new BaseItem(name);
-        Item seed = new BaseCropSeed("seed_" + name, blockCrop);
+        BaseCropSeed seed = new BaseCropSeed("seed_" + name, blockCrop);
 
         registerContent(new RegistryObject(modId, name, crop));
         registerContent(new RegistryObject(modId, "seed_" + name, seed));
 
         registerContent(new RegistryObject(modId, "crop_" + name, blockCrop));
 
+        seed.setBlockCrop(blockCrop);
         blockCrop.setSeed(seed).setCrop(crop);
 
         return this;
@@ -229,7 +230,7 @@ public class GenesisRegistry implements IGenesisRegistry
     //Plants
     public IGenesisRegistry registerEntity(String name)
     {
-        //registerContent(new RegistryObject(modId, "crop_" + name, null));
+        registerContent(new RegistryObject(modId, name));
         return this;
     }
 

@@ -1,5 +1,10 @@
 package com.reuxertz.genesis.util;
 
+import com.reuxertz.genesis.organics.Genome;
+import com.reuxertz.genesis.organics.IOrganismContainer;
+import com.reuxertz.genesis.organics.Organism;
+import net.minecraft.nbt.NBTTagCompound;
+
 import java.util.Random;
 
 public class TickCounter {
@@ -19,16 +24,24 @@ public class TickCounter {
 
     public TickCounter(Random random, boolean randomize)
     {
+        this(random, randomize, -1l);
+    }
+    public TickCounter(Random random, boolean randomize, long creationTick)
+    {
         this.random = random;
         this.randomize = randomize;
     }
 
-    public int getTicks(long tick)
+    public int getTicks(long currentTick)
+    {
+        return getTicks(currentTick, true);
+    }
+    public int getTicks(long currentTick, boolean updateLastTick)
     {
         if (lastTick < 0)
-            lastTick = tick;
+            lastTick = currentTick;
 
-        long dif = tick - lastTick;
+        long dif = currentTick - lastTick;
         lastTickDif = dif;
 
         int tickCount = 0;
@@ -43,7 +56,7 @@ public class TickCounter {
                 tickCount++;
             }
 
-            dif = tick - tLastTick;
+            dif = currentTick - tLastTick;
         }
 
         if (tickCount == 0)

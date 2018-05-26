@@ -1,4 +1,4 @@
-package com.reuxertz.genesis.organisms;
+package com.reuxertz.genesis.organics;
 
 
 import com.reuxertz.genesis.api.organisms.GeneData;
@@ -29,7 +29,7 @@ public class GeneHelper
 //
 //        HashMap<GeneData.GeneType, Gene> result = new HashMap<>();
 //
-//        //result.put(GeneData.GeneType.MassFactor, new Gene(GeneData.GeneType.MassFactor, typeToCodonMap.get(GeneData.GeneType.MassFactor)).Clone(.5, .5));
+//        //result.put(GeneData.GeneType.AdultMassFactor, new Gene(GeneData.GeneType.AdultMassFactor, typeToCodonMap.get(GeneData.GeneType.AdultMassFactor)).Clone(.5, .5));
 //
 //        return result;
 //    }
@@ -37,8 +37,9 @@ public class GeneHelper
     {
         HashMap<GeneData.GeneType, String> result = new HashMap<>();
 
-        result.put(GeneData.GeneType.MassFactor, "AAA");
+        result.put(GeneData.GeneType.AdultMassFactor, "AAA");
         result.put(GeneData.GeneType.GrowthFactor, "AAC");
+        result.put(GeneData.GeneType.NewBornMassFactor, "AAG");
 
         return result;
     }

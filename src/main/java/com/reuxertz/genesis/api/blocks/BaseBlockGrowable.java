@@ -1,11 +1,14 @@
 package com.reuxertz.genesis.api.blocks;
 
-import com.reuxertz.genesis.organisms.Genome;
-import com.reuxertz.genesis.organisms.Metabolism;
-import com.reuxertz.genesis.organisms.Organism;
+import com.reuxertz.genesis.api.organisms.GeneData;
+import com.reuxertz.genesis.api.organisms.SpeciesFeature;
+import com.reuxertz.genesis.organics.Genome;
+import com.reuxertz.genesis.organics.GenomeHelper;
+import com.reuxertz.genesis.organics.Organism;
 import com.reuxertz.genesis.registry.SpeciesRegistry;
 import com.reuxertz.genesis.tileentity.TileEntityBaseCrop;
 import net.minecraft.block.BlockCrops;
+import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
@@ -20,27 +23,28 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.Random;
 
-public class BaseBlockCrop extends BlockCrops implements IBaseBlock
+public class BaseBlockGrowable extends BlockCrops implements IBaseBlock, ITileEntityProvider
 {
     protected String name;
     protected Item seed;
     protected Item crop;
 
-    public BaseBlockCrop(String name) {
+    public BaseBlockGrowable(String name) {
         this(name, CreativeTabs.MISC);
     }
-    public BaseBlockCrop(String name, CreativeTabs tab) {
+    public BaseBlockGrowable(String name, CreativeTabs tab) {
         super();
         this.name = name;
         setCreativeTab(tab);
+
     }
 
-    public BaseBlockCrop setSeed(Item seed)
+    public BaseBlockGrowable setSeed(Item seed)
     {
         this.seed = seed;
         return this;
     }
-    public BaseBlockCrop setCrop(Item crop)
+    public BaseBlockGrowable setCrop(Item crop)
     {
         this.crop = crop;
         return this;
@@ -62,11 +66,16 @@ public class BaseBlockCrop extends BlockCrops implements IBaseBlock
         return ((Integer)state.getValue(this.getAgeProperty())).intValue();
     }
 
+    public boolean canBlockSustainGenesisPlant(IBlockState state)
+    {
+        return state.getBlock() == Blocks.FARMLAND || state.getBlock() == Blocks.DIRT
+                || state.getBlock() == Blocks.GRASS;
+    }
+
     @Override
     protected boolean canSustainBush(IBlockState state)
     {
-        return state.getBlock() == Blocks.FARMLAND || state.getBlock() == Blocks.GRASS
-                || state.getBlock() == Blocks.GRASS;
+        return canBlockSustainGenesisPlant(state);
     }
 
     @SideOnly(Side.CLIENT)
@@ -75,7 +84,6 @@ public class BaseBlockCrop extends BlockCrops implements IBaseBlock
         ModelResourceLocation normal = new ModelResourceLocation(getRegistryName(), "inventory");
         ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, normal);
     }
-
     @Override
     public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand)
     {
@@ -83,7 +91,7 @@ public class BaseBlockCrop extends BlockCrops implements IBaseBlock
         this.checkAndDropBlock(worldIn, pos, state);
 
         TileEntityBaseCrop te = (TileEntityBaseCrop)worldIn.getTileEntity(pos);
-        te.getOrganism().tick(worldIn);
+        //te.getOrganism().tick(worldIn);
 
         if (!worldIn.isAreaLoaded(pos, 1)) return; // Forge: prevent loading unloaded chunks when checking neighbor's light
         if (worldIn.getLightFromNeighbors(pos.up()) >= 9 && false)
@@ -96,7 +104,7 @@ public class BaseBlockCrop extends BlockCrops implements IBaseBlock
 
                 if(net.minecraftforge.common.ForgeHooks.onCropsGrowPre(worldIn, pos, state, rand.nextInt((int)(25.0F / f) + 1) == 0))
                 {
-                    worldIn.setBlockState(pos, this.withAge(i + 1), 2);
+                    worldIn.setBlockState(pos, this.withAge(i + 1));
                     net.minecraftforge.common.ForgeHooks.onCropsGrowPost(worldIn, pos, state, worldIn.getBlockState(pos));
                 }
             }
@@ -104,21 +112,39 @@ public class BaseBlockCrop extends BlockCrops implements IBaseBlock
     }
 
     @Override
-    public boolean hasTileEntity(IBlockState state)
+    public boolean canPlaceBlockAt(World worldIn, BlockPos pos)
     {
-        return true;
+        IBlockState soil = worldIn.getBlockState(pos.down());
+        return super.canPlaceBlockAt(worldIn, pos) && soil.getBlock().canSustainPlant(soil, worldIn, pos.down(), net.minecraft.util.EnumFacing.UP, this);
     }
 
     @Override
-    public TileEntity createTileEntity(World world, IBlockState state) {
+    public TileEntity createNewTileEntity(World world, int meta) {
 
         String shortName = name.substring(name.lastIndexOf("_") + 1, name.length());
         Genome g = SpeciesRegistry.getSpeciesGenome(shortName);
 
-        Organism o = new Organism(shortName, g, new Metabolism(), 10);
+        Organism o = new Organism(shortName, g, 10);
         TileEntityBaseCrop newTileEntity = new TileEntityBaseCrop(o);
+
+        o.addEnergy(o.getMass());
         o.setOrganismContainer(newTileEntity);
 
         return newTileEntity;
     }
+
+//    @Override
+//    public TileEntity createTileEntity(World world, IBlockState state) {
+//
+//        String shortName = name.substring(name.lastIndexOf("_") + 1, name.length());
+//        Genome g = SpeciesRegistry.getSpeciesGenome(shortName);
+//
+//        Organism o = new Organism(shortName, g, new Metabolism(), 10);
+//        TileEntityBaseCrop newTileEntity = new TileEntityBaseCrop(o);
+//
+//        o.getMetabolism().addEnergy(o.getMass());
+//        o.setOrganismContainer(newTileEntity);
+//
+//        return newTileEntity;
+//    }
 }

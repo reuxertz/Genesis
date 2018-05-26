@@ -4,7 +4,8 @@ public class SpeciesFeature {
 
     public enum FeatureTypes
     {
-        BabyMass,
+        NewbornMass,
+        ClutchSize,
         AdultMass,
     }
 

@@ -1,20 +1,17 @@
 package com.reuxertz.genesis.proxy;
 
 import com.reuxertz.genesis.Genesis;
+import com.reuxertz.genesis.handlers.GuiHandler;
 import com.reuxertz.genesis.internal.GenesisApiHandler;
-import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.IGuiHandler;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 import java.io.File;
 
@@ -33,7 +30,7 @@ public class CommonProxy implements IGuiHandler {
     }
 
     public void init(FMLInitializationEvent e) {
-        NetworkRegistry.INSTANCE.registerGuiHandler(Genesis.instance, new GuiProxy());
+        NetworkRegistry.INSTANCE.registerGuiHandler(Genesis.instance, new GuiHandler());
     }
 
     public void postInit(FMLPostInitializationEvent e) {

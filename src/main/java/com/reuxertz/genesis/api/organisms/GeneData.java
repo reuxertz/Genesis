@@ -4,8 +4,10 @@ public class GeneData {
 
     public enum GeneType
     {
-        MassFactor,
-        GrowthFactor
+        NewBornMassFactor,
+        ClutchSizeFactor,
+        AdultMassFactor,
+        GrowthFactor,
     }
 
     public GeneType geneType;

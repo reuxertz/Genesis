@@ -2,7 +2,7 @@ package com.reuxertz.genesis.registry;
 
 import com.reuxertz.genesis.api.organisms.GeneData;
 import com.reuxertz.genesis.api.organisms.SpeciesFeature;
-import com.reuxertz.genesis.organisms.Genome;
+import com.reuxertz.genesis.organics.Genome;
 
 import java.util.HashMap;
 import java.util.List;

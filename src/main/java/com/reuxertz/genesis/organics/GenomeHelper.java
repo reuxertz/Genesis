@@ -1,13 +1,79 @@
-package com.reuxertz.genesis.organisms;
+package com.reuxertz.genesis.organics;
 
 import com.reuxertz.genesis.api.organisms.GeneData;
-import net.minecraft.nbt.NBTTagCompound;
+import com.reuxertz.genesis.api.organisms.SpeciesFeature;
+import com.reuxertz.genesis.registry.SpeciesRegistry;
+import com.reuxertz.genesis.util.MathHelper;
+import com.reuxertz.genesis.util.RandomHelper;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Random;
 
-public class Genome
-{
-    public static Random random = new Random();
+public class GenomeHelper {
+
+    public enum ExpressionType { PseudoLinear, Sigmoid }
+
+    public static double expressValue(String speciesName, SpeciesFeature.FeatureTypes featureType, Genome genome, GeneData.GeneType geneType, ExpressionType expressionType)
+    {
+        SpeciesFeature speciesFeature = SpeciesRegistry.getSpeciesFeature(speciesName, featureType);
+        return expressValue(genome, geneType, speciesFeature.value, expressionType);
+    }
+
+    public static double expressValue(Genome genome, GeneData.GeneType geneType, ExpressionType expressionType) {
+        return expressValue(genome, geneType, 1, expressionType);
+    }
+    private static double expressValue(Genome genome, GeneData.GeneType geneType, double featureValue, ExpressionType expressionType)
+    {
+        GeneData geneData = genome.getGene(geneType);
+        double geneValue = 0.0;
+
+        if (geneData != null)
+            geneValue = geneData.value;
+        else
+            geneValue = 0.0;
+
+        double expValue = 0;
+
+        if (expressionType == ExpressionType.PseudoLinear) {
+            double base = 10;
+            double normalizedExpFactor = MathHelper.PseudoLinear(geneValue, base);
+            expValue = normalizedExpFactor * featureValue;
+        }
+        else if (expressionType == ExpressionType.Sigmoid)
+        {
+            double slope = 1;
+            double expFactor = MathHelper.Sigmoid(geneValue, slope);
+            expValue = expFactor * featureValue;
+        }
+
+        return expValue;
+    }
+
+    public static Genome reproduce(Random random, Genome g1, Genome g2)
+    {
+        int randChromosomeG1 = random.nextInt(2);
+        int randChromosomeG2 = random.nextInt(2);
+
+        String g1s = null;
+        String g2s = null;
+
+        if (randChromosomeG1 == 0)
+            g1s = g1.sequence1;
+        else
+            g1s = g1.sequence2;
+
+        if (randChromosomeG2 == 0)
+            g2s = g2.sequence1;
+        else
+            g2s = g2.sequence2;
+
+        Genome newGenome = new Genome(g1s, g2s);
+
+        return newGenome;
+    }
+
 
     public static List<GeneData> Translate(String genomeSequence)
     {
@@ -22,7 +88,7 @@ public class Genome
             if (remainingLength < GeneHelper.geneLength)
                 break;
 
-            String geneSubString = genomeSequence.substring(i, GeneHelper.geneLength);
+            String geneSubString = genomeSequence.substring(i, i + GeneHelper.geneLength);
             GeneData newGeneData = GeneHelper.Translate(geneSubString);
 
             if (newGeneData == null)
@@ -42,10 +108,10 @@ public class Genome
 
             if (curProbability > 0)
             {
-                if (curProbability < 1 && random.nextDouble() > curProbability)
+                if (curProbability < 1 && RandomHelper.random.nextDouble() > curProbability)
                     return sequence;
 
-                int randomPositionIndex = random.nextInt(sequence.length());
+                int randomPositionIndex = RandomHelper.random.nextInt(sequence.length());
 
                 String preSequence = sequence.substring(0, randomPositionIndex);
                 String postSequence = sequence.substring(randomPositionIndex + 1, sequence.length());
@@ -64,11 +130,11 @@ public class Genome
 
             if (curProbability > 0)
             {
-                if (curProbability < 1 && random.nextDouble() > curProbability)
+                if (curProbability < 1 && RandomHelper.random.nextDouble() > curProbability)
                     return sequence;
 
-                int randomLetterIndex = random.nextInt(GeneHelper.letters.length());
-                int randomPositionIndex = random.nextInt(sequence.length());
+                int randomLetterIndex = RandomHelper.random.nextInt(GeneHelper.letters.length());
+                int randomPositionIndex = RandomHelper.random.nextInt(sequence.length());
 
                 String randomLetter = GeneHelper.letters.substring(randomLetterIndex, randomLetterIndex + 1);
 
@@ -88,8 +154,8 @@ public class Genome
 
         List<Integer> crossoverIndexes = new ArrayList<Integer>();
 
-        while (random.nextDouble() < .5) {
-            int index = random.nextInt(sequence1.length());
+        while (RandomHelper.random.nextDouble() < .5) {
+            int index = RandomHelper.random.nextInt(sequence1.length());
 
             if (!crossoverIndexes.contains(index))
                 crossoverIndexes.add(index);
@@ -97,7 +163,7 @@ public class Genome
 
         String out1 = "";
         String out2 = "";
-        Boolean swap = random.nextBoolean();
+        Boolean swap = RandomHelper.random.nextBoolean();
 
         int startIndex = 0;
         int stopIndex1 = 0;
@@ -165,66 +231,5 @@ public class Genome
         }
 
         return new ArrayList(resultMap.values());
-    }
-
-    public String sequence1;
-    public String sequence2;
-    public List<GeneData> sequence1Genes;
-    public List<GeneData> sequence2Genes;
-    public List<GeneData> expressedGenes;
-    public Map<GeneData.GeneType, GeneData> expressedGenesMap = new HashMap<>();
-
-    public Genome(String sequence)
-    {
-        this(sequence, sequence);
-    }
-    public Genome(String sequence1, String sequence2)
-    {
-        this.sequence1 = sequence1;
-        this.sequence2 = sequence2;
-
-        Translate();
-    }
-
-    public Genome(List<GeneData> genes)
-    {
-        String sequence = "";
-        for (int i = 0; i < genes.size(); i++)
-            sequence += GeneHelper.getGeneString(genes.get(i));
-
-        sequence1 = sequence;
-        sequence2 = sequence;
-
-        Translate();
-    }
-
-    public void Translate()
-    {
-        sequence1Genes = Genome.Translate(sequence1);
-        sequence2Genes = Genome.Translate(sequence2);
-
-        List<GeneData> allGenes = new ArrayList<>(sequence1Genes);
-        allGenes.addAll(sequence2Genes);
-
-        expressedGenes = FilterDominantGenes(allGenes);
-
-        for (int i = 0; i < expressedGenes.size(); i++)
-            expressedGenesMap.put(expressedGenes.get(i).geneType, expressedGenes.get(i));
-    }
-
-    public GeneData getGene(GeneData.GeneType type)
-    {
-        return expressedGenesMap.get(type);
-    }
-
-    public void writeToNBT(NBTTagCompound nbt)
-    {
-        nbt.setString("sequence1", this.sequence1);
-        nbt.setString("sequence2", this.sequence2);
-    }
-
-    public static Genome readFromNBT(NBTTagCompound nbt)
-    {
-        return new Genome(nbt.getString("sequence1"), nbt.getString("sequence2"));
     }
 }

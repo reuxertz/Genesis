@@ -29,10 +29,14 @@ public class Flora implements IGenesisPlugin
             .registerCrop("onion")
             .registerSpecies("onion",
                 Arrays.asList(
-                        new SpeciesFeature(SpeciesFeature.FeatureTypes.AdultMass, 2000)),
+                    new SpeciesFeature(SpeciesFeature.FeatureTypes.AdultMass, 2000),
+                    new SpeciesFeature(SpeciesFeature.FeatureTypes.NewbornMass, 10),
+                    new SpeciesFeature(SpeciesFeature.FeatureTypes.ClutchSize, 1.5)),
                 Arrays.asList(
-                        new GeneData(GeneData.GeneType.MassFactor, 0, 0),
-                        new GeneData(GeneData.GeneType.GrowthFactor, 0, 0))
+                    new GeneData(GeneData.GeneType.AdultMassFactor, 0, 0),
+                    new GeneData(GeneData.GeneType.GrowthFactor, 0, 0),
+                    new GeneData(GeneData.GeneType.NewBornMassFactor, 0, 0),
+                    new GeneData(GeneData.GeneType.ClutchSizeFactor, 0, 0))
             );
 
         return;

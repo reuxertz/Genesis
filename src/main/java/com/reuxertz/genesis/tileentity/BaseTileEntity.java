@@ -13,7 +13,9 @@ public class BaseTileEntity extends TileEntity {
         // client. In contrast getUpdatePacket() is called when the tile entity
         // itself wants to sync to the client. In many cases you want to send
         // over the same information in getUpdateTag() as in getUpdatePacket().
-        return writeToNBT(new NBTTagCompound());
+        boolean side = world.isRemote;
+        NBTTagCompound nbt = new NBTTagCompound();
+        return writeToNBT(nbt);
     }
 
     @Override
@@ -22,14 +24,17 @@ public class BaseTileEntity extends TileEntity {
         // and that's all we have we just write our entire NBT here. If you have a complex
         // tile entity that doesn't need to have all information on the client you can write
         // a more optimal NBT here.
+        boolean b = world.isRemote;
         NBTTagCompound nbtTag = new NBTTagCompound();
-        this.writeToNBT(nbtTag);
+        nbtTag = this.writeToNBT(nbtTag);
         return new SPacketUpdateTileEntity(getPos(), 1, nbtTag);
+
     }
 
     @Override
     public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity packet) {
         // Here we get the packet from the server and read it into our client side tile entity
+        boolean side = world.isRemote;
         this.readFromNBT(packet.getNbtCompound());
     }
 
