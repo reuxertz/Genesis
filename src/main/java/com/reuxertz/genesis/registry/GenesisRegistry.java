@@ -10,14 +10,21 @@ import com.reuxertz.genesis.api.organisms.GeneData;
 import com.reuxertz.genesis.api.items.BaseCropSeed;
 import com.reuxertz.genesis.api.items.BaseItem;
 import com.reuxertz.genesis.api.organisms.SpeciesFeature;
+import com.reuxertz.genesis.entities.EntityHuman;
 import com.reuxertz.genesis.tileentity.TileEntityBaseCrop;
 import net.minecraft.block.Block;
+import net.minecraft.block.material.MapColor;
+import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.EntityEntry;
+import net.minecraftforge.fml.common.registry.EntityEntryBuilder;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -103,9 +110,36 @@ public class GenesisRegistry implements IGenesisRegistry
 
                 RegistryObject regobj = registry.registryObjectList.get(i);
                 event.getRegistry().register(regobj.entityEntry);
+
+                //Class entityClass = regobj.entityEntry.getEntityClass();
+
+                //RenderingRegistry.registerEntityRenderingHandler(entityClass, RenderRegistry.RenderFactoryEntityHuman.INSTANCE);
                 regobj.registerEntity();
 
             }
+//
+//        EntityEntry registree = EntityEntryBuilder.create()
+//                .entity(EntityHuman.class)
+//                .id(new ResourceLocation(Genesis.MODID, "human"), 0)
+//                .name("human")
+//                .tracker(80, 3, false)
+//                .egg(MapColor.BLUE.colorValue, MapColor.YELLOW.colorValue)
+//                //.spawn(EnumCreatureType.CREATURE, 20, 1, 5, BiomeDictionary.getBiomes(BiomeDictionary.Type.FOREST))
+//                .build();
+//
+//        registry.registerEntity("human", registree);
+
+        return;
+    }
+
+    public static void registerEntityRenderers()
+    {
+        for (int i = 0; i < GenesisRegistry.registryObjectList.size(); i++)
+        {
+            //RegistryObject regobj = registry.registryObjectList.get(i);
+
+            //RenderingRegistry.registerEntityRenderingHandler(EntityHuman.class, RenderRegistry.RenderFactoryEntityHuman.INSTANCE);
+        }
     }
 
     @SideOnly(Side.CLIENT)
@@ -228,9 +262,9 @@ public class GenesisRegistry implements IGenesisRegistry
     }
 
     //Plants
-    public IGenesisRegistry registerEntity(String name)
+    public IGenesisRegistry registerEntity(String name, EntityEntry entityEntry)
     {
-        registerContent(new RegistryObject(modId, name));
+        registerContent(new RegistryObject(modId, name, entityEntry));
         return this;
     }
 

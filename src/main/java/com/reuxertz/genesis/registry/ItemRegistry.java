@@ -16,8 +16,6 @@ public class ItemRegistry {
 //    @GameRegistry.ObjectHolder("genesis:simpleitem2")
 //    public static SimpleItem simpleItem2;
 
-
-
     @GameRegistry.ObjectHolder("genesis:ingot_copper")
     public static BaseIngot ingotCopper;
     @GameRegistry.ObjectHolder("genesis:ingot_tin")
@@ -52,7 +50,6 @@ public class ItemRegistry {
     @GameRegistry.ObjectHolder("genesis:nugget_ruby")
     public static BaseNugget nuggetRuby;
 
-
     @GameRegistry.ObjectHolder("genesis:chain_copper")
     public static BaseNugget chainCopper;
     @GameRegistry.ObjectHolder("genesis:chain_bronze")
@@ -61,7 +58,6 @@ public class ItemRegistry {
     public static BaseNugget chainIron;
     @GameRegistry.ObjectHolder("genesis:chain_steel")
     public static BaseNugget chainSteel;
-
 
     @GameRegistry.ObjectHolder("genesis:sword_copper")
     public static BaseSword swordCopper;
@@ -75,7 +71,7 @@ public class ItemRegistry {
     public static BaseHoe hoeCopper;
     @GameRegistry.ObjectHolder("genesis:hammer_copper")
     public static BaseHammer hammerCopper;
-    
+
     @GameRegistry.ObjectHolder("genesis:sword_bronze")
     public static BaseSword swordBronze;
     @GameRegistry.ObjectHolder("genesis:sword_bronze")

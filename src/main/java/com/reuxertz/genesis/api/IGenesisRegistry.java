@@ -3,6 +3,7 @@ package com.reuxertz.genesis.api;
 import com.reuxertz.genesis.api.organisms.GeneData;
 import com.reuxertz.genesis.api.organisms.SpeciesFeature;
 import com.reuxertz.genesis.registry.RegistryObject;
+import net.minecraftforge.fml.common.registry.EntityEntry;
 
 import java.util.List;
 
@@ -23,7 +24,7 @@ public interface IGenesisRegistry {
     IGenesisRegistry registerCrop(String name);
 
     //Entity registes
-    IGenesisRegistry registerEntity(String name);
+    IGenesisRegistry registerEntity(String name, EntityEntry entityEntry);
 
     //Ecosystem registers
     IGenesisRegistry registerSpecies(String name, List<SpeciesFeature> speciesData, List<GeneData> genes);

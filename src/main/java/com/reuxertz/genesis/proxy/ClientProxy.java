@@ -1,14 +1,17 @@
 package com.reuxertz.genesis.proxy;
 
 import com.reuxertz.genesis.Genesis;
+import com.reuxertz.genesis.entities.EntityHuman;
 import com.reuxertz.genesis.internal.GenesisApiHandler;
 import com.reuxertz.genesis.registry.GenesisRegistry;
+import com.reuxertz.genesis.registry.RenderRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemModelMesher;
 import net.minecraft.client.renderer.RenderItem;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.resources.IReloadableResourceManager;
 import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
@@ -26,6 +29,8 @@ public class ClientProxy extends CommonProxy {
     public void preInit(FMLPreInitializationEvent event) {
 
         super.preInit(event);
+
+        RenderingRegistry.registerEntityRenderingHandler(EntityHuman.class, RenderRegistry.RenderFactoryEntityHuman.INSTANCE);
     }
 
     @Override
