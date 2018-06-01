@@ -14,12 +14,18 @@ import com.reuxertz.genesis.entities.EntityHuman;
 import com.reuxertz.genesis.tileentity.TileEntityBaseCrop;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.MapColor;
+import net.minecraft.client.model.ModelBiped;
+import net.minecraft.client.renderer.entity.Render;
+import net.minecraft.client.renderer.entity.RenderLiving;
+import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -29,6 +35,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -113,7 +120,6 @@ public class GenesisRegistry implements IGenesisRegistry
 
                 //Class entityClass = regobj.entityEntry.getEntityClass();
 
-                //RenderingRegistry.registerEntityRenderingHandler(entityClass, RenderRegistry.RenderFactoryEntityHuman.INSTANCE);
                 regobj.registerEntity();
 
             }
@@ -132,13 +138,23 @@ public class GenesisRegistry implements IGenesisRegistry
         return;
     }
 
+    @SuppressWarnings("unchecked")
     public static void registerEntityRenderers()
     {
         for (int i = 0; i < GenesisRegistry.registryObjectList.size(); i++)
         {
-            //RegistryObject regobj = registry.registryObjectList.get(i);
-
-            //RenderingRegistry.registerEntityRenderingHandler(EntityHuman.class, RenderRegistry.RenderFactoryEntityHuman.INSTANCE);
+            if (GenesisRegistry.registryObjectList.get(i).entityEntry != null)
+            {
+                RegistryObject regobj = registry.registryObjectList.get(i);
+                RenderingRegistry.registerEntityRenderingHandler(regobj.entityEntry.getEntityClass(), manager ->
+                    new RenderLiving(manager, new ModelBiped(), 1f) {
+                        @Override
+                        protected ResourceLocation getEntityTexture(Entity entity) {
+                            return new ResourceLocation(regobj.modId + ":" + "textures/entities/" + regobj.name + "/" + regobj.name + ".png");
+                        }
+                    }
+                );
+            }
         }
     }
 

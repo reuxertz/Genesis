@@ -8,12 +8,16 @@ import net.minecraftforge.fml.common.registry.EntityEntry;
 
 public class RegistryObject {
 
-    public EntityEntry entityEntry;
     public String name;
     public String modId;
+
+    public EntityEntry entityEntry;
+
     public Block block;
-    public Item item;
     public Class tileEntityClass;
+
+    public Item item;
+
 
     protected boolean _isItemRegistered;
     protected boolean _isBlockRegistered;
