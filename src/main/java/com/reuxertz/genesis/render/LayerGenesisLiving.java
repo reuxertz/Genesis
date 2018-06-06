@@ -15,8 +15,6 @@ public class LayerGenesisLiving<E extends EntityGenesisAnimal> implements LayerR
     private final RenderGenesisLiving renderer;
     private final ResourceLocation resourceLocation;
 
-    public ResourceLocation getResourceLocation() { return resourceLocation; }
-
     public LayerGenesisLiving(RenderGenesisLiving renderer, ResourceLocation resourceLocation)
     {
         this.renderer = renderer;
@@ -28,7 +26,7 @@ public class LayerGenesisLiving<E extends EntityGenesisAnimal> implements LayerR
     {
         if (!entity.isInvisible())
         {
-            ResourceLocation texture = resourceLocation;//this.renderer.dinosaur.getOverlayTexture(entity, "teeth");
+            ResourceLocation texture = resourceLocation;
             if (texture != null)
             {
                 ITextureObject textureObject = Minecraft.getMinecraft().getTextureManager().getTexture(texture);
