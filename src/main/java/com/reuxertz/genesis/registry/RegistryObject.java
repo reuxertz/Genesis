@@ -2,9 +2,16 @@ package com.reuxertz.genesis.registry;
 
 import com.reuxertz.genesis.api.blocks.IBaseBlock;
 import com.reuxertz.genesis.api.items.IBaseItem;
+import com.reuxertz.genesis.render.LayerGenesisLiving;
+import com.reuxertz.genesis.render.RenderGenesisLiving;
 import net.minecraft.block.Block;
+import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.item.Item;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.EntityEntry;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class RegistryObject {
 
@@ -12,12 +19,13 @@ public class RegistryObject {
     public String modId;
 
     public EntityEntry entityEntry;
+    public Map<String, ResourceLocation> entityLayerResourceMap = new HashMap<>();
+    public RenderGenesisLiving renderGenesisLiving;
 
     public Block block;
     public Class tileEntityClass;
 
     public Item item;
-
 
     protected boolean _isItemRegistered;
     protected boolean _isBlockRegistered;
@@ -41,6 +49,8 @@ public class RegistryObject {
     {
         return modId + "." + name;
     }
+
+    public void setRender(RenderGenesisLiving renderGenesisLiving) { this.renderGenesisLiving = renderGenesisLiving; }
 
     protected RegistryObject(String modId, String name) {
         this.modId = modId;
@@ -84,6 +94,7 @@ public class RegistryObject {
     {
         _isEntityRegistered = true;
     }
+
     public void initModel()
     {
         if (isModelInitialized())

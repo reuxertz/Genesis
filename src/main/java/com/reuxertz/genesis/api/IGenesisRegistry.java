@@ -3,9 +3,12 @@ package com.reuxertz.genesis.api;
 import com.reuxertz.genesis.api.organisms.GeneData;
 import com.reuxertz.genesis.api.organisms.SpeciesFeature;
 import com.reuxertz.genesis.registry.RegistryObject;
+import com.reuxertz.genesis.render.LayerGenesisLiving;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 
 import java.util.List;
+import java.util.Map;
 
 public interface IGenesisRegistry {
 
@@ -23,8 +26,9 @@ public interface IGenesisRegistry {
     //Plant registers
     IGenesisRegistry registerCrop(String name);
 
-    //Entity registes
+    //Entity registers
     IGenesisRegistry registerEntity(String name, EntityEntry entityEntry);
+    IGenesisRegistry registerOverlay(String name, String overlayName);
 
     //Ecosystem registers
     IGenesisRegistry registerSpecies(String name, List<SpeciesFeature> speciesData, List<GeneData> genes);

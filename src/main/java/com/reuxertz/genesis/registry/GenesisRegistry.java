@@ -10,27 +10,20 @@ import com.reuxertz.genesis.api.organisms.GeneData;
 import com.reuxertz.genesis.api.items.BaseCropSeed;
 import com.reuxertz.genesis.api.items.BaseItem;
 import com.reuxertz.genesis.api.organisms.SpeciesFeature;
-import com.reuxertz.genesis.entities.EntityHuman;
+import com.reuxertz.genesis.render.LayerGenesisLiving;
+import com.reuxertz.genesis.render.RenderGenesisLiving;
 import com.reuxertz.genesis.tileentity.TileEntityBaseCrop;
 import net.minecraft.block.Block;
-import net.minecraft.block.material.MapColor;
-import net.minecraft.client.model.ModelBiped;
-import net.minecraft.client.renderer.entity.Render;
-import net.minecraft.client.renderer.entity.RenderLiving;
-import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.model.ModelPlayer;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.EntityEntry;
-import net.minecraftforge.fml.common.registry.EntityEntryBuilder;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -62,10 +55,6 @@ public class GenesisRegistry implements IGenesisRegistry
         for (int i = 0; i < GenesisRegistry.registryObjectList.size(); i++) {
 
             RegistryObject regobj = GenesisRegistry.registryObjectList.get(i);
-
-            //I feel like this should be here, but it doesn't work with it
-//            if (regobj.isItemRegistered())
-//                continue;
 
             if (regobj.block != null && regobj.item == null &&
                     regobj.block instanceof BaseBlock && ((BaseBlock)regobj.block).isSimple)
@@ -101,9 +90,6 @@ public class GenesisRegistry implements IGenesisRegistry
                 RegistryObject regobj = registry.registryObjectList.get(i);
                 event.getRegistry().register((Block)regobj.block);
                 regobj.registerBlock();
-
-//                if (regobj.tileEntityClass != null)
-//                    GameRegistry.registerTileEntity(regobj.tileEntityClass, "genesis:tileEntityBaseCrop");
             }
     }
 
@@ -118,22 +104,9 @@ public class GenesisRegistry implements IGenesisRegistry
                 RegistryObject regobj = registry.registryObjectList.get(i);
                 event.getRegistry().register(regobj.entityEntry);
 
-                //Class entityClass = regobj.entityEntry.getEntityClass();
-
                 regobj.registerEntity();
 
             }
-//
-//        EntityEntry registree = EntityEntryBuilder.create()
-//                .entity(EntityHuman.class)
-//                .id(new ResourceLocation(Genesis.MODID, "human"), 0)
-//                .name("human")
-//                .tracker(80, 3, false)
-//                .egg(MapColor.BLUE.colorValue, MapColor.YELLOW.colorValue)
-//                //.spawn(EnumCreatureType.CREATURE, 20, 1, 5, BiomeDictionary.getBiomes(BiomeDictionary.Type.FOREST))
-//                .build();
-//
-//        registry.registerEntity("human", registree);
 
         return;
     }
@@ -143,17 +116,42 @@ public class GenesisRegistry implements IGenesisRegistry
     {
         for (int i = 0; i < GenesisRegistry.registryObjectList.size(); i++)
         {
-            if (GenesisRegistry.registryObjectList.get(i).entityEntry != null)
+            RegistryObject regobj = registry.registryObjectList.get(i);
+            if (regobj.entityEntry != null)
             {
-                RegistryObject regobj = registry.registryObjectList.get(i);
                 RenderingRegistry.registerEntityRenderingHandler(regobj.entityEntry.getEntityClass(), manager ->
-                    new RenderLiving(manager, new ModelBiped(), 1f) {
-                        @Override
-                        protected ResourceLocation getEntityTexture(Entity entity) {
-                            return new ResourceLocation(regobj.modId + ":" + "textures/entities/" + regobj.name + "/" + regobj.name + ".png");
-                        }
+                    {
+                        RenderGenesisLiving renderGenesisLiving = new RenderGenesisLiving(manager, new ModelPlayer(1.0f, false), 1f) {
+                            @Override
+                            protected ResourceLocation getEntityTexture(Entity entity) {
+                                return new ResourceLocation(regobj.modId + ":" + "textures/entities/" + regobj.name + "/" + regobj.name + ".png");
+                            }
+                        };
+                        regobj.setRender(renderGenesisLiving);
+
+//                        for (Map.Entry<String, ResourceLocation> entry : regobj.entityLayerResourceMap.entrySet() ) {
+//                            String key = entry.getKey();
+//                            ResourceLocation resourceLocation = entry.getValue();
+//
+//
+//                        }
+                        return renderGenesisLiving;
                     }
                 );
+            }
+        }
+    }
+    public static void registerEntityLayerRenderers()
+    {
+        for (int i = 0; i < GenesisRegistry.registryObjectList.size(); i++)
+        {
+            RegistryObject regobj = GenesisRegistry.registryObjectList.get(i);
+            for (Map.Entry<String, ResourceLocation> entry : regobj.entityLayerResourceMap.entrySet())
+            {
+                String key = entry.getKey();
+                ResourceLocation resourceLocation = entry.getValue();
+
+                regobj.renderGenesisLiving.addLayer(new LayerGenesisLiving(regobj.renderGenesisLiving, resourceLocation));
             }
         }
     }
@@ -277,10 +275,19 @@ public class GenesisRegistry implements IGenesisRegistry
         return this;
     }
 
-    //Plants
+    //Entities
     public IGenesisRegistry registerEntity(String name, EntityEntry entityEntry)
     {
         registerContent(new RegistryObject(modId, name, entityEntry));
+        return this;
+    }
+    public IGenesisRegistry registerOverlay(String name, String overlayName)
+    {
+        RegistryObject registryObject = registryObjectHashMap.get(name);
+
+        ResourceLocation re = new ResourceLocation(modId,  "textures/entities/" + name + "/" + name + "_" + overlayName);
+        registryObject.entityLayerResourceMap.put(overlayName, re);
+
         return this;
     }
 

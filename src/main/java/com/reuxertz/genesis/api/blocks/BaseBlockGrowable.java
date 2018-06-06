@@ -66,7 +66,7 @@ public class BaseBlockGrowable extends BlockCrops implements IBaseBlock, ITileEn
         return ((Integer)state.getValue(this.getAgeProperty())).intValue();
     }
 
-    public boolean canBlockSustainGenesisPlant(IBlockState state)
+    public static boolean canBlockSustainGenesisPlant(IBlockState state)
     {
         return state.getBlock() == Blocks.FARMLAND || state.getBlock() == Blocks.DIRT
                 || state.getBlock() == Blocks.GRASS;
