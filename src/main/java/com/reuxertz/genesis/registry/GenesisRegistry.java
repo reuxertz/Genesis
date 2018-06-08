@@ -286,7 +286,7 @@ public class GenesisRegistry implements IGenesisRegistry
     {
         RegistryObject registryObject = registryObjectHashMap.get(name);
 
-        ResourceLocation re = new ResourceLocation(modId,  "textures/entities/" + name + "/" + name + "_" + overlayName);
+        ResourceLocation re = new ResourceLocation(modId,  "textures/entities/" + name + "/" + name + "_" + overlayName + ".png");
         registryObject.entityLayerResourceMap.put(overlayName, re);
 
         return this;

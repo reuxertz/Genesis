@@ -9,7 +9,6 @@ public class SpeciesFeature {
         AdultMass,
     }
 
-
     public FeatureTypes featureType;
     public double value;
 

@@ -33,7 +33,6 @@ public class LayerGenesisLiving<E extends EntityGenesisAnimal> implements LayerR
                 if (textureObject != TextureUtil.MISSING_TEXTURE)
                 {
                     this.renderer.bindTexture(texture);
-
                     this.renderer.getMainModel().render(entity, limbSwing, limbSwingAmount, age, yaw, pitch, scale);
                     this.renderer.setLightmap(entity);
                 }
@@ -44,6 +43,6 @@ public class LayerGenesisLiving<E extends EntityGenesisAnimal> implements LayerR
     @Override
     public boolean shouldCombineTextures()
     {
-        return true;
+        return false;
     }
 }
