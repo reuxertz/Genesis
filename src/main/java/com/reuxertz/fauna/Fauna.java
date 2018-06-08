@@ -1,21 +1,16 @@
 package com.reuxertz.fauna;
 
-import com.reuxertz.genesis.Genesis;
 import com.reuxertz.genesis.api.GenesisPlugin;
 import com.reuxertz.genesis.api.IGenesisPlugin;
 import com.reuxertz.genesis.api.IGenesisRegistry;
 import com.reuxertz.genesis.api.organisms.GeneData;
 import com.reuxertz.genesis.api.organisms.SpeciesFeature;
 import com.reuxertz.genesis.entities.EntityHuman;
-import com.reuxertz.genesis.render.LayerGenesisLiving;
-import com.reuxertz.genesis.render.RenderGenesisLiving;
 import net.minecraft.block.material.MapColor;
-import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.registry.EntityEntryBuilder;
 
-import javax.annotation.Nullable;
 import java.util.Arrays;
 
 @Mod(modid = Fauna.MODID, name = Fauna.NAME, version = Fauna.VERSION, dependencies = "required-after:forge@[14.23.3.2655,)", useMetadata = true)
@@ -54,7 +49,8 @@ public class Fauna implements IGenesisPlugin
                                 new GeneData(GeneData.GeneType.ClutchSizeFactor, 0, 0)))
                 .registerOverlay("human", "eyes")
                 .registerOverlay("human", "hair")
-                .registerOverlay("human", "mouth");
+                .registerOverlay("human", "mouth")
+        ;
 
         //registry.registerEntity("human", registree);
 

@@ -119,9 +119,12 @@ public class GenesisRegistry implements IGenesisRegistry
             RegistryObject regobj = registry.registryObjectList.get(i);
             if (regobj.entityEntry != null)
             {
-                RenderingRegistry.registerEntityRenderingHandler(regobj.entityEntry.getEntityClass(), manager ->
+                RenderingRegistry.registerEntityRenderingHandler(regobj.entityEntry.getEntityClass(),
+                    //new RenderFactoryGenesisLiving(manager, new ModelPlayer(1.0f, false), 1f));
+                        manager ->
                     {
-                        RenderGenesisLiving renderGenesisLiving = new RenderGenesisLiving(manager, new ModelPlayer(1.0f, false), 1f) {
+                        RenderGenesisLiving renderGenesisLiving = new RenderGenesisLiving(manager, regobj.name, new ModelPlayer(1.0f, false), 1f) {
+
                             @Override
                             protected ResourceLocation getEntityTexture(Entity entity) {
                                 return new ResourceLocation(regobj.modId + ":" + "textures/entities/" + regobj.name + "/" + regobj.name + ".png");
@@ -132,9 +135,7 @@ public class GenesisRegistry implements IGenesisRegistry
 //                        for (Map.Entry<String, ResourceLocation> entry : regobj.entityLayerResourceMap.entrySet() ) {
 //                            String key = entry.getKey();
 //                            ResourceLocation resourceLocation = entry.getValue();
-//
-//
-//                        }
+
                         return renderGenesisLiving;
                     }
                 );

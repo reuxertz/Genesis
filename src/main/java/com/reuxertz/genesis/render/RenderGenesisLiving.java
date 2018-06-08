@@ -1,17 +1,28 @@
 package com.reuxertz.genesis.render;
 
+import com.reuxertz.genesis.Genesis;
+import com.reuxertz.genesis.registry.RegistryObject;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.util.ResourceLocation;
+
+import java.util.Map;
 
 public abstract class RenderGenesisLiving extends RenderLiving {
 
-    public RenderGenesisLiving(RenderManager renderManager, ModelBase modelBase, float size)
+    public RenderGenesisLiving(RenderManager renderManager, String name, ModelBase modelBase, float size)
     {
         super(renderManager, modelBase, size);
 
-        //if(dinosaur.getOverlays()[i].equalsIgnoreCase("mouth"))
-        //    this.addLayer(new LayerGenesisLiving(this));
+        RegistryObject regobj = Genesis.registry.getRegistryObject(name);
+        for (Map.Entry<String, ResourceLocation> entry : regobj.entityLayerResourceMap.entrySet())
+        {
+            String key = entry.getKey();
+            ResourceLocation resourceLocation = entry.getValue();
+
+            addLayer(new LayerGenesisLiving(this, resourceLocation));
+        }
     }
 
 

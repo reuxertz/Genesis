@@ -36,10 +36,10 @@ public class ClientProxy extends CommonProxy {
 
     @Override
     public void init(FMLInitializationEvent event) {
-
         super.init(event);
 
-        GenesisRegistry.registerEntityLayerRenderers();
+        //GenesisRegistry.registerEntityLayerRenderers();
+
 
 //        for (int i = 0; i < Genesis.registry.)
 //            for (Map.Entry<String, ResourceLocation> entry : regobj.entityLayerResourceMap.entrySet() ) {
