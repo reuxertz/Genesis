@@ -96,12 +96,14 @@ public class BaseBlockGrowable extends BlockCrops implements IBaseBlock, ITileEn
         this.checkAndDropBlock(worldIn, pos, state);
 
         TileEntityBaseCrop te = (TileEntityBaseCrop)worldIn.getTileEntity(pos);
-        //te.getOrganism().tick(worldIn);
+        te.getOrganism().tick(worldIn);
+        te.refreshState();
 
         if (!worldIn.isAreaLoaded(pos, 1)) return; // Forge: prevent loading unloaded chunks when checking neighbor's light
         if (worldIn.getLightFromNeighbors(pos.up()) >= 9 && false)
         {
             int i = this.getAge(state);
+            worldIn.setBlockState(pos, this.withAge(i + 1));
 
             if (i < this.getMaxAge())
             {
@@ -109,8 +111,8 @@ public class BaseBlockGrowable extends BlockCrops implements IBaseBlock, ITileEn
 
                 if(net.minecraftforge.common.ForgeHooks.onCropsGrowPre(worldIn, pos, state, rand.nextInt((int)(25.0F / f) + 1) == 0))
                 {
-                    worldIn.setBlockState(pos, this.withAge(i + 1));
-                    net.minecraftforge.common.ForgeHooks.onCropsGrowPost(worldIn, pos, state, worldIn.getBlockState(pos));
+                    //worldIn.setBlockState(pos, this.withAge(i + 1));
+                    //net.minecraftforge.common.ForgeHooks.onCropsGrowPost(worldIn, pos, state, worldIn.getBlockState(pos));
                 }
             }
         }
@@ -145,14 +147,34 @@ public class BaseBlockGrowable extends BlockCrops implements IBaseBlock, ITileEn
         if (ah == hand)
         {
             ItemStack is = playerIn.getHeldItem(hand);
-            if (is == ItemStack.EMPTY)
+            TileEntityBaseCrop tileEntityBaseCrop = (TileEntityBaseCrop)worldIn.getTileEntity(pos);
+
+            if (is.isEmpty() || is == ItemStack.EMPTY)
             {
-                TileEntityBaseCrop tileEntityBaseCrop = (TileEntityBaseCrop)worldIn.getTileEntity(pos);
                 int newbornCount = tileEntityBaseCrop.getOrganism().removeNewborn();
+                if (newbornCount == 0)
+                    return false;
 
                 ItemStack newbornItemStack = new ItemStack(tileEntityBaseCrop.getRegistryObject().item, newbornCount);
                 playerIn.setHeldItem(hand, newbornItemStack);
 
+                tileEntityBaseCrop.refreshState();
+                return true;
+            }
+
+            if (is.getItem() == tileEntityBaseCrop.getRegistryObject().item)
+            {
+                int newbornCount = tileEntityBaseCrop.getOrganism().removeNewborn();
+                if (newbornCount == 0)
+                    return false;
+
+                if (is.getCount() + newbornCount <= is.getMaxStackSize())
+                {
+                    is.grow(newbornCount);
+                    playerIn.setHeldItem(hand, is);
+                }
+
+                tileEntityBaseCrop.refreshState();
                 return true;
             }
         }

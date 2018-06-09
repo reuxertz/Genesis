@@ -5,6 +5,7 @@ import com.reuxertz.genesis.api.items.IBaseItem;
 import com.reuxertz.genesis.render.LayerGenesisLiving;
 import com.reuxertz.genesis.render.RenderGenesisLiving;
 import net.minecraft.block.Block;
+import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
@@ -21,6 +22,7 @@ public class RegistryObject {
     public EntityEntry entityEntry;
     public Map<String, ResourceLocation> entityLayerResourceMap = new HashMap<>();
     public RenderGenesisLiving renderGenesisLiving;
+    public ModelBase entityModel;
 
     public Block block;
     public Class tileEntityClass;
@@ -76,10 +78,11 @@ public class RegistryObject {
         this(modId, name, block);
         this.tileEntityClass = tileEntityClass;
     }
-    public RegistryObject(String modId, String name, EntityEntry entry)
+    public RegistryObject(String modId, String name, EntityEntry entry, ModelBase modelbase)
     {
         this(modId, name);
         this.entityEntry = entry;
+        this.entityModel = modelbase;
     }
 
     public void registerItem()

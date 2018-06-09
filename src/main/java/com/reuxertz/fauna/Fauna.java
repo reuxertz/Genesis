@@ -7,6 +7,7 @@ import com.reuxertz.genesis.api.organisms.GeneData;
 import com.reuxertz.genesis.api.organisms.SpeciesFeature;
 import com.reuxertz.genesis.entities.EntityHuman;
 import net.minecraft.block.material.MapColor;
+import net.minecraft.client.model.ModelPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.registry.EntityEntryBuilder;
@@ -36,7 +37,7 @@ public class Fauna implements IGenesisPlugin
                 .tracker(80, 3, false)
                 .egg(MapColor.BROWN.colorValue, MapColor.GOLD.colorValue)
                 //.spawn(EnumCreatureType.CREATURE, 20, 1, 5, BiomeDictionary.getBiomes(BiomeDictionary.Type.FOREST))
-                .build())
+                .build(), new ModelPlayer(1.0f, false))
                 .registerSpecies("human",
                         Arrays.asList(
                                 new SpeciesFeature(SpeciesFeature.FeatureTypes.AdultMass, 70000),

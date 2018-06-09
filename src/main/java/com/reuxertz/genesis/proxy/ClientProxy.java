@@ -31,7 +31,6 @@ public class ClientProxy extends CommonProxy {
         super.preInit(event);
 
         Genesis.registry.registerEntityRenderers();
-        //RenderingRegistry.registerEntityRenderingHandler(EntityHuman.class, RenderRegistry.RenderFactoryEntityHuman.INSTANCE);
     }
 
     @Override

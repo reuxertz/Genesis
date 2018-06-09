@@ -14,6 +14,7 @@ import com.reuxertz.genesis.render.LayerGenesisLiving;
 import com.reuxertz.genesis.render.RenderGenesisLiving;
 import com.reuxertz.genesis.tileentity.TileEntityBaseCrop;
 import net.minecraft.block.Block;
+import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelPlayer;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
@@ -120,10 +121,9 @@ public class GenesisRegistry implements IGenesisRegistry
             if (regobj.entityEntry != null)
             {
                 RenderingRegistry.registerEntityRenderingHandler(regobj.entityEntry.getEntityClass(),
-                    //new RenderFactoryGenesisLiving(manager, new ModelPlayer(1.0f, false), 1f));
                         manager ->
                     {
-                        RenderGenesisLiving renderGenesisLiving = new RenderGenesisLiving(manager, regobj.name, new ModelPlayer(1.0f, false), 1f) {
+                        RenderGenesisLiving renderGenesisLiving = new RenderGenesisLiving(manager, regobj.name, regobj.entityModel, 1f) {
 
                             @Override
                             protected ResourceLocation getEntityTexture(Entity entity) {
@@ -131,28 +131,9 @@ public class GenesisRegistry implements IGenesisRegistry
                             }
                         };
                         regobj.setRender(renderGenesisLiving);
-
-//                        for (Map.Entry<String, ResourceLocation> entry : regobj.entityLayerResourceMap.entrySet() ) {
-//                            String key = entry.getKey();
-//                            ResourceLocation resourceLocation = entry.getValue();
-
                         return renderGenesisLiving;
                     }
                 );
-            }
-        }
-    }
-    public static void registerEntityLayerRenderers()
-    {
-        for (int i = 0; i < GenesisRegistry.registryObjectList.size(); i++)
-        {
-            RegistryObject regobj = GenesisRegistry.registryObjectList.get(i);
-            for (Map.Entry<String, ResourceLocation> entry : regobj.entityLayerResourceMap.entrySet())
-            {
-                String key = entry.getKey();
-                ResourceLocation resourceLocation = entry.getValue();
-
-                regobj.renderGenesisLiving.addLayer(new LayerGenesisLiving(regobj.renderGenesisLiving, resourceLocation));
             }
         }
     }
@@ -277,9 +258,9 @@ public class GenesisRegistry implements IGenesisRegistry
     }
 
     //Entities
-    public IGenesisRegistry registerEntity(String name, EntityEntry entityEntry)
+    public IGenesisRegistry registerEntity(String name, EntityEntry entityEntry, ModelBase modelBase)
     {
-        registerContent(new RegistryObject(modId, name, entityEntry));
+        registerContent(new RegistryObject(modId, name, entityEntry, modelBase));
         return this;
     }
     public IGenesisRegistry registerOverlay(String name, String overlayName)

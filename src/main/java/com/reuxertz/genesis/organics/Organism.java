@@ -61,15 +61,12 @@ public class Organism {
     public double getNewBornPotential2(double newBornOverride) { return getExcessEnergy() / (
             newBornOverride * EnergyHelper.getEnergy(newBornMassValue) + EnergyHelper.getEnergyStorageCapacity(newBornMassValue)); }
     public boolean isDead() { return energy <= 0 || mass <= 0; }
-    public double getGrowthStateByMass()
+    public double getGrowthStateByTotalMass()
     {
 //        SpeciesFeature speciesAdultMass = SpeciesRegistry.getSpeciesFeature(name, SpeciesFeature.FeatureTypes.AdultMass);
 //        GeneData speciesAdultMassGene = genome.getGene(GeneData.GeneType.AdultMassFactor);
 
-        double growthStage = mass / adultMassValue;
-        if (growthStage > 1)
-            growthStage = 1;
-
+        double growthStage = (mass + newbornCount * newBornMassValue) / adultMassValue;
         return growthStage;
     }
 
@@ -110,7 +107,7 @@ public class Organism {
 
     public int removeNewborn()
     {
-        if (newbornCount > 1) {
+        if (newbornCount >= 1) {
             newbornCount--;
             return 1;
         }

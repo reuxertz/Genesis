@@ -44,7 +44,7 @@ public class TileEntityBaseCrop extends BaseTileEntity implements
 
     @Override
     public void update() {
-        getOrganism().tick(world);
+        //getOrganism().tick(world);
     }
 
     @Override
@@ -125,8 +125,13 @@ public class TileEntityBaseCrop extends BaseTileEntity implements
             return;
         }
 
-        double growthStage = organism.getGrowthStateByMass();
-        int growthStageInt = (int)(growthStage * 7.0);
+        double growthStage = organism.getGrowthStateByTotalMass();
+        growthStage = growthStage * 6.99;
+
+
+        if (growthStage > 7)
+            growthStage = 7;
+        int growthStageInt = (int)growthStage;
 
         IBlockState state = world.getBlockState(pos);
         int actualGrowthStage = ((BaseBlockGrowable)state.getBlock()).getAge(state);

@@ -42,7 +42,7 @@ public class Genesis
 
         GenesisApiHandler.loadPlugins(event.getAsmData());
 
-        MinecraftForge.EVENT_BUS.register(ForgeHandler.class);
+        MinecraftForge.EVENT_BUS.register(new ForgeHandler());
 
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityGroundItem.class, new RendererGroundItem());
 

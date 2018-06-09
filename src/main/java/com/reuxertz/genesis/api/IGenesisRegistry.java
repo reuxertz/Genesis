@@ -4,6 +4,7 @@ import com.reuxertz.genesis.api.organisms.GeneData;
 import com.reuxertz.genesis.api.organisms.SpeciesFeature;
 import com.reuxertz.genesis.registry.RegistryObject;
 import com.reuxertz.genesis.render.LayerGenesisLiving;
+import net.minecraft.client.model.ModelBase;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 
@@ -27,7 +28,7 @@ public interface IGenesisRegistry {
     IGenesisRegistry registerCrop(String name);
 
     //Entity registers
-    IGenesisRegistry registerEntity(String name, EntityEntry entityEntry);
+    IGenesisRegistry registerEntity(String name, EntityEntry entityEntry, ModelBase modelBase);
     IGenesisRegistry registerOverlay(String name, String overlayName);
 
     //Ecosystem registers
