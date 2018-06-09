@@ -2,6 +2,7 @@ package com.reuxertz.genesis.organics;
 
 import com.reuxertz.genesis.api.organisms.GeneData;
 import com.reuxertz.genesis.api.organisms.SpeciesFeature;
+import com.reuxertz.genesis.tileentity.TileEntityBaseCrop;
 import com.reuxertz.genesis.util.EnergyHelper;
 import com.reuxertz.genesis.util.MathHelper;
 import com.reuxertz.genesis.util.TickCounter;
@@ -26,29 +27,29 @@ public class Organism {
 
     protected double mass;
     protected double energy;
+    protected double newbornCount;
 
     protected double growthRateValue;
     protected double adultMassValue;
     protected double newBornMassValue;
     protected double clutchSizeValue;
 
+    public TickCounter getTickCounter() { return tickCounter; }
+
     public void addEnergy(double energy)
     {
         this.energy += energy;
     }
-
     public void setOrganismContainer(IOrganismContainer organismContainer)
     {
         this.organismContainer = organismContainer;
     }
 
-    public TickCounter getTickCounter() { return tickCounter; }
-
-    public double energy()
+    public double getEnergy()
     {
         return energy;
     }
-    public double excessEnergy()
+    public double getExcessEnergy()
     {
         double rawExcessEnergy = energy - EnergyHelper.getEnergyStorageCapacity(mass);
         if (rawExcessEnergy < 0)
@@ -57,6 +58,8 @@ public class Organism {
             return rawExcessEnergy;
     }
     public double getMass() { return mass; }
+    public double getNewBornPotential2(double newBornOverride) { return getExcessEnergy() / (
+            newBornOverride * EnergyHelper.getEnergy(newBornMassValue) + EnergyHelper.getEnergyStorageCapacity(newBornMassValue)); }
     public boolean isDead() { return energy <= 0 || mass <= 0; }
     public double getGrowthStateByMass()
     {
@@ -99,32 +102,43 @@ public class Organism {
 
         if (tickCount > 0) {
             handleMetabolism(world);
-            for (int i = 0; i < tickCount; i++)
-            {
-
-            }
-
             handleReproduction();
             organismContainer.refreshState();
         }
 
     }
 
+    public int removeNewborn()
+    {
+        if (newbornCount > 1) {
+            newbornCount--;
+            return 1;
+        }
+        return 0;
+    }
+
     public boolean handleReproduction()
     {
-        double excessEnergy = excessEnergy();
-        if (excessEnergy > 0)
-        {
-            double reprEnergy = clutchSizeValue *
-                    (EnergyHelper.getEnergyContent(newBornMassValue) + EnergyHelper.getEnergyStorageCapacity(newBornMassValue));
-            if (reprEnergy > excessEnergy)
-                return false;
+        double newBornPotential = (getExcessEnergy() / newBornMassValue);
+        if (newBornPotential < 1)
+            return false;
 
-            for (int i = 0; i < clutchSizeValue; i++)
-                organismContainer.handleReproduction();
+        boolean loseEnergy = true;
+        if (newbornCount < clutchSizeValue)
+            newbornCount++;
+        else
+            loseEnergy = organismContainer.handleReproduction();
+
+        if (loseEnergy) {
+
+            double nbmv = EnergyHelper.getEnergy(newBornMassValue);
+            double nbmvsc = EnergyHelper.getEnergyStorageCapacity(newBornMassValue);
+
+            double parentEnergyLoss = -1.0 * (nbmv + nbmvsc);
+            addEnergy(parentEnergyLoss);
         }
 
-        return false;
+        return true;
     }
 
     public void handleMetabolism(World world)
@@ -152,7 +166,7 @@ public class Organism {
         mass += growthEnergy * EnergyStorageDensityPerGram;
 
         //Handle Excess Energy
-        double excessEnergy = excessEnergy();
+        double excessEnergy = getExcessEnergy();
         if (excessEnergy > 0)
         {
             double excessLossFactor = MathHelper.Sigmoid(excessEnergy / adultMassValue, 1.0);
@@ -174,7 +188,8 @@ public class Organism {
 
         nbt.setString("name", name);
         nbt.setDouble("mass", mass);
-        nbt.setDouble("energy", energy);
+        nbt.setDouble("getEnergy", energy);
+        nbt.setDouble("newbornCount", newbornCount);
     }
 
     public static Organism readFromNBT(IOrganismContainer organismContainer, NBTTagCompound nbt)
@@ -186,7 +201,8 @@ public class Organism {
         organism.setOrganismContainer(organismContainer);
 
         organism.mass = nbt.getDouble("mass");
-        organism.energy = nbt.getDouble("energy");
+        organism.energy = nbt.getDouble("getEnergy");
+        organism.newbornCount = nbt.getDouble("newbornCount");
 
         return organism;
     }

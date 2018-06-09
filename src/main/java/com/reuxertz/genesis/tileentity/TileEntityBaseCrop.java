@@ -1,8 +1,10 @@
 package com.reuxertz.genesis.tileentity;
 
+import com.reuxertz.genesis.Genesis;
 import com.reuxertz.genesis.api.blocks.BaseBlockGrowable;
 import com.reuxertz.genesis.organics.IOrganismContainer;
 import com.reuxertz.genesis.organics.Organism;
+import com.reuxertz.genesis.registry.RegistryObject;
 import com.reuxertz.genesis.util.BlockHelper;
 import com.reuxertz.genesis.util.EnergyHelper;
 import com.reuxertz.genesis.util.RandomHelper;
@@ -21,18 +23,23 @@ public class TileEntityBaseCrop extends BaseTileEntity implements
         ITickable,
         IOrganismContainer  {
 
+    protected RegistryObject registryObject;
     protected Organism organism;
+    protected String name;
 
     public World getWorld() { return world; }
-
+    public RegistryObject getRegistryObject() { return registryObject; }
     public Organism getOrganism() { return organism; }
 
     public TileEntityBaseCrop()
     {
     }
-    public TileEntityBaseCrop(Organism organism)
+    public TileEntityBaseCrop(Organism organism, String name)
     {
         this.organism = organism;
+        this.name = name;
+
+        registryObject = Genesis.registry.getRegistryObject(name);
     }
 
     @Override
@@ -43,9 +50,10 @@ public class TileEntityBaseCrop extends BaseTileEntity implements
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound)
     {
-        boolean b = world.isRemote;
         NBTTagCompound nbt = super.writeToNBT(compound);
         organism.writeToNBT(nbt);
+
+        nbt.setString("name", name);
 
         return nbt;
     }
@@ -54,6 +62,10 @@ public class TileEntityBaseCrop extends BaseTileEntity implements
     public void readFromNBT(NBTTagCompound nbt) {
         super.readFromNBT(nbt);
         organism = Organism.readFromNBT(this, nbt);
+
+        name = nbt.getString("name");
+
+        registryObject = Genesis.registry.getRegistryObject(name);
     }
 
     @Override
@@ -98,16 +110,10 @@ public class TileEntityBaseCrop extends BaseTileEntity implements
         IBlockState topBlock = world.getBlockState(randBlockPos.up());
 
         if (parentBlock.canBlockSustainGenesisPlant(block) && topBlock.getBlock() == Blocks.AIR) {
+
             world.setBlockState(randBlockPos.up(), parentBlock.getDefaultState());
-
-            TileEntityBaseCrop tileEntityBaseCrop = (TileEntityBaseCrop)world.getTileEntity(randBlockPos.up());
-
-            double parentEnergyLoss = -1.0 * (EnergyHelper.getEnergyContent(tileEntityBaseCrop.organism.getMass()) + tileEntityBaseCrop.organism.energy());
-            organism.addEnergy(parentEnergyLoss);
-
             return true;
         }
-
 
         return false;
     }
@@ -128,8 +134,6 @@ public class TileEntityBaseCrop extends BaseTileEntity implements
         {
             if (actualGrowthStage != growthStageInt && actualGrowthStage < 8)
                 world.setBlockState(pos, ((BlockCrops)state.getBlock()).withAge(growthStageInt));
-            else
-                growthStage = growthStage;
 
             net.minecraftforge.common.ForgeHooks.onCropsGrowPost(world, pos, state, world.getBlockState(pos));
         }

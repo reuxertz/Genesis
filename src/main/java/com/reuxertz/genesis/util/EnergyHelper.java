@@ -19,13 +19,18 @@ public class EnergyHelper {
         return value / (20.0 * 60.0 * 20.0);
     }
 
-    public static double getEnergyContent(double mass)
+    public static double getMass(double energy)
+    {
+        return energy / EnergyContentPerGram;
+    }
+
+    public static double getEnergy(double mass)
     {
         return mass * EnergyContentPerGram;
     }
     public static double getEnergyLossPerGramDay(double mass)
     {
-        return Math.pow(getEnergyContent(mass), EnergyLossToGramExponent) / mass;
+        return Math.pow(getEnergy(mass), EnergyLossToGramExponent) / mass;
     }
     public static double getEnergyLossPerGramTick(double mass)
     {

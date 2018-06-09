@@ -12,15 +12,20 @@ import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nullable;
 import java.util.Random;
 
 public class BaseBlockGrowable extends BlockCrops implements IBaseBlock, ITileEntityProvider
@@ -28,27 +33,6 @@ public class BaseBlockGrowable extends BlockCrops implements IBaseBlock, ITileEn
     protected String name;
     protected Item seed;
     protected Item crop;
-
-    public BaseBlockGrowable(String name) {
-        this(name, CreativeTabs.MISC);
-    }
-    public BaseBlockGrowable(String name, CreativeTabs tab) {
-        super();
-        this.name = name;
-        setCreativeTab(tab);
-
-    }
-
-    public BaseBlockGrowable setSeed(Item seed)
-    {
-        this.seed = seed;
-        return this;
-    }
-    public BaseBlockGrowable setCrop(Item crop)
-    {
-        this.crop = crop;
-        return this;
-    }
 
     @Override
     protected Item getSeed() {
@@ -76,6 +60,27 @@ public class BaseBlockGrowable extends BlockCrops implements IBaseBlock, ITileEn
     protected boolean canSustainBush(IBlockState state)
     {
         return canBlockSustainGenesisPlant(state);
+    }
+
+    public BaseBlockGrowable(String name) {
+        this(name, CreativeTabs.MISC);
+    }
+    public BaseBlockGrowable(String name, CreativeTabs tab) {
+        super();
+        this.name = name;
+        setCreativeTab(tab);
+
+    }
+
+    public BaseBlockGrowable setSeed(Item seed)
+    {
+        this.seed = seed;
+        return this;
+    }
+    public BaseBlockGrowable setCrop(Item crop)
+    {
+        this.crop = crop;
+        return this;
     }
 
     @SideOnly(Side.CLIENT)
@@ -125,12 +130,35 @@ public class BaseBlockGrowable extends BlockCrops implements IBaseBlock, ITileEn
         Genome g = SpeciesRegistry.getSpeciesGenome(shortName);
 
         Organism o = new Organism(shortName, g, 10);
-        TileEntityBaseCrop newTileEntity = new TileEntityBaseCrop(o);
+        TileEntityBaseCrop newTileEntity = new TileEntityBaseCrop(o, shortName);
 
         o.addEnergy(o.getMass());
         o.setOrganismContainer(newTileEntity);
 
         return newTileEntity;
+    }
+
+    @Override
+    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
+    {
+        EnumHand ah = playerIn.getActiveHand();
+        if (ah == hand)
+        {
+            ItemStack is = playerIn.getHeldItem(hand);
+            if (is == ItemStack.EMPTY)
+            {
+                TileEntityBaseCrop tileEntityBaseCrop = (TileEntityBaseCrop)worldIn.getTileEntity(pos);
+                int newbornCount = tileEntityBaseCrop.getOrganism().removeNewborn();
+
+                ItemStack newbornItemStack = new ItemStack(tileEntityBaseCrop.getRegistryObject().item, newbornCount);
+                playerIn.setHeldItem(hand, newbornItemStack);
+
+                return true;
+            }
+        }
+
+
+        return false;
     }
 
 //    @Override

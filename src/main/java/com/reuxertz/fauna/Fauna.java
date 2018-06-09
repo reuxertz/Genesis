@@ -41,7 +41,10 @@ public class Fauna implements IGenesisPlugin
                         Arrays.asList(
                                 new SpeciesFeature(SpeciesFeature.FeatureTypes.AdultMass, 70000),
                                 new SpeciesFeature(SpeciesFeature.FeatureTypes.NewbornMass, 3500),
-                                new SpeciesFeature(SpeciesFeature.FeatureTypes.ClutchSize, 1.01)),
+                                new SpeciesFeature(SpeciesFeature.FeatureTypes.ClutchSize, 1.01),
+                                new SpeciesFeature(SpeciesFeature.FeatureTypes.Layer, "eyes", 1),
+                                new SpeciesFeature(SpeciesFeature.FeatureTypes.Layer, "hair", 1),
+                                new SpeciesFeature(SpeciesFeature.FeatureTypes.Layer, "mouth", 1)),
                         Arrays.asList(
                                 new GeneData(GeneData.GeneType.AdultMassFactor, 0, 0),
                                 new GeneData(GeneData.GeneType.GrowthFactor, 0, 0),
