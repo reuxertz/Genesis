@@ -14,28 +14,37 @@ public class Genome
     public List<GeneData> expressedGenes;
     public Map<GeneData.GeneType, GeneData> expressedGenesMap = new HashMap<>();
 
+    public void setSequence(String sequence1, String sequence2)
+    {
+        this.sequence1 = sequence1;
+        this.sequence2 = sequence2;
+        Translate();
+    }
+    public void setSequence(String sequence) {
+        setSequence(sequence, sequence);
+    }
+    public void setSequence(NBTTagCompound nbtTagCompound)
+    {
+        String s1 = nbtTagCompound.getString("sequence1");
+        String s2 = nbtTagCompound.getString("sequence2");
+        setSequence(s1, s2);
+    }
+
     public Genome(String sequence)
     {
         this(sequence, sequence);
     }
     public Genome(String sequence1, String sequence2)
     {
-        this.sequence1 = sequence1;
-        this.sequence2 = sequence2;
-
-        Translate();
+        setSequence(sequence1, sequence2);
     }
-
     public Genome(List<GeneData> genes)
     {
         String sequence = "";
         for (int i = 0; i < genes.size(); i++)
             sequence += GeneHelper.getGeneString(genes.get(i));
 
-        sequence1 = sequence;
-        sequence2 = sequence;
-
-        Translate();
+        setSequence(sequence);
     }
 
     public void Translate()

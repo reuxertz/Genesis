@@ -1,6 +1,8 @@
 package com.reuxertz.genesis.api.items;
 
 import com.reuxertz.genesis.api.blocks.BaseBlockGrowable;
+import com.reuxertz.genesis.organics.GenomeHelper;
+import com.reuxertz.genesis.tileentity.TileEntityBaseCrop;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.BlockCrops;
 import net.minecraft.block.state.IBlockState;
@@ -47,7 +49,11 @@ public class BaseCropSeed extends ItemSeeds implements IBaseItem {
         if (facing == EnumFacing.UP && cpe && csp &&
                 worldIn.isAirBlock(pos.up()))
         {
+            GenomeHelper.validateGeneticsNBT(itemstack);
+
             worldIn.setBlockState(pos.up(), this.blockCrop.getDefaultState());
+            TileEntityBaseCrop tileEntityBaseCrop = (TileEntityBaseCrop)worldIn.getTileEntity(pos.up());
+            tileEntityBaseCrop.getOrganism().getGenome().setSequence(itemstack.getTagCompound().getString(GenomeHelper.NBTGenomeTag));
 
             if (player instanceof EntityPlayerMP)
             {
@@ -62,23 +68,16 @@ public class BaseCropSeed extends ItemSeeds implements IBaseItem {
             return EnumActionResult.FAIL;
         }
     }
-//
-//    @Override
-//    public net.minecraftforge.common.EnumPlantType getPlantType(net.minecraft.world.IBlockAccess world, BlockPos pos)
-//    {
-//        return this.crops == net.minecraft.init.Blocks.NETHER_WART ? net.minecraftforge.common.EnumPlantType.Nether : net.minecraftforge.common.EnumPlantType.Crop;
-//    }
-//
-//    @Override
-//    public net.minecraft.blocks.state.IBlockState getPlant(net.minecraft.world.IBlockAccess world, BlockPos pos)
-//    {
-//        return this.crops.getDefaultState();
-//    }
 
     @SideOnly(Side.CLIENT)
     public void initModel() {
 
         ModelResourceLocation normal = new ModelResourceLocation(getRegistryName(), "inventory");
         ModelLoader.setCustomModelResourceLocation(this, 0, normal);
+    }
+
+    public void validateGenetics()
+    {
+
     }
 }

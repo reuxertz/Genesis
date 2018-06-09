@@ -19,6 +19,7 @@ import net.minecraft.client.model.ModelPlayer;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
@@ -41,10 +42,20 @@ import static com.reuxertz.genesis.Genesis.registry;
 public class GenesisRegistry implements IGenesisRegistry
 {
     private static Map<String, RegistryObject> registryObjectHashMap = new HashMap<>();
+    private static Map<Item, String> registryItemHashMap = new HashMap<>();
     private static List<RegistryObject> registryObjectList = new ArrayList<>();
     private static List<String> registeredModIds = new ArrayList<>();
 
     private final String modId;
+
+    public RegistryObject getRegistryObject(String name)
+    {
+        return registryObjectHashMap.get(name);
+    }
+    public RegistryObject getRegistryObject(Item item)
+    {
+        return registryObjectHashMap.get(registryItemHashMap.get(item));
+    }
 
     public GenesisRegistry(String modId) {
         this.modId = modId;
@@ -121,14 +132,12 @@ public class GenesisRegistry implements IGenesisRegistry
             if (regobj.entityEntry != null)
             {
                 RenderingRegistry.registerEntityRenderingHandler(regobj.entityEntry.getEntityClass(),
-                        manager ->
-                    {
-                        RenderGenesisLiving renderGenesisLiving = new RenderGenesisLiving(manager, regobj.name, regobj.entityModel, 1f) {
-
-                            @Override
-                            protected ResourceLocation getEntityTexture(Entity entity) {
-                                return new ResourceLocation(regobj.modId + ":" + "textures/entities/" + regobj.name + "/" + regobj.name + ".png");
-                            }
+                        manager -> {
+                            RenderGenesisLiving renderGenesisLiving = new RenderGenesisLiving(manager, regobj.name, regobj.entityModel, 1f) {
+                                @Override
+                                protected ResourceLocation getEntityTexture(Entity entity) {
+                                    return new ResourceLocation(regobj.modId + ":" + "textures/entities/" + regobj.name + "/" + regobj.name + ".png");
+                                }
                         };
                         regobj.setRender(renderGenesisLiving);
                         return renderGenesisLiving;
@@ -147,11 +156,6 @@ public class GenesisRegistry implements IGenesisRegistry
         return;
     }
 
-    public RegistryObject getRegistryObject(String name)
-    {
-        return registryObjectHashMap.get(name);
-    }
-
     public IGenesisRegistry registerContent(RegistryObject registryObject)
     {
         if (registryObjectHashMap.keySet().contains(registryObject.name) ||
@@ -164,6 +168,9 @@ public class GenesisRegistry implements IGenesisRegistry
 
         if (!registeredModIds.contains(registryObject.modId))
             registeredModIds.add(registryObject.modId);
+
+        if (registryObject.item != null)
+            registryItemHashMap.put(registryObject.item, registryObject.name);
 
         return this;
     }
@@ -243,7 +250,7 @@ public class GenesisRegistry implements IGenesisRegistry
     public IGenesisRegistry registerCrop(String name)
     {
         BaseBlockGrowable blockCrop = new BaseBlockGrowable("crop_" + name);
-        Item crop = new BaseItem(name);
+        BaseCropSeed crop = new BaseCropSeed(name, blockCrop);
         BaseCropSeed seed = new BaseCropSeed("seed_" + name, blockCrop);
 
         registerContent(new RegistryObject(modId, name, crop));
@@ -252,6 +259,7 @@ public class GenesisRegistry implements IGenesisRegistry
         registerContent(new RegistryObject(modId, "crop_" + name, blockCrop));
 
         seed.setBlockCrop(blockCrop);
+        crop.setBlockCrop(blockCrop);
         blockCrop.setSeed(seed).setCrop(crop);
 
         return this;

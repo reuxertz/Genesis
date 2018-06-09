@@ -28,7 +28,7 @@ public class SpeciesRegistry {
         }
     }
 
-    public static HashMap<String, SpeciesRegistryObject> speciesRegistry = new HashMap<>();
+    private static final HashMap<String, SpeciesRegistryObject> speciesRegistry = new HashMap<>();
 
     public static void registerSpecies(String speciesName, List<SpeciesFeature> speciesData, List<GeneData> geneData)
     {

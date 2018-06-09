@@ -2,6 +2,7 @@ package com.reuxertz.genesis.tileentity;
 
 import com.reuxertz.genesis.Genesis;
 import com.reuxertz.genesis.api.blocks.BaseBlockGrowable;
+import com.reuxertz.genesis.organics.Genome;
 import com.reuxertz.genesis.organics.IOrganismContainer;
 import com.reuxertz.genesis.organics.Organism;
 import com.reuxertz.genesis.registry.RegistryObject;
@@ -12,6 +13,8 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockCrops;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
@@ -44,7 +47,7 @@ public class TileEntityBaseCrop extends BaseTileEntity implements
 
     @Override
     public void update() {
-        //getOrganism().tick(world);
+        getOrganism().tick(world);
     }
 
     @Override
@@ -126,11 +129,14 @@ public class TileEntityBaseCrop extends BaseTileEntity implements
         }
 
         double growthStage = organism.getGrowthStateByTotalMass();
-        growthStage = growthStage * 6.99;
-
+        growthStage  = growthStage * 7.0;
 
         if (growthStage > 7)
             growthStage = 7;
+
+        if (organism.getNewbornCount() < 1)
+            growthStage--;
+
         int growthStageInt = (int)growthStage;
 
         IBlockState state = world.getBlockState(pos);

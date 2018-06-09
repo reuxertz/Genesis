@@ -1,10 +1,14 @@
 package com.reuxertz.genesis.organics;
 
+import com.reuxertz.genesis.Genesis;
 import com.reuxertz.genesis.api.organisms.GeneData;
 import com.reuxertz.genesis.api.organisms.SpeciesFeature;
 import com.reuxertz.genesis.registry.SpeciesRegistry;
 import com.reuxertz.genesis.util.MathHelper;
 import com.reuxertz.genesis.util.RandomHelper;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.common.util.Constants;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,6 +18,7 @@ import java.util.Random;
 public class GenomeHelper {
 
     public enum ExpressionType { PseudoLinear, Sigmoid }
+    public static String NBTGenomeTag = "genome";
 
     public static double expressValue(String speciesName, SpeciesFeature.FeatureTypes featureType, Genome genome, GeneData.GeneType geneType, ExpressionType expressionType)
     {
@@ -73,8 +78,6 @@ public class GenomeHelper {
 
         return newGenome;
     }
-
-
     public static List<GeneData> Translate(String genomeSequence)
     {
         List<GeneData> result = new ArrayList<>();
@@ -231,5 +234,30 @@ public class GenomeHelper {
         }
 
         return new ArrayList(resultMap.values());
+    }
+
+    public static boolean validateNBT(ItemStack stack)
+    {
+        if (!stack.hasTagCompound())
+        {
+            stack.setTagCompound(new NBTTagCompound());
+            return false;
+        }
+
+        return true;
+    }
+    public static boolean validateGeneticsNBT(ItemStack stack)
+    {
+        boolean nbtValidation = validateNBT(stack);
+        if (!stack.getTagCompound().hasKey(NBTGenomeTag))
+        {
+            NBTTagCompound nbtGenome = new NBTTagCompound();
+            String name = stack.getItem().getItemStackDisplayName(stack);
+            SpeciesRegistry.getSpeciesGenome(Genesis.registry.getRegistryObject(stack.getItem()).name).writeToNBT(nbtGenome);
+            stack.getTagCompound().setTag(NBTGenomeTag, nbtGenome);
+            return false;
+        }
+
+        return nbtValidation && true;
     }
 }

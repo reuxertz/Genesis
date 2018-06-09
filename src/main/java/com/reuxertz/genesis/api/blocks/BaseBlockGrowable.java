@@ -96,26 +96,26 @@ public class BaseBlockGrowable extends BlockCrops implements IBaseBlock, ITileEn
         this.checkAndDropBlock(worldIn, pos, state);
 
         TileEntityBaseCrop te = (TileEntityBaseCrop)worldIn.getTileEntity(pos);
-        te.getOrganism().tick(worldIn);
-        te.refreshState();
+        //te.getOrganism().tick(worldIn);
+        //te.refreshState();
 
-        if (!worldIn.isAreaLoaded(pos, 1)) return; // Forge: prevent loading unloaded chunks when checking neighbor's light
-        if (worldIn.getLightFromNeighbors(pos.up()) >= 9 && false)
-        {
-            int i = this.getAge(state);
-            worldIn.setBlockState(pos, this.withAge(i + 1));
-
-            if (i < this.getMaxAge())
-            {
-                  float f = getGrowthChance(this, worldIn, pos);
-
-                if(net.minecraftforge.common.ForgeHooks.onCropsGrowPre(worldIn, pos, state, rand.nextInt((int)(25.0F / f) + 1) == 0))
-                {
-                    //worldIn.setBlockState(pos, this.withAge(i + 1));
-                    //net.minecraftforge.common.ForgeHooks.onCropsGrowPost(worldIn, pos, state, worldIn.getBlockState(pos));
-                }
-            }
-        }
+//        if (!worldIn.isAreaLoaded(pos, 1)) return; // Forge: prevent loading unloaded chunks when checking neighbor's light
+//        if (worldIn.getLightFromNeighbors(pos.up()) >= 9 && false)
+//        {
+//            int i = this.getAge(state);
+//            worldIn.setBlockState(pos, this.withAge(i + 1));
+//
+//            if (i < this.getMaxAge())
+//            {
+//                  float f = getGrowthChance(this, worldIn, pos);
+//
+//                if(net.minecraftforge.common.ForgeHooks.onCropsGrowPre(worldIn, pos, state, rand.nextInt((int)(25.0F / f) + 1) == 0))
+//                {
+//                    //worldIn.setBlockState(pos, this.withAge(i + 1));
+//                    //net.minecraftforge.common.ForgeHooks.onCropsGrowPost(worldIn, pos, state, worldIn.getBlockState(pos));
+//                }
+//            }
+//        }
     }
 
     @Override
@@ -155,7 +155,8 @@ public class BaseBlockGrowable extends BlockCrops implements IBaseBlock, ITileEn
                 if (newbornCount == 0)
                     return false;
 
-                ItemStack newbornItemStack = new ItemStack(tileEntityBaseCrop.getRegistryObject().item, newbornCount);
+                Item item = tileEntityBaseCrop.getRegistryObject().item;
+                ItemStack newbornItemStack = new ItemStack(item, newbornCount);
                 playerIn.setHeldItem(hand, newbornItemStack);
 
                 tileEntityBaseCrop.refreshState();

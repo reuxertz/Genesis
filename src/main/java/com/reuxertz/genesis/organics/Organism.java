@@ -35,6 +35,7 @@ public class Organism {
     protected double clutchSizeValue;
 
     public TickCounter getTickCounter() { return tickCounter; }
+    public Genome getGenome() { return genome; }
 
     public void addEnergy(double energy)
     {
@@ -58,8 +59,7 @@ public class Organism {
             return rawExcessEnergy;
     }
     public double getMass() { return mass; }
-    public double getNewBornPotential2(double newBornOverride) { return getExcessEnergy() / (
-            newBornOverride * EnergyHelper.getEnergy(newBornMassValue) + EnergyHelper.getEnergyStorageCapacity(newBornMassValue)); }
+    public double getNewbornCount() { return newbornCount; }
     public boolean isDead() { return energy <= 0 || mass <= 0; }
     public double getGrowthStateByTotalMass()
     {
