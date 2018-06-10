@@ -16,6 +16,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -157,7 +158,9 @@ public class BaseBlockGrowable extends BlockCrops implements IBaseBlock, ITileEn
 
                 Item item = tileEntityBaseCrop.getRegistryObject().item;
                 ItemStack newbornItemStack = new ItemStack(item, newbornCount);
-                GenomeHelper.addGenomeToItemStack(newbornItemStack, tileEntityBaseCrop.getOrganism().getGenome().clone());
+                NBTTagCompound newNBTTagCompound = new NBTTagCompound();
+                newNBTTagCompound = tileEntityBaseCrop.getOrganism().getGenome().writeToNBT(newNBTTagCompound);
+                newbornItemStack.setTagCompound(newNBTTagCompound);
                 playerIn.setHeldItem(hand, newbornItemStack);
 
                 tileEntityBaseCrop.refreshState();
@@ -166,16 +169,24 @@ public class BaseBlockGrowable extends BlockCrops implements IBaseBlock, ITileEn
 
             if (is.getItem() == tileEntityBaseCrop.getRegistryObject().item)
             {
-                double newbornCount = tileEntityBaseCrop.getOrganism().getNewbornCount();
+                int newbornCount = tileEntityBaseCrop.getOrganism().removeNewborn();
                 if (newbornCount == 0)
                     return false;
 
                 if (is.getCount() + newbornCount <= is.getMaxStackSize())
                 {
-                    int newbornCountInt = tileEntityBaseCrop.getOrganism().removeNewborn();
-                    is.grow(newbornCountInt);
-                    GenomeHelper.addGenomeToItemStack(is, tileEntityBaseCrop.getOrganism().getGenome().clone());
-                    playerIn.setHeldItem(hand, is);
+                    Item item = tileEntityBaseCrop.getRegistryObject().item;
+                    ItemStack newbornItemStack = new ItemStack(item, newbornCount);
+                    NBTTagCompound newNBTTagCompound = new NBTTagCompound();
+                    newNBTTagCompound = tileEntityBaseCrop.getOrganism().getGenome().writeToNBT(newNBTTagCompound);
+                    newbornItemStack.setTagCompound(newNBTTagCompound);
+                    playerIn.setHeldItem(hand, newbornItemStack);
+
+
+//                    int newbornCountInt = tileEntityBaseCrop.getOrganism().removeNewborn();
+//                    is.grow(newbornCountInt);
+//                    GenomeHelper.addGenomeToItemStack(is, tileEntityBaseCrop.getOrganism().getGenome().clone());
+//                    playerIn.setHeldItem(hand, is);
                 }
 
                 tileEntityBaseCrop.refreshState();

@@ -53,7 +53,7 @@ public class BaseCropSeed extends ItemSeeds implements IBaseItem {
         {
             worldIn.setBlockState(pos.up(), this.blockCrop.getDefaultState());
             TileEntityBaseCrop tileEntityBaseCrop = (TileEntityBaseCrop)worldIn.getTileEntity(pos.up());
-            Genome genome = GenomeHelper.removeGenomeToItemStack(itemstack, tileEntityBaseCrop.getRegistryObject().name);
+            Genome genome = Genome.readFromNBT(itemstack.getTagCompound());
             tileEntityBaseCrop.getOrganism().getGenome().setSequence(genome.sequence1, genome.sequence2);
             GenomeHelper.validateGenome(tileEntityBaseCrop.getRegistryObject().name, tileEntityBaseCrop.getOrganism().getGenome());
 

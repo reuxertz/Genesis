@@ -262,37 +262,37 @@ public class GenomeHelper {
         return true;
     }
 
-    public static void addGenomeToItemStack(ItemStack stack, Genome genome)
-    {
-        if (!stack.hasTagCompound())
-            stack.setTagCompound(new NBTTagCompound());
-
-        if (!stack.getTagCompound().hasKey("genomeStack"))
-            stack.getTagCompound().setTag("genomeStack", new NBTTagList());
-
-        NBTTagList tagList = stack.getTagCompound().getTagList("genomeStack", 10);
-
-        NBTTagCompound genomeNBT = genome.writeToNBT(new NBTTagCompound());
-        tagList.appendTag(genomeNBT);
-        stack.getTagCompound().setTag("genomeStack", tagList);
-    }
-    public static Genome removeGenomeToItemStack(ItemStack stack, String name)
-    {
-        if (stack.hasTagCompound()) {
-            if (stack.getTagCompound().hasKey("genomeStack"))
-            {
-                NBTTagList list = stack.getTagCompound().getTagList("genomeStack", 10);
-                NBTTagCompound nbtTagCompound = (NBTTagCompound)list.get(list.tagCount() - 1);
-                list.removeTag(list.tagCount() - 1);
-                stack.getTagCompound().setTag("genomeStack", list);
-
-                Genome genome = new Genome(nbtTagCompound.getString(Genome.sequence1Tag), nbtTagCompound.getString(Genome.sequence2Tag));
-                return genome;
-            }
-        }
-
-        Genome speciesGenome = SpeciesRegistry.getSpeciesGenome(name).clone();
-        return speciesGenome;
-
-    }
+//    public static void addGenomeToItemStack(ItemStack stack, Genome genome)
+//    {
+//        if (!stack.hasTagCompound())
+//            stack.setTagCompound(new NBTTagCompound());
+//
+//        if (!stack.getTagCompound().hasKey("genomeStack"))
+//            stack.getTagCompound().setTag("genomeStack", new NBTTagList());
+//
+//        NBTTagList tagList = stack.getTagCompound().getTagList("genomeStack", 10);
+//
+//        NBTTagCompound genomeNBT = genome.writeToNBT(new NBTTagCompound());
+//        tagList.appendTag(genomeNBT);
+//        stack.getTagCompound().setTag("genomeStack", tagList);
+//    }
+//    public static Genome removeGenomeToItemStack(ItemStack stack, String name)
+//    {
+//        if (stack.hasTagCompound()) {
+//            if (stack.getTagCompound().hasKey("genomeStack"))
+//            {
+//                NBTTagList list = stack.getTagCompound().getTagList("genomeStack", 10);
+//                NBTTagCompound nbtTagCompound = (NBTTagCompound)list.get(list.tagCount() - 1);
+//                list.removeTag(list.tagCount() - 1);
+//                stack.getTagCompound().setTag("genomeStack", list);
+//
+//                Genome genome = new Genome(nbtTagCompound.getString(Genome.sequence1Tag), nbtTagCompound.getString(Genome.sequence2Tag));
+//                return genome;
+//            }
+//        }
+//
+//        Genome speciesGenome = SpeciesRegistry.getSpeciesGenome(name).clone();
+//        return speciesGenome;
+//
+//    }
 }

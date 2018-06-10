@@ -22,10 +22,10 @@ public class GenetiCraft implements IGenesisPlugin
         return;
     }
 
-    public String getModID() { return com.reuxertz.fauna.Fauna.MODID; }
+    public String getModID() { return com.reuxertz.geneticraft.GenetiCraft.MODID; }
     public void register(IGenesisRegistry registry)
     {
-        //registry.registerContent()
+        registry.registerItem("syringe");
 
         return;
     }
