@@ -1,0 +1,12 @@
+item.genesis.simpleitem.name=simple item
+
+tile.genesis.simpleblock2.name=simple block
+
+commands.gene.set.succeed=Changed gene of sequence %s position %s, from %s to %s
+commands.gene.set.usuage=/genesis gene set <sequence> <position> <gene>
+commands.gene.set.error.invalidsequence=% is not a valid sequence
+commands.gene.set.error.emptysequence=Sequence %s is empty
+commands.gene.set.error.unknowngene=Unknown Gene %s
+commands.gene.set.error.genomenotfound=Genome not found
+
+commands.gene.show.error.nosequence=No Sequence Found

@@ -1,6 +1,8 @@
 package com.reuxertz.genesis;
 
 import com.reuxertz.genesis.api.IGenesisPlugin;
+import com.reuxertz.genesis.command.CommandGene;
+import com.reuxertz.genesis.command.GenesisCommand;
 import com.reuxertz.genesis.handlers.ForgeHandler;
 import com.reuxertz.genesis.internal.GenesisApiHandler;
 import com.reuxertz.genesis.proxy.CommonProxy;
@@ -200,6 +202,6 @@ public class Genesis
 
     @Mod.EventHandler
     public void serverLoad(FMLServerStartingEvent event) {
-        //event.registerServerCommand(new TeleportCommand());
+        event.registerServerCommand(new GenesisCommand());
     }
 }
