@@ -1,4 +1,4 @@
-package com.reuxertz.genesis.block;
+package com.reuxertz.genesis.blocks;
 
 import com.reuxertz.genesis.tileentity.TileEntityGroundItem;
 import net.minecraft.block.BlockContainer;

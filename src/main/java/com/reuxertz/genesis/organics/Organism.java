@@ -63,9 +63,6 @@ public class Organism {
     public boolean isDead() { return energy <= 0 || mass <= 0; }
     public double getGrowthStateByTotalMass()
     {
-//        SpeciesFeature speciesAdultMass = SpeciesRegistry.getSpeciesFeature(name, SpeciesFeature.FeatureTypes.AdultMass);
-//        GeneData speciesAdultMassGene = genome.getGene(GeneData.GeneType.AdultMassFactor);
-
         double growthStage = (mass + newbornCount * newBornMassValue) / adultMassValue;
         return growthStage;
     }

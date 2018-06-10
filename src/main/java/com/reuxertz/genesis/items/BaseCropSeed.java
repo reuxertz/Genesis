@@ -1,6 +1,8 @@
-package com.reuxertz.genesis.api.items;
+package com.reuxertz.genesis.items;
 
 import com.reuxertz.genesis.api.blocks.BaseBlockGrowable;
+import com.reuxertz.genesis.api.items.IBaseItem;
+import com.reuxertz.genesis.organics.Genome;
 import com.reuxertz.genesis.organics.GenomeHelper;
 import com.reuxertz.genesis.tileentity.TileEntityBaseCrop;
 import net.minecraft.advancements.CriteriaTriggers;
@@ -51,15 +53,12 @@ public class BaseCropSeed extends ItemSeeds implements IBaseItem {
         {
             worldIn.setBlockState(pos.up(), this.blockCrop.getDefaultState());
             TileEntityBaseCrop tileEntityBaseCrop = (TileEntityBaseCrop)worldIn.getTileEntity(pos.up());
-
-            if (GenomeHelper.validateNBT(itemstack))
-                tileEntityBaseCrop.getOrganism().getGenome().setSequence(itemstack.getTagCompound().getString(GenomeHelper.NBTGenomeTag));
+            Genome genome = GenomeHelper.removeGenomeToItemStack(itemstack, tileEntityBaseCrop.getRegistryObject().name);
+            tileEntityBaseCrop.getOrganism().getGenome().setSequence(genome.sequence1, genome.sequence2);
             GenomeHelper.validateGenome(tileEntityBaseCrop.getRegistryObject().name, tileEntityBaseCrop.getOrganism().getGenome());
 
             if (player instanceof EntityPlayerMP)
-            {
                 CriteriaTriggers.PLACED_BLOCK.trigger((EntityPlayerMP)player, pos.up(), itemstack);
-            }
 
             itemstack.shrink(1);
             return EnumActionResult.SUCCESS;

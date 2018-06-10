@@ -2,7 +2,6 @@ package com.reuxertz.genesis.api;
 
 import com.reuxertz.genesis.api.organisms.GeneData;
 import com.reuxertz.genesis.api.organisms.SpeciesFeature;
-import com.reuxertz.genesis.registry.RegistryObject;
 import com.reuxertz.genesis.render.LayerGenesisLiving;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.util.ResourceLocation;
@@ -12,9 +11,6 @@ import java.util.List;
 import java.util.Map;
 
 public interface IGenesisRegistry {
-
-    //Base
-    IGenesisRegistry registerContent(RegistryObject registryObject);
 
     //Metal/Ore registers
     IGenesisRegistry registerOre(String name);

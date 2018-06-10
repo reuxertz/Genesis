@@ -1,13 +1,7 @@
 package com.reuxertz.genesis.handlers;
 
 import com.reuxertz.genesis.Genesis;
-import com.reuxertz.genesis.api.blocks.BaseBlockGrowable;
-import com.reuxertz.genesis.api.items.BaseCropSeed;
-import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -45,7 +39,7 @@ public class ForgeHandler {
             //if (curItem.getItem() instanceof ISemiBlockItem) {
                // boolean success = interact(event, curItem, event.getPos());
 
-                //If the block can't be placed in the pos, then try to place it next to the block.
+                //If the blocks can't be placed in the pos, then try to place it next to the blocks.
                 //if(!success && event.getFace() != null)
                 //    success = interact(event, curItem, event.getPos().offset(event.getFace()));
 

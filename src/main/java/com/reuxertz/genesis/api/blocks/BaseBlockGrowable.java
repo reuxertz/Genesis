@@ -157,6 +157,7 @@ public class BaseBlockGrowable extends BlockCrops implements IBaseBlock, ITileEn
 
                 Item item = tileEntityBaseCrop.getRegistryObject().item;
                 ItemStack newbornItemStack = new ItemStack(item, newbornCount);
+                GenomeHelper.addGenomeToItemStack(newbornItemStack, tileEntityBaseCrop.getOrganism().getGenome().clone());
                 playerIn.setHeldItem(hand, newbornItemStack);
 
                 tileEntityBaseCrop.refreshState();
@@ -165,13 +166,15 @@ public class BaseBlockGrowable extends BlockCrops implements IBaseBlock, ITileEn
 
             if (is.getItem() == tileEntityBaseCrop.getRegistryObject().item)
             {
-                int newbornCount = tileEntityBaseCrop.getOrganism().removeNewborn();
+                double newbornCount = tileEntityBaseCrop.getOrganism().getNewbornCount();
                 if (newbornCount == 0)
                     return false;
 
                 if (is.getCount() + newbornCount <= is.getMaxStackSize())
                 {
-                    is.grow(newbornCount);
+                    int newbornCountInt = tileEntityBaseCrop.getOrganism().removeNewborn();
+                    is.grow(newbornCountInt);
+                    GenomeHelper.addGenomeToItemStack(is, tileEntityBaseCrop.getOrganism().getGenome().clone());
                     playerIn.setHeldItem(hand, is);
                 }
 

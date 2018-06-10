@@ -7,6 +7,9 @@ import java.util.*;
 
 public class Genome
 {
+    public static final String sequence1Tag = "sequence1";
+    public static final String sequence2Tag = "sequence2";
+
     public String sequence1;
     public String sequence2;
     public List<GeneData> sequence1Genes;
@@ -77,14 +80,14 @@ public class Genome
 
     public NBTTagCompound writeToNBT(NBTTagCompound nbt)
     {
-        nbt.setString("sequence1", this.sequence1);
-        nbt.setString("sequence2", this.sequence2);
+        nbt.setString(sequence1Tag, this.sequence1);
+        nbt.setString(sequence2Tag, this.sequence2);
 
         return nbt;
     }
 
     public static Genome readFromNBT(NBTTagCompound nbt)
     {
-        return new Genome(nbt.getString("sequence1"), nbt.getString("sequence2"));
+        return new Genome(nbt.getString(sequence1Tag), nbt.getString(sequence2Tag));
     }
 }

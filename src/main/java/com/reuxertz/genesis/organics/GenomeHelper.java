@@ -3,11 +3,13 @@ package com.reuxertz.genesis.organics;
 import com.reuxertz.genesis.Genesis;
 import com.reuxertz.genesis.api.organisms.GeneData;
 import com.reuxertz.genesis.api.organisms.SpeciesFeature;
+import com.reuxertz.genesis.registry.RegistryObject;
 import com.reuxertz.genesis.registry.SpeciesRegistry;
 import com.reuxertz.genesis.util.MathHelper;
 import com.reuxertz.genesis.util.RandomHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.common.util.Constants;
 
 import java.util.ArrayList;
@@ -236,6 +238,7 @@ public class GenomeHelper {
         return new ArrayList(resultMap.values());
     }
 
+
     public static boolean validateNBT(ItemStack stack)
     {
         if (!stack.hasTagCompound())
@@ -251,24 +254,45 @@ public class GenomeHelper {
         if (!genome.isValid())
         {
             NBTTagCompound nbtGenome = new NBTTagCompound();
-            Genome speciesGenome = SpeciesRegistry.getSpeciesGenome(name);
+            Genome speciesGenome = SpeciesRegistry.getSpeciesGenome(name).clone();
             genome.setSequence(speciesGenome.sequence1, speciesGenome.sequence2);
             return false;
         }
 
         return true;
     }
-    public static boolean validateGeneticsNBT(ItemStack stack)
+
+    public static void addGenomeToItemStack(ItemStack stack, Genome genome)
     {
-        boolean nbtValidation = validateNBT(stack);
-        if (!stack.getTagCompound().hasKey(NBTGenomeTag))
-        {
-            NBTTagCompound nbtGenome = new NBTTagCompound();
-            SpeciesRegistry.getSpeciesGenome(Genesis.registry.getRegistryObject(stack.getItem()).name).writeToNBT(nbtGenome);
-            stack.getTagCompound().setTag(NBTGenomeTag, nbtGenome);
-            return false;
+        if (!stack.hasTagCompound())
+            stack.setTagCompound(new NBTTagCompound());
+
+        if (!stack.getTagCompound().hasKey("genomeStack"))
+            stack.getTagCompound().setTag("genomeStack", new NBTTagList());
+
+        NBTTagList tagList = stack.getTagCompound().getTagList("genomeStack", 10);
+
+        NBTTagCompound genomeNBT = genome.writeToNBT(new NBTTagCompound());
+        tagList.appendTag(genomeNBT);
+        stack.getTagCompound().setTag("genomeStack", tagList);
+    }
+    public static Genome removeGenomeToItemStack(ItemStack stack, String name)
+    {
+        if (stack.hasTagCompound()) {
+            if (stack.getTagCompound().hasKey("genomeStack"))
+            {
+                NBTTagList list = stack.getTagCompound().getTagList("genomeStack", 10);
+                NBTTagCompound nbtTagCompound = (NBTTagCompound)list.get(list.tagCount() - 1);
+                list.removeTag(list.tagCount() - 1);
+                stack.getTagCompound().setTag("genomeStack", list);
+
+                Genome genome = new Genome(nbtTagCompound.getString(Genome.sequence1Tag), nbtTagCompound.getString(Genome.sequence2Tag));
+                return genome;
+            }
         }
 
-        return nbtValidation && true;
+        Genome speciesGenome = SpeciesRegistry.getSpeciesGenome(name).clone();
+        return speciesGenome;
+
     }
 }
