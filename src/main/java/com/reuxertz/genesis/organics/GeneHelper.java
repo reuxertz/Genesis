@@ -40,6 +40,7 @@ public class GeneHelper
         result.put(GeneData.GeneType.AdultMassFactor, "AAA");
         result.put(GeneData.GeneType.GrowthFactor, "AAC");
         result.put(GeneData.GeneType.NewBornMassFactor, "AAG");
+        result.put(GeneData.GeneType.ClutchSizeFactor, "AAT");
 
         return result;
     }

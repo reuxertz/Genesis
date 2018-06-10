@@ -49,11 +49,12 @@ public class BaseCropSeed extends ItemSeeds implements IBaseItem {
         if (facing == EnumFacing.UP && cpe && csp &&
                 worldIn.isAirBlock(pos.up()))
         {
-            GenomeHelper.validateGeneticsNBT(itemstack);
-
             worldIn.setBlockState(pos.up(), this.blockCrop.getDefaultState());
             TileEntityBaseCrop tileEntityBaseCrop = (TileEntityBaseCrop)worldIn.getTileEntity(pos.up());
-            tileEntityBaseCrop.getOrganism().getGenome().setSequence(itemstack.getTagCompound().getString(GenomeHelper.NBTGenomeTag));
+
+            if (GenomeHelper.validateNBT(itemstack))
+                tileEntityBaseCrop.getOrganism().getGenome().setSequence(itemstack.getTagCompound().getString(GenomeHelper.NBTGenomeTag));
+            GenomeHelper.validateGenome(tileEntityBaseCrop.getRegistryObject().name, tileEntityBaseCrop.getOrganism().getGenome());
 
             if (player instanceof EntityPlayerMP)
             {

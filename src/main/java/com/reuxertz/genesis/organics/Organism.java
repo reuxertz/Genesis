@@ -74,13 +74,9 @@ public class Organism {
     {
         this.genome = genome;
         this.name = name;
-
         this.tickCounter = new TickCounter(random, true);
 
-        growthRateValue = GenomeHelper.expressValue(genome, GeneData.GeneType.GrowthFactor, GenomeHelper.ExpressionType.Sigmoid);
-        adultMassValue = GenomeHelper.expressValue(name, SpeciesFeature.FeatureTypes.AdultMass, genome, GeneData.GeneType.AdultMassFactor, GenomeHelper.ExpressionType.PseudoLinear);
-        newBornMassValue = GenomeHelper.expressValue(name, SpeciesFeature.FeatureTypes.NewbornMass, genome, GeneData.GeneType.NewBornMassFactor, GenomeHelper.ExpressionType.PseudoLinear);
-        clutchSizeValue = GenomeHelper.expressValue(name, SpeciesFeature.FeatureTypes.ClutchSize, genome, GeneData.GeneType.ClutchSizeFactor, GenomeHelper.ExpressionType.PseudoLinear);
+        initializeGenome();
 
         return;
     }
@@ -88,6 +84,16 @@ public class Organism {
         this(name, genome);
         this.mass = mass;
         this.energy = EnergyHelper.getEnergyStorageCapacity(mass);
+    }
+
+    public void initializeGenome()
+    {
+        //GenomeHelper.validateGenome(name, genome);
+
+        growthRateValue = GenomeHelper.expressValue(genome, GeneData.GeneType.GrowthFactor, GenomeHelper.ExpressionType.Sigmoid);
+        adultMassValue = GenomeHelper.expressValue(name, SpeciesFeature.FeatureTypes.AdultMass, genome, GeneData.GeneType.AdultMassFactor, GenomeHelper.ExpressionType.PseudoLinear);
+        newBornMassValue = GenomeHelper.expressValue(name, SpeciesFeature.FeatureTypes.NewbornMass, genome, GeneData.GeneType.NewBornMassFactor, GenomeHelper.ExpressionType.PseudoLinear);
+        clutchSizeValue = GenomeHelper.expressValue(name, SpeciesFeature.FeatureTypes.ClutchSize, genome, GeneData.GeneType.ClutchSizeFactor, GenomeHelper.ExpressionType.PseudoLinear);
     }
 
     public void tick(World world)

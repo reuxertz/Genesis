@@ -246,13 +246,24 @@ public class GenomeHelper {
 
         return true;
     }
+    public static boolean validateGenome(String name, Genome genome)
+    {
+        if (!genome.isValid())
+        {
+            NBTTagCompound nbtGenome = new NBTTagCompound();
+            Genome speciesGenome = SpeciesRegistry.getSpeciesGenome(name);
+            genome.setSequence(speciesGenome.sequence1, speciesGenome.sequence2);
+            return false;
+        }
+
+        return true;
+    }
     public static boolean validateGeneticsNBT(ItemStack stack)
     {
         boolean nbtValidation = validateNBT(stack);
         if (!stack.getTagCompound().hasKey(NBTGenomeTag))
         {
             NBTTagCompound nbtGenome = new NBTTagCompound();
-            String name = stack.getItem().getItemStackDisplayName(stack);
             SpeciesRegistry.getSpeciesGenome(Genesis.registry.getRegistryObject(stack.getItem()).name).writeToNBT(nbtGenome);
             stack.getTagCompound().setTag(NBTGenomeTag, nbtGenome);
             return false;

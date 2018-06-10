@@ -18,16 +18,20 @@ public class Genome
     {
         this.sequence1 = sequence1;
         this.sequence2 = sequence2;
-        Translate();
+        translate();
     }
     public void setSequence(String sequence) {
         setSequence(sequence, sequence);
     }
-    public void setSequence(NBTTagCompound nbtTagCompound)
+
+    public boolean isValid()
     {
-        String s1 = nbtTagCompound.getString("sequence1");
-        String s2 = nbtTagCompound.getString("sequence2");
-        setSequence(s1, s2);
+        boolean hasEmptySequence = sequence1.isEmpty() || sequence1.isEmpty();
+
+        if (hasEmptySequence)
+            return false;
+
+        return true;
     }
 
     public Genome(String sequence)
@@ -47,7 +51,12 @@ public class Genome
         setSequence(sequence);
     }
 
-    public void Translate()
+    public Genome clone()
+    {
+        return new Genome(sequence1, sequence2);
+    }
+
+    public void translate()
     {
         sequence1Genes = GenomeHelper.Translate(sequence1);
         sequence2Genes = GenomeHelper.Translate(sequence2);
@@ -66,10 +75,12 @@ public class Genome
         return expressedGenesMap.get(type);
     }
 
-    public void writeToNBT(NBTTagCompound nbt)
+    public NBTTagCompound writeToNBT(NBTTagCompound nbt)
     {
         nbt.setString("sequence1", this.sequence1);
         nbt.setString("sequence2", this.sequence2);
+
+        return nbt;
     }
 
     public static Genome readFromNBT(NBTTagCompound nbt)
