@@ -28,7 +28,6 @@ import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import sun.reflect.generics.visitor.Reifier;
 
 import java.util.ArrayList;
 import java.util.HashMap;

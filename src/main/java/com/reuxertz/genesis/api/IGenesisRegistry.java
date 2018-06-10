@@ -12,6 +12,8 @@ import java.util.Map;
 
 public interface IGenesisRegistry {
 
+    IGenesisRegistry registerItem(String name);
+
     //Metal/Ore registers
     IGenesisRegistry registerOre(String name);
     IGenesisRegistry registerNugget(String name);

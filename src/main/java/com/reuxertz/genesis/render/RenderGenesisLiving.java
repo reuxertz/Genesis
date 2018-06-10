@@ -6,6 +6,7 @@ import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
+import sun.plugin.javascript.navig4.Layer;
 
 import java.util.Map;
 
@@ -21,7 +22,8 @@ public abstract class RenderGenesisLiving extends RenderLiving {
             String key = entry.getKey();
             ResourceLocation resourceLocation = entry.getValue();
 
-            addLayer(new LayerGenesisLiving(this, resourceLocation));
+            LayerGenesisLiving layerGenesisLiving = new LayerGenesisLiving(this, resourceLocation);
+            addLayer(layerGenesisLiving);
         }
     }
 

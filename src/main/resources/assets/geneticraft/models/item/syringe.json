@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "geneticraft:items/syringe_empty"
+    "layer0": "geneticraft:items/syringe/syringe_empty"
   }
 }
