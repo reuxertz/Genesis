@@ -2,6 +2,7 @@ package com.reuxertz.genesis.render;
 
 import com.reuxertz.genesis.api.entities.EntityGenesisAnimal;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.client.renderer.texture.ITextureObject;
 import net.minecraft.client.renderer.texture.TextureUtil;
@@ -13,11 +14,13 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class LayerGenesisLiving<E extends EntityGenesisAnimal> implements LayerRenderer<E>
 {
     private final RenderGenesisLiving renderer;
+    private final String layerName;
     private final ResourceLocation resourceLocation;
 
-    public LayerGenesisLiving(RenderGenesisLiving renderer, ResourceLocation resourceLocation)
+    public LayerGenesisLiving(RenderGenesisLiving renderer, String layerName, ResourceLocation resourceLocation)
     {
         this.renderer = renderer;
+        this.layerName = layerName;
         this.resourceLocation = resourceLocation;
     }
 
@@ -32,6 +35,7 @@ public class LayerGenesisLiving<E extends EntityGenesisAnimal> implements LayerR
                 ITextureObject textureObject = Minecraft.getMinecraft().getTextureManager().getTexture(texture);
                 if (textureObject != TextureUtil.MISSING_TEXTURE)
                 {
+                    //GlStateManager.color(0f, 1f, 1f);
                     this.renderer.bindTexture(texture);
                     this.renderer.getMainModel().render(entity, limbSwing, limbSwingAmount, age, yaw, pitch, scale);
                     this.renderer.setLightmap(entity);

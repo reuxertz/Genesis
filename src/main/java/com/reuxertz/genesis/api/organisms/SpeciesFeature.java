@@ -1,27 +1,50 @@
 package com.reuxertz.genesis.api.organisms;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SpeciesFeature {
 
     public enum FeatureTypes
     {
         NewbornMass,
         ClutchSize,
+        AdultAgeTicks,
         AdultMass,
+
         Layer,
     }
 
-    public FeatureTypes featureType;
-    public String typeClass;
-    public double value;
-
-    public SpeciesFeature(FeatureTypes type, double value)
+    public enum LayerTypes
     {
-        this(type, null, value);
+        skin,
+        eyes,
+        hair,
+        mouth,
     }
-    public SpeciesFeature(FeatureTypes type, String typeClass, double value)
+
+    public FeatureTypes featureType;
+    public List<Double> values = new ArrayList<>();
+
+    public SpeciesFeature(FeatureTypes type, double double1)
+    {
+        List<Double> values = new ArrayList<Double>();
+        values.add(double1);
+
+        this.featureType = type;
+        this.values = values;
+    }
+    public SpeciesFeature(FeatureTypes type, int int1)
+    {
+        List<Double> values = new ArrayList<Double>();
+        values.add((double)int1);
+
+        this.featureType = type;
+        this.values = values;
+    }
+    public SpeciesFeature(FeatureTypes type, List<Double> value)
     {
         this.featureType = type;
-        this.typeClass = typeClass;
-        this.value = value;
+        this.values = new ArrayList<>(value);
     }
 }

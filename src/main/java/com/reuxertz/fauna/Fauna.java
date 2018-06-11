@@ -6,6 +6,7 @@ import com.reuxertz.genesis.api.IGenesisRegistry;
 import com.reuxertz.genesis.api.organisms.GeneData;
 import com.reuxertz.genesis.api.organisms.SpeciesFeature;
 import com.reuxertz.genesis.entities.EntityHuman;
+import com.reuxertz.genesis.util.TimeHelper;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.client.model.ModelPlayer;
 import net.minecraft.util.ResourceLocation;
@@ -41,16 +42,27 @@ public class Fauna implements IGenesisPlugin
                 .registerSpecies("human",
                         Arrays.asList(
                                 new SpeciesFeature(SpeciesFeature.FeatureTypes.AdultMass, 70000),
+                                new SpeciesFeature(SpeciesFeature.FeatureTypes.AdultAgeTicks, TimeHelper.ConvertYearsToTicks(20)),
                                 new SpeciesFeature(SpeciesFeature.FeatureTypes.NewbornMass, 3500),
                                 new SpeciesFeature(SpeciesFeature.FeatureTypes.ClutchSize, 1.01),
-                                new SpeciesFeature(SpeciesFeature.FeatureTypes.Layer, "eyes", 1),
-                                new SpeciesFeature(SpeciesFeature.FeatureTypes.Layer, "hair", 1),
-                                new SpeciesFeature(SpeciesFeature.FeatureTypes.Layer, "mouth", 1)),
+
+                                new SpeciesFeature(SpeciesFeature.FeatureTypes.Layer, SpeciesFeature.LayerTypes.skin.ordinal()),
+                                new SpeciesFeature(SpeciesFeature.FeatureTypes.Layer, SpeciesFeature.LayerTypes.eyes.ordinal()),
+                                new SpeciesFeature(SpeciesFeature.FeatureTypes.Layer, SpeciesFeature.LayerTypes.hair.ordinal()),
+                                new SpeciesFeature(SpeciesFeature.FeatureTypes.Layer, SpeciesFeature.LayerTypes.mouth.ordinal())),
                         Arrays.asList(
                                 new GeneData(GeneData.GeneType.AdultMassFactor, 0, 0),
                                 new GeneData(GeneData.GeneType.GrowthFactor, 0, 0),
                                 new GeneData(GeneData.GeneType.NewBornMassFactor, 0, 0),
-                                new GeneData(GeneData.GeneType.ClutchSizeFactor, 0, 0)))
+                                new GeneData(GeneData.GeneType.ClutchSizeFactor, 0, 0),
+
+                                new GeneData(GeneData.GeneType.LayerFactor, 0, 1, 1, 1),
+                                new GeneData(GeneData.GeneType.LayerFactor, 0, 1, 1, 1),
+                                new GeneData(GeneData.GeneType.LayerFactor, 0, 1, 1, 1),
+                                new GeneData(GeneData.GeneType.LayerFactor, 0, 1, 1, 1)
+
+
+                        ))
                 .registerOverlay("human", "eyes")
                 .registerOverlay("human", "hair")
                 .registerOverlay("human", "mouth")

@@ -1,5 +1,6 @@
-package com.reuxertz.genesis.api.blocks;
+package com.reuxertz.genesis.blocks;
 
+import com.reuxertz.genesis.api.blocks.IBaseBlock;
 import com.reuxertz.genesis.api.organisms.GeneData;
 import com.reuxertz.genesis.api.organisms.SpeciesFeature;
 import com.reuxertz.genesis.organics.Genome;
@@ -26,7 +27,6 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import javax.annotation.Nullable;
 import java.util.Random;
 
 public class BaseBlockGrowable extends BlockCrops implements IBaseBlock, ITileEntityProvider
@@ -175,17 +175,12 @@ public class BaseBlockGrowable extends BlockCrops implements IBaseBlock, ITileEn
 
                 if (is.getCount() + newbornCount <= is.getMaxStackSize())
                 {
-                    Item item = tileEntityBaseCrop.getRegistryObject().item;
-                    ItemStack newbornItemStack = new ItemStack(item, newbornCount);
-                    NBTTagCompound newNBTTagCompound = new NBTTagCompound();
-                    newNBTTagCompound = tileEntityBaseCrop.getOrganism().getGenome().writeToNBT(newNBTTagCompound);
-                    newbornItemStack.setTagCompound(newNBTTagCompound);
-                    playerIn.setHeldItem(hand, newbornItemStack);
-
+                    is.grow(newbornCount);
+                    playerIn.setHeldItem(hand, is);
 
 //                    int newbornCountInt = tileEntityBaseCrop.getOrganism().removeNewborn();
-//                    is.grow(newbornCountInt);
 //                    GenomeHelper.addGenomeToItemStack(is, tileEntityBaseCrop.getOrganism().getGenome().clone());
+//                    is.grow(newbornCountInt);
 //                    playerIn.setHeldItem(hand, is);
                 }
 

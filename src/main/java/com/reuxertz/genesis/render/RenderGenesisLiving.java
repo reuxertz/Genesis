@@ -22,7 +22,7 @@ public abstract class RenderGenesisLiving extends RenderLiving {
             String key = entry.getKey();
             ResourceLocation resourceLocation = entry.getValue();
 
-            LayerGenesisLiving layerGenesisLiving = new LayerGenesisLiving(this, resourceLocation);
+            LayerGenesisLiving layerGenesisLiving = new LayerGenesisLiving(this, key, resourceLocation);
             addLayer(layerGenesisLiving);
         }
     }

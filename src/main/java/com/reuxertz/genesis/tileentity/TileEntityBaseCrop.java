@@ -1,7 +1,7 @@
 package com.reuxertz.genesis.tileentity;
 
 import com.reuxertz.genesis.Genesis;
-import com.reuxertz.genesis.api.blocks.BaseBlockGrowable;
+import com.reuxertz.genesis.blocks.BaseBlockGrowable;
 import com.reuxertz.genesis.organics.Genome;
 import com.reuxertz.genesis.organics.IOrganismContainer;
 import com.reuxertz.genesis.organics.Organism;
@@ -30,6 +30,7 @@ public class TileEntityBaseCrop extends BaseTileEntity implements
     protected Organism organism;
     protected String name;
 
+    public String getName() { return name; }
     public World getWorld() { return world; }
     public RegistryObject getRegistryObject() { return registryObject; }
     public Organism getOrganism() { return organism; }

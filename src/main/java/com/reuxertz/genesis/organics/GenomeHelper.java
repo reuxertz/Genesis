@@ -25,7 +25,7 @@ public class GenomeHelper {
     public static double expressValue(String speciesName, SpeciesFeature.FeatureTypes featureType, Genome genome, GeneData.GeneType geneType, ExpressionType expressionType)
     {
         SpeciesFeature speciesFeature = SpeciesRegistry.getSpeciesFeature(speciesName, featureType);
-        return expressValue(genome, geneType, speciesFeature.value, expressionType);
+        return expressValue(genome, geneType, speciesFeature.values.get(0), expressionType);
     }
 
     public static double expressValue(Genome genome, GeneData.GeneType geneType, ExpressionType expressionType) {
@@ -37,7 +37,7 @@ public class GenomeHelper {
         double geneValue = 0.0;
 
         if (geneData != null)
-            geneValue = geneData.value;
+            geneValue = geneData.values.get(0);
         else
             geneValue = 0.0;
 
@@ -93,14 +93,20 @@ public class GenomeHelper {
             if (remainingLength < GeneHelper.geneLength)
                 break;
 
-            String geneSubString = genomeSequence.substring(i, i + GeneHelper.geneLength);
+            String remainderString = genomeSequence.substring(i, genomeSequence.length());
+            int stopIndex = remainderString.indexOf(GeneHelper.stopCodon);
+
+            String subString = remainderString.substring(0, stopIndex);
+            int geneLength = subString.length();
+
+            String geneSubString = genomeSequence.substring(i + GeneHelper.startCodon.length(), i + geneLength);
             GeneData newGeneData = GeneHelper.Translate(geneSubString);
 
             if (newGeneData == null)
                 continue;
 
             result.add(newGeneData);
-            i += GeneHelper.geneLength - 1;
+            i += subString.length() + GeneHelper.stopCodon.length() - 1;
         }
 
         return result;

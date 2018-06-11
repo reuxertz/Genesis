@@ -5,6 +5,7 @@ import com.reuxertz.genesis.api.organisms.GeneData;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class GeneHelper
 {
@@ -17,6 +18,7 @@ public class GeneHelper
 
     //Translation Constants
     public static final String startCodon = "ATG";
+    public static final String stopCodon = "TAGTAG";
     public static final HashMap<GeneData.GeneType, String> typeToCodonMap = InitTypeToCodonMap();
     public static final HashMap<String, GeneData.GeneType> codonToTypeMap = InitCodonToTypeMap();
 
@@ -95,18 +97,28 @@ public class GeneHelper
     }
     public static GeneData Translate(String geneString) {
 
-        if (geneString.length() < 12)
+        if (geneString.length() < 9)
             return null;
 
-        String typeCodon = geneString.substring(3, 6);
+        String typeCodon = geneString.substring(0, 3);
         if (!codonToTypeMap.containsKey(typeCodon))
             return null;
 
-        double geneValue = ConvertCodonToDouble(geneString.substring(6, 9));
-        double geneDominance = ConvertCodonToDouble(geneString.substring(9, 12));
+        double geneDominance = ConvertCodonToDouble(geneString.substring(3, 6));
+        //double geneValue = ConvertCodonToDouble(geneString.substring(9, 12));
+
+        String valueSubstring = geneString.substring(3, geneString.length());
+        int valueCount = valueSubstring.length() / GeneHelper.codonLength;
+
+        List<Double> values = new ArrayList<>();
+        for (int i = 0; i < valueCount; i++) {
+            String valueCodon = valueSubstring.substring(i * 3, (i + 1) * 3);
+            double value = ConvertCodonToDouble(valueCodon);
+            values.add(value);
+        }
 
         GeneData.GeneType geneType = codonToTypeMap.get(typeCodon);
-        GeneData newGene = new GeneData(geneType, geneValue, geneDominance);
+        GeneData newGene = new GeneData(geneType, geneDominance, values);
 
         return newGene;
         //return null;
@@ -114,7 +126,13 @@ public class GeneHelper
 
     public static String getGeneString(GeneData geneData)
     {
-        return startCodon + typeToCodonMap.get(geneData.geneType) + ConvertDoubleToCodon(geneData.value) + ConvertDoubleToCodon(geneData.dominance);
+        String result = startCodon + typeToCodonMap.get(geneData.geneType) + ConvertDoubleToCodon(geneData.dominance);
+
+        for (int i = 0; i < geneData.values.size(); i++)
+            result += ConvertDoubleToCodon(geneData.values.get(i));
+
+        result += stopCodon;
+        return result;
     }
 
 }

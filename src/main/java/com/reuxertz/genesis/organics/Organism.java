@@ -25,12 +25,15 @@ public class Organism {
     protected IOrganismContainer organismContainer;
     protected TickCounter tickCounter;
 
+    protected long ticksTimeAlive;
+
     protected double mass;
     protected double energy;
     protected double newbornCount;
 
     protected double growthRateValue;
     protected double adultMassValue;
+    protected double adultAgeTicksValue;
     protected double newBornMassValue;
     protected double clutchSizeValue;
 
@@ -89,6 +92,7 @@ public class Organism {
 
         growthRateValue = GenomeHelper.expressValue(genome, GeneData.GeneType.GrowthFactor, GenomeHelper.ExpressionType.Sigmoid);
         adultMassValue = GenomeHelper.expressValue(name, SpeciesFeature.FeatureTypes.AdultMass, genome, GeneData.GeneType.AdultMassFactor, GenomeHelper.ExpressionType.PseudoLinear);
+        adultAgeTicksValue = GenomeHelper.expressValue(name, SpeciesFeature.FeatureTypes.AdultAgeTicks, genome, GeneData.GeneType.AdultAgeTicksFactor, GenomeHelper.ExpressionType.PseudoLinear);
         newBornMassValue = GenomeHelper.expressValue(name, SpeciesFeature.FeatureTypes.NewbornMass, genome, GeneData.GeneType.NewBornMassFactor, GenomeHelper.ExpressionType.PseudoLinear);
         clutchSizeValue = GenomeHelper.expressValue(name, SpeciesFeature.FeatureTypes.ClutchSize, genome, GeneData.GeneType.ClutchSizeFactor, GenomeHelper.ExpressionType.PseudoLinear);
     }
@@ -99,6 +103,7 @@ public class Organism {
             return;
 
         int tickCount = tickCounter.getTicks(world.getTotalWorldTime());
+        ticksTimeAlive += tickCount * tickCounter.getWaitTicks();
 
         if (tickCount > 0) {
             handleMetabolism(world);
@@ -196,13 +201,27 @@ public class Organism {
     {
         Genome genome = Genome.readFromNBT(nbt);
         String organismName = nbt.getString("name");
+        if (organismName == null || organismName == "")
+            organismName = organismContainer.getName();
 
-        Organism organism = new Organism(organismName, genome);
-        organism.setOrganismContainer(organismContainer);
+        Organism organism;
+        if (GenomeHelper.validateGenome(organismName, genome))
+        {
+            organism = new Organism(organismName, genome);
+            organism.setOrganismContainer(organismContainer);
 
-        organism.mass = nbt.getDouble("mass");
-        organism.energy = nbt.getDouble("getEnergy");
-        organism.newbornCount = nbt.getDouble("newbornCount");
+            organism.mass = nbt.getDouble("mass");
+            organism.energy = nbt.getDouble("getEnergy");
+            organism.newbornCount = nbt.getDouble("newbornCount");
+            organism.name = nbt.getString("name");
+        }
+        else
+        {
+            organism = new Organism(organismName, genome);
+            organism.setOrganismContainer(organismContainer);
+
+
+        }
 
         return organism;
     }

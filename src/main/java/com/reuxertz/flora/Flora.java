@@ -5,6 +5,7 @@ import com.reuxertz.genesis.api.IGenesisPlugin;
 import com.reuxertz.genesis.api.IGenesisRegistry;
 import com.reuxertz.genesis.api.organisms.GeneData;
 import com.reuxertz.genesis.api.organisms.SpeciesFeature;
+import com.reuxertz.genesis.util.TimeHelper;
 import net.minecraftforge.fml.common.Mod;
 
 import java.util.Arrays;
@@ -30,6 +31,7 @@ public class Flora implements IGenesisPlugin
             .registerSpecies("onion",
                 Arrays.asList(
                     new SpeciesFeature(SpeciesFeature.FeatureTypes.AdultMass, 2000),
+                    new SpeciesFeature(SpeciesFeature.FeatureTypes.AdultAgeTicks, 0),
                     new SpeciesFeature(SpeciesFeature.FeatureTypes.NewbornMass, 10),
                     new SpeciesFeature(SpeciesFeature.FeatureTypes.ClutchSize, 1.5)),
                 Arrays.asList(

@@ -13,7 +13,7 @@ public class TickCounter {
     private long lastTickDif = -1;
 
     private Random random;
-    private int randomSpread = 10;
+    private int randomSpread = 3;
     private int wait = 50;
     private boolean randomize = true;
 
@@ -21,22 +21,15 @@ public class TickCounter {
     {
         return lastTickDif;
     }
+    public int getWaitTicks() { return wait; }
 
     public TickCounter(Random random, boolean randomize)
-    {
-        this(random, randomize, -1l);
-    }
-    public TickCounter(Random random, boolean randomize, long creationTick)
     {
         this.random = random;
         this.randomize = randomize;
     }
 
     public int getTicks(long currentTick)
-    {
-        return getTicks(currentTick, true);
-    }
-    public int getTicks(long currentTick, boolean updateLastTick)
     {
         if (lastTick < 0)
             lastTick = currentTick;

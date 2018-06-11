@@ -1,7 +1,7 @@
 package com.reuxertz.genesis.items;
 
-import com.reuxertz.genesis.api.blocks.BaseBlockGrowable;
 import com.reuxertz.genesis.api.items.IBaseItem;
+import com.reuxertz.genesis.blocks.BaseBlockGrowable;
 import com.reuxertz.genesis.organics.Genome;
 import com.reuxertz.genesis.organics.GenomeHelper;
 import com.reuxertz.genesis.tileentity.TileEntityBaseCrop;
@@ -53,6 +53,9 @@ public class BaseCropSeed extends ItemSeeds implements IBaseItem {
         {
             worldIn.setBlockState(pos.up(), this.blockCrop.getDefaultState());
             TileEntityBaseCrop tileEntityBaseCrop = (TileEntityBaseCrop)worldIn.getTileEntity(pos.up());
+
+            GenomeHelper.validateNBT(itemstack);
+
             Genome genome = Genome.readFromNBT(itemstack.getTagCompound());
             tileEntityBaseCrop.getOrganism().getGenome().setSequence(genome.sequence1, genome.sequence2);
             GenomeHelper.validateGenome(tileEntityBaseCrop.getRegistryObject().name, tileEntityBaseCrop.getOrganism().getGenome());
