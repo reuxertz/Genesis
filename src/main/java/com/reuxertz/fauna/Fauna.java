@@ -46,23 +46,24 @@ public class Fauna implements IGenesisPlugin
                                 new SpeciesFeature(SpeciesFeature.FeatureTypes.NewbornMass, 3500),
                                 new SpeciesFeature(SpeciesFeature.FeatureTypes.ClutchSize, 1.01),
 
-                                new SpeciesFeature(SpeciesFeature.FeatureTypes.Layer, SpeciesFeature.LayerTypes.skin.ordinal()),
-                                new SpeciesFeature(SpeciesFeature.FeatureTypes.Layer, SpeciesFeature.LayerTypes.eyes.ordinal()),
-                                new SpeciesFeature(SpeciesFeature.FeatureTypes.Layer, SpeciesFeature.LayerTypes.hair.ordinal()),
-                                new SpeciesFeature(SpeciesFeature.FeatureTypes.Layer, SpeciesFeature.LayerTypes.mouth.ordinal())),
+                                new SpeciesFeature(SpeciesFeature.FeatureTypes.HairLayer, 1),
+                                new SpeciesFeature(SpeciesFeature.FeatureTypes.EyeLayer, 1),
+                                new SpeciesFeature(SpeciesFeature.FeatureTypes.SkinLayer, 1),
+                                new SpeciesFeature(SpeciesFeature.FeatureTypes.MouthLayer, 1)),
                         Arrays.asList(
                                 new GeneData(GeneData.GeneType.AdultMassFactor, 0, 0),
                                 new GeneData(GeneData.GeneType.GrowthFactor, 0, 0),
                                 new GeneData(GeneData.GeneType.NewBornMassFactor, 0, 0),
                                 new GeneData(GeneData.GeneType.ClutchSizeFactor, 0, 0),
 
-                                new GeneData(GeneData.GeneType.LayerFactor, 0, 1, 1, 1),
-                                new GeneData(GeneData.GeneType.LayerFactor, 0, 1, 1, 1),
-                                new GeneData(GeneData.GeneType.LayerFactor, 0, 1, 1, 1),
-                                new GeneData(GeneData.GeneType.LayerFactor, 0, 1, 1, 1)
+                              new GeneData(GeneData.GeneType.HairLayer, 1, 1, 1),
+                              new GeneData(GeneData.GeneType.EyeLayer, 1, 1, 1),
+                              new GeneData(GeneData.GeneType.SkinLayer, 1, 1, 1),
+                              new GeneData(GeneData.GeneType.MouthLayer, 1, 1, 1)
 
 
                         ))
+                .registerOverlay("human", "skin")
                 .registerOverlay("human", "eyes")
                 .registerOverlay("human", "hair")
                 .registerOverlay("human", "mouth")

@@ -13,8 +13,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockCrops;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
@@ -30,7 +28,7 @@ public class TileEntityBaseCrop extends BaseTileEntity implements
     protected Organism organism;
     protected String name;
 
-    public String getName() { return name; }
+    public String getOrganismName() { return name; }
     public World getWorld() { return world; }
     public RegistryObject getRegistryObject() { return registryObject; }
     public Organism getOrganism() { return organism; }
@@ -48,6 +46,10 @@ public class TileEntityBaseCrop extends BaseTileEntity implements
 
     @Override
     public void update() {
+
+        if (world.isRemote)
+            return;
+
         getOrganism().tick(world);
     }
 
@@ -129,7 +131,7 @@ public class TileEntityBaseCrop extends BaseTileEntity implements
             return;
         }
 
-        double growthStage = organism.getGrowthStateByTotalMass();
+        double growthStage = organism.getGrowthState();
         growthStage  = growthStage * 7.0;
 
         if (growthStage > 7)

@@ -44,6 +44,11 @@ public class GeneHelper
         result.put(GeneData.GeneType.NewBornMassFactor, "AAG");
         result.put(GeneData.GeneType.ClutchSizeFactor, "AAT");
 
+        result.put(GeneData.GeneType.SkinLayer, "ACA");
+        result.put(GeneData.GeneType.EyeLayer, "ACC");
+        result.put(GeneData.GeneType.HairLayer, "ACG");
+        result.put(GeneData.GeneType.MouthLayer, "ACT");
+
         return result;
     }
     public static HashMap<String, GeneData.GeneType> InitCodonToTypeMap()

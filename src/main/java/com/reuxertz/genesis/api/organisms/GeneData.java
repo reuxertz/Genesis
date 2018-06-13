@@ -1,5 +1,7 @@
 package com.reuxertz.genesis.api.organisms;
 
+import com.reuxertz.genesis.organics.GeneHelper;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +15,10 @@ public class GeneData {
         AdultAgeTicksFactor,
         GrowthFactor,
 
-        LayerFactor,
+        EyeLayer,
+        HairLayer,
+        MouthLayer,
+        SkinLayer
     }
 
     public GeneType geneType;
@@ -30,17 +35,17 @@ public class GeneData {
 
         this.values = values;
     }
-    public GeneData(GeneType geneType, double  dominance, double... values)
+    public GeneData(GeneType geneType, double dominance, double... values)
     {
         this.geneType = geneType;
         this.dominance = dominance;
 
-        this.values = new ArrayList<Double>();
+        this.values = new ArrayList<>();
         for (int i = 0 ;i < values.length; i++)
             this.values.add(values[i]);
     }
 
-    public GeneData(GeneType geneType, double  dominance, List<Double> values)
+    public GeneData(GeneType geneType, double dominance, List<Double> values)
     {
         this.geneType = geneType;
         this.dominance = dominance;

@@ -12,15 +12,10 @@ public class SpeciesFeature {
         AdultAgeTicks,
         AdultMass,
 
-        Layer,
-    }
-
-    public enum LayerTypes
-    {
-        skin,
-        eyes,
-        hair,
-        mouth,
+        EyeLayer,
+        HairLayer,
+        MouthLayer,
+        SkinLayer
     }
 
     public FeatureTypes featureType;

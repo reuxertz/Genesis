@@ -1,6 +1,10 @@
 package com.reuxertz.genesis.render;
 
 import com.reuxertz.genesis.api.entities.EntityGenesisAnimal;
+import com.reuxertz.genesis.api.organisms.GeneData;
+import com.reuxertz.genesis.api.organisms.SpeciesFeature;
+import com.reuxertz.genesis.organics.Genome;
+import com.reuxertz.genesis.organics.Organism;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
@@ -35,6 +39,18 @@ public class LayerGenesisLiving<E extends EntityGenesisAnimal> implements LayerR
                 ITextureObject textureObject = Minecraft.getMinecraft().getTextureManager().getTexture(texture);
                 if (textureObject != TextureUtil.MISSING_TEXTURE)
                 {
+                    String layerName = this.layerName;
+                    Organism organism = entity.getOrganism();
+
+                    if (organism == null)
+                        return;
+
+                    Genome genome = entity.getOrganism().getGenome();//.getGene(GeneData.GeneType.EyeLayer);
+                    if (genome == null)
+                        return;
+
+                    //entity.getOrganism().getGenome().expressedGenes
+
                     //GlStateManager.color(0f, 1f, 1f);
                     this.renderer.bindTexture(texture);
                     this.renderer.getMainModel().render(entity, limbSwing, limbSwingAmount, age, yaw, pitch, scale);

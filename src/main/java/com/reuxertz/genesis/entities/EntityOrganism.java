@@ -1,40 +1,51 @@
 package com.reuxertz.genesis.entities;
 
 import com.reuxertz.genesis.Genesis;
+import com.reuxertz.genesis.handlers.NetworkHandler;
+import com.reuxertz.genesis.handlers.packets.PacketOrganismNBT;
 import com.reuxertz.genesis.organics.Genome;
 import com.reuxertz.genesis.organics.IOrganismContainer;
 import com.reuxertz.genesis.organics.Organism;
-import com.reuxertz.genesis.registry.GenesisRegistry;
 import com.reuxertz.genesis.registry.RegistryObject;
 import com.reuxertz.genesis.registry.SpeciesRegistry;
 import net.minecraft.entity.EntityCreature;
-import net.minecraft.entity.EntityHanging;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagFloat;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import scala.tools.nsc.transform.patmat.Logic;
 
-import java.util.UUID;
-
-public abstract class EntityOrganism extends EntityCreature implements IOrganismContainer {
+public abstract class EntityOrganism extends EntityCreature implements IOrganismContainer
+        //,IEntityAdditionalSpawnData
+{
 
     protected Organism organism;
     protected RegistryObject registryObject;
 
-    public World getWorld() { return this.world; }
-    public Organism getOrganism() { return organism; }
-    public RegistryObject getRegistryObject() { return registryObject; }
+    public World getWorld() {
+        return this.world;
+    }
 
-    public EntityOrganism(World world)
-    {
+    public Organism getOrganism() {
+        return organism;
+    }
+
+    public RegistryObject getRegistryObject() {
+        return registryObject;
+    }
+
+    public EntityOrganism(World world) {
         super(world);
-
+        registryObject = Genesis.registry.getRegistryObject(this.getOrganismName());
         return;
+    }
+
+    @Override
+    public void onEntityUpdate()
+    {
+        super.onEntityUpdate();
+
+        if (world.isRemote)
+            return;
+
+        organism.tick(world);
     }
 
     public void handleGrowth()
@@ -51,6 +62,15 @@ public abstract class EntityOrganism extends EntityCreature implements IOrganism
     }
 
 
+//    public void writeSpawnData(ByteBuf buffer) {
+//        //GenomeHelper.validateGenome(getOrganismName(), this.getOrganism().getGenome());
+//        NBTTagCompound nbtTagCompound = organism.writeToNBT(new NBTTagCompound());
+//        ByteBufUtils.writeTag(buffer, nbtTagCompound);
+//    }
+//    public void readSpawnData(ByteBuf additionalData) {
+//        NBTTagCompound nbtTagCompound = ByteBufUtils.readTag(additionalData);
+//    }
+
     public void writeEntityToNBT(NBTTagCompound compound)
     {
         super.writeEntityToNBT(compound);
@@ -60,16 +80,19 @@ public abstract class EntityOrganism extends EntityCreature implements IOrganism
     {
         super.readEntityFromNBT(compound);
 
-        registryObject = Genesis.registry.getRegistryObject(this.getName());
 
+        readOrganismFromNBT(compound);
+    }
+    public void readOrganismFromNBT(NBTTagCompound compound)
+    {
         organism = Organism.readFromNBT(this, compound);
         if (organism == null) {
             Genome genome = SpeciesRegistry.getSpeciesGenome(this.getName());
             organism = new Organism(this.getName(), genome);
             organism.writeToNBT(compound);
         }
-
-    }
+        NetworkHandler.sendToPlayersInWorld(world, new PacketOrganismNBT(this));
+}
 
 
 

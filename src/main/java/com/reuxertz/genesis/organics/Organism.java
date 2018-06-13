@@ -2,6 +2,8 @@ package com.reuxertz.genesis.organics;
 
 import com.reuxertz.genesis.api.organisms.GeneData;
 import com.reuxertz.genesis.api.organisms.SpeciesFeature;
+import com.reuxertz.genesis.handlers.NetworkHandler;
+import com.reuxertz.genesis.handlers.packets.PacketOrganismNBT;
 import com.reuxertz.genesis.tileentity.TileEntityBaseCrop;
 import com.reuxertz.genesis.util.EnergyHelper;
 import com.reuxertz.genesis.util.MathHelper;
@@ -64,10 +66,32 @@ public class Organism {
     public double getMass() { return mass; }
     public double getNewbornCount() { return newbornCount; }
     public boolean isDead() { return energy <= 0 || mass <= 0; }
-    public double getGrowthStateByTotalMass()
+    public double getAgeState()
     {
-        double growthStage = (mass + newbornCount * newBornMassValue) / adultMassValue;
-        return growthStage;
+        return (ticksTimeAlive - adultAgeTicksValue) / adultAgeTicksValue;
+    }
+    public double getGrowthState()
+    {
+        if (adultAgeTicksValue == 0) {
+            double growthStage = (mass + newbornCount * newBornMassValue) / adultMassValue;
+            return growthStage;
+        }
+
+        double ageState = getAgeState();
+        return ageState;
+
+    }
+    public double getAgeMaxMass()
+    {
+        if (adultAgeTicksValue == 0) {
+            return adultMassValue;
+        }
+
+        double adultMassFactor = getGrowthState();
+        if (adultMassFactor > 1)
+            adultMassFactor = 1;
+
+        return adultMassFactor * adultMassValue;
     }
 
     public Organism(String name, Genome genome)
@@ -161,13 +185,15 @@ public class Organism {
 
         //Handle Mass Growth
         double growthEnergy = growthRateValue * energy;
-        double maxMassGrowth = adultMassValue - mass;
+        energy -= growthEnergy;
+
+        double ageMaxMass = getAgeMaxMass();
+        double maxMassGrowth = ageMaxMass - getMass();
         double maxEnergyIntake = maxMassGrowth * EnergyStorageDensityPerGram;
 
         if (maxEnergyIntake < growthEnergy)
             growthEnergy = maxEnergyIntake;
 
-        energy -= growthEnergy;
         mass += growthEnergy * EnergyStorageDensityPerGram;
 
         //Handle Excess Energy
@@ -185,16 +211,17 @@ public class Organism {
         return;
     }
 
-    public void writeToNBT(NBTTagCompound nbt)
+    public NBTTagCompound writeToNBT(NBTTagCompound nbt)
     {
-        boolean side = organismContainer.getWorld().isRemote;
-
         genome.writeToNBT(nbt);
 
         nbt.setString("name", name);
         nbt.setDouble("mass", mass);
+        nbt.setLong("ticksTimeAlive", ticksTimeAlive);
         nbt.setDouble("getEnergy", energy);
         nbt.setDouble("newbornCount", newbornCount);
+
+        return nbt;
     }
 
     public static Organism readFromNBT(IOrganismContainer organismContainer, NBTTagCompound nbt)
@@ -202,7 +229,7 @@ public class Organism {
         Genome genome = Genome.readFromNBT(nbt);
         String organismName = nbt.getString("name");
         if (organismName == null || organismName == "")
-            organismName = organismContainer.getName();
+            organismName = organismContainer.getOrganismName();
 
         Organism organism;
         if (GenomeHelper.validateGenome(organismName, genome))
@@ -210,17 +237,18 @@ public class Organism {
             organism = new Organism(organismName, genome);
             organism.setOrganismContainer(organismContainer);
 
+
+
             organism.mass = nbt.getDouble("mass");
             organism.energy = nbt.getDouble("getEnergy");
-            organism.newbornCount = nbt.getDouble("newbornCount");
             organism.name = nbt.getString("name");
+            organism.ticksTimeAlive = nbt.getLong("ticksTimeAlive");
+            organism.newbornCount = nbt.getDouble("newbornCount");
         }
         else
         {
             organism = new Organism(organismName, genome);
             organism.setOrganismContainer(organismContainer);
-
-
         }
 
         return organism;
