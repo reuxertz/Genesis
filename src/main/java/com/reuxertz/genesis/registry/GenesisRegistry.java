@@ -301,19 +301,24 @@ public class GenesisRegistry implements IGenesisRegistry
     }
 
     //Ecosystem
-//    public IGenesisRegistry registerBreed(String name, List<GeneData> genes)
-//    {
-//        SpeciesRegistry.registerBreed(name, null, genes);
-//        return this;
-//    }
-//    public IGenesisRegistry registerBreed(String name, String subspecies, List<GeneData> genes)
-//    {
-//        SpeciesRegistry.registerBreed(name, subspecies, genes);
-//        return this;
-//    }
-    public IGenesisRegistry registerSpecies(String name, List<SpeciesFeature> speciesData, List<GeneData> geneData)
+    public IGenesisRegistry registerBreed(String name, List<GeneData> genes)
     {
-        SpeciesRegistry.registerSpecies(name, speciesData, geneData);
+        SpeciesRegistry.registerBreed(name, null, genes);
         return this;
     }
+    public IGenesisRegistry registerBreed(String name, String subspecies, List<GeneData> genes)
+    {
+        SpeciesRegistry.registerBreed(name, subspecies, genes);
+        return this;
+    }
+    public IGenesisRegistry registerSpecies(String name, List<SpeciesFeature> speciesData)
+    {
+        SpeciesRegistry.registerSpecies(name, speciesData);
+        return this;
+    }
+//    public IGenesisRegistry registerSpecies(String name, List<SpeciesFeature> speciesData, List<GeneData> geneData)
+//    {
+//        SpeciesRegistry.registerSpecies(name, speciesData, geneData);
+//        return this;
+//    }
 }

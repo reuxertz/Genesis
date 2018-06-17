@@ -43,7 +43,7 @@ public abstract class EntityOrganism extends EntityCreature implements IOrganism
 //            name += "_" + subspecies;
 
         if (this.registryObject != null) {
-            Genome genome = SpeciesRegistry.getSpeciesGenome(this.registryObject.name);
+            Genome genome = SpeciesRegistry.getSpeciesGenome(this.registryObject.name, subspecies);
             organism = new Organism(this.registryObject.name, genome, age, mass);
             organism.setOrganismContainer(this);
         }

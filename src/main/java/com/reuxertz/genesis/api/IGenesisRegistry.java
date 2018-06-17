@@ -32,9 +32,9 @@ public interface IGenesisRegistry {
     IGenesisRegistry registerOverlay(String name, String overlayName, int zIndex);
 
     //Ecosystem registers
-//    IGenesisRegistry registerBreed(String name, List<GeneData> genes);
-//    IGenesisRegistry registerBreed(String name, String subspecies, List<GeneData> genes);
-//    IGenesisRegistry registerSpecies(String name, List<SpeciesFeature> speciesData);
-    IGenesisRegistry registerSpecies(String name, List<SpeciesFeature> speciesData, List<GeneData> genes);
+    IGenesisRegistry registerBreed(String name, List<GeneData> genes);
+    IGenesisRegistry registerBreed(String name, String subspecies, List<GeneData> genes);
+    IGenesisRegistry registerSpecies(String name, List<SpeciesFeature> speciesData);
+    //IGenesisRegistry registerSpecies(String name, List<SpeciesFeature> speciesData, List<GeneData> genes);
 
 }

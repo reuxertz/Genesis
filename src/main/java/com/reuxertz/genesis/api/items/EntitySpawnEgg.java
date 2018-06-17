@@ -111,12 +111,20 @@ public class EntitySpawnEgg extends BaseItem {
 
         Genesis.registry.iterate(registryObject -> {
             if (registryObject.entityEntry != null) {
-                NBTTagCompound nbt = new NBTTagCompound();
-                ItemStack itemStack = new ItemStack(this, 1);
-                itemStack.setStackDisplayName("item.entityspawnegg." + registryObject.name);
-                nbt.setString("name", registryObject.name);
-                itemStack.setTagCompound(nbt);
-                subtypes.add(itemStack);
+                List<SpeciesRegistry.BreedRegistryObject> breeds = SpeciesRegistry.getBreeds(registryObject.name);
+                for (int i = 0; i < breeds.size(); i++) {
+                    NBTTagCompound nbt = new NBTTagCompound();
+                    ItemStack itemStack = new ItemStack(this, 1);
+                    itemStack.setStackDisplayName("item.entityspawnegg." + registryObject.name);
+                    nbt.setString("name", registryObject.name);
+
+                    if (breeds.get(i).breedName == null)
+                        continue;
+
+                    nbt.setString("subspecies", breeds.get(i).breedName);
+                    itemStack.setTagCompound(nbt);
+                    subtypes.add(itemStack);
+                }
             }
         });
 
@@ -166,13 +174,14 @@ public class EntitySpawnEgg extends BaseItem {
             }
 
             RegistryObject registryObject = Genesis.registry.getRegistryObject(stack.getTagCompound().getString("name"));
+            String subspecies = stack.getTagCompound().getString("subspecies");
 
             Class<? extends EntityOrganism> entityClass = (Class<? extends EntityOrganism>)(registryObject.entityEntry.getEntityClass());
             double adultMass = SpeciesRegistry.getSpeciesFeature(registryObject.name, SpeciesFeature.FeatureTypes.AdultMass).values.get(0);
             Entity entity = null;
             try {
                 entity = entityClass.getConstructor(World.class, RegistryObject.class, String.class, Double.class, Double.class)
-                        .newInstance(player.world, registryObject, "", ((Double)1.0d), ((Double)adultMass));
+                        .newInstance(player.world, registryObject, subspecies, ((Double)1.0d), ((Double)adultMass));
 
             }
             catch (Exception ex)

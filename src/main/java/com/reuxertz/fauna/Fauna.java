@@ -49,10 +49,21 @@ public class Fauna implements IGenesisPlugin
                         new SpeciesFeature(SpeciesFeature.FeatureTypes.SkinLayer, 1),
                         new SpeciesFeature(SpeciesFeature.FeatureTypes.HairLayer, 1),
                         new SpeciesFeature(SpeciesFeature.FeatureTypes.EyeLayer, 1),
-                        new SpeciesFeature(SpeciesFeature.FeatureTypes.MouthLayer, 1)),
-                //.registerBreed("human",
+                        new SpeciesFeature(SpeciesFeature.FeatureTypes.MouthLayer, 1)))
+                .registerBreed("human",
                     Arrays.asList(
+                        new GeneData(GeneData.GeneType.AdultMassFactor, 0, 0),
+                        new GeneData(GeneData.GeneType.GrowthFactor, 0, 0),
+                        new GeneData(GeneData.GeneType.NewBornMassFactor, 0, 0),
+                        new GeneData(GeneData.GeneType.ClutchSizeFactor, 0, 0),
 
+                        new GeneData(GeneData.GeneType.SkinLayer, 1, 1, 1),
+                        new GeneData(GeneData.GeneType.HairLayer, 1, 1, 1),
+                        new GeneData(GeneData.GeneType.EyesLayer, 1, 1, 1),
+                        new GeneData(GeneData.GeneType.MouthLayer, 1, 1, 1)
+                    ))
+                .registerBreed("human", "caucasian",
+                    Arrays.asList(
                         new GeneData(GeneData.GeneType.AdultMassFactor, 0, 0),
                         new GeneData(GeneData.GeneType.GrowthFactor, 0, 0),
                         new GeneData(GeneData.GeneType.NewBornMassFactor, 0, 0),
