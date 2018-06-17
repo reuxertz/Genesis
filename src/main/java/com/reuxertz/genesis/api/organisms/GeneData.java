@@ -15,7 +15,7 @@ public class GeneData {
         AdultAgeTicksFactor,
         GrowthFactor,
 
-        EyeLayer,
+        EyesLayer,
         HairLayer,
         MouthLayer,
         SkinLayer

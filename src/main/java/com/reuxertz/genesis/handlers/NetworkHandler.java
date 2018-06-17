@@ -18,6 +18,7 @@ public class NetworkHandler {
 
     public static void preInit() {
         registerMessage(PacketOrganismNBT.class, Side.CLIENT);
+        registerMessage(PacketOrganismNBT.class, Side.SERVER);
     }
 
     private static void registerMessage(Class<? extends PacketBase> message, Side recievingSide) {

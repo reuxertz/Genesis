@@ -10,17 +10,29 @@ import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.EntityEntry;
+import sun.plugin.javascript.navig4.Layer;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class RegistryObject {
 
+    public static class LayerResourceLocation extends ResourceLocation
+    {
+        public int zIndex;
+
+        public LayerResourceLocation(String modID, String resourcePath, int zIndex)
+        {
+            super(modID, resourcePath);
+            this.zIndex = zIndex;
+        }
+    }
+
     public String name;
     public String modId;
 
     public EntityEntry entityEntry;
-    public Map<String, ResourceLocation> entityLayerResourceMap = new HashMap<>();
+    public Map<String, LayerResourceLocation> entityLayerResourceMap = new HashMap<>();
     public RenderGenesisLiving renderGenesisLiving;
     public ModelBase entityModel;
 
@@ -85,18 +97,18 @@ public class RegistryObject {
         this.entityModel = modelbase;
     }
 
-    public void registerItem()
-    {
-        _isItemRegistered = true;
-    }
-    public void registerBlock()
-    {
-        _isBlockRegistered = true;
-    }
-    public void registerEntity()
-    {
-        _isEntityRegistered = true;
-    }
+//    public void registerItem()
+//    {
+//        _isItemRegistered = true;
+//    }
+//    public void registerBlock()
+//    {
+//        _isBlockRegistered = true;
+//    }
+//    public void registerEntity()
+//    {
+//        _isEntityRegistered = true;
+//    }
 
     public void initModel()
     {

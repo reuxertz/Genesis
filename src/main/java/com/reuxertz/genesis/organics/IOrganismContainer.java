@@ -5,8 +5,6 @@ import net.minecraft.world.World;
 
 public interface IOrganismContainer {
 
-    String getOrganismName();
-
     RegistryObject getRegistryObject();
 
     World getWorld();

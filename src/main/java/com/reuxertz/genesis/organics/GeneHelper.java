@@ -45,7 +45,7 @@ public class GeneHelper
         result.put(GeneData.GeneType.ClutchSizeFactor, "AAT");
 
         result.put(GeneData.GeneType.SkinLayer, "ACA");
-        result.put(GeneData.GeneType.EyeLayer, "ACC");
+        result.put(GeneData.GeneType.EyesLayer, "ACC");
         result.put(GeneData.GeneType.HairLayer, "ACG");
         result.put(GeneData.GeneType.MouthLayer, "ACT");
 
@@ -136,7 +136,7 @@ public class GeneHelper
         for (int i = 0; i < geneData.values.size(); i++)
             result += ConvertDoubleToCodon(geneData.values.get(i));
 
-        result += stopCodon;
+        result += stopCodon + stopCodon;
         return result;
     }
 

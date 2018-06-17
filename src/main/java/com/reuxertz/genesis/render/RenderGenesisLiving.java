@@ -5,10 +5,14 @@ import com.reuxertz.genesis.registry.RegistryObject;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.util.SearchTreeManager;
 import net.minecraft.util.ResourceLocation;
 import sun.plugin.javascript.navig4.Layer;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public abstract class RenderGenesisLiving extends RenderLiving {
 
@@ -17,14 +21,33 @@ public abstract class RenderGenesisLiving extends RenderLiving {
         super(renderManager, modelBase, size);
 
         RegistryObject regobj = Genesis.registry.getRegistryObject(name);
-        for (Map.Entry<String, ResourceLocation> entry : regobj.entityLayerResourceMap.entrySet())
+        List<LayerGenesisLiving> layers = new ArrayList<>();
+
+        List<String> keys = new ArrayList<>(regobj.entityLayerResourceMap.keySet());
+        for (int i = 0; i < keys.size(); i++)
         {
-            String key = entry.getKey();
-            ResourceLocation resourceLocation = entry.getValue();
+            String key = keys.get(i);
+            RegistryObject.LayerResourceLocation resourceLocation = regobj.entityLayerResourceMap.get(key);
 
             LayerGenesisLiving layerGenesisLiving = new LayerGenesisLiving(this, key, resourceLocation);
-            addLayer(layerGenesisLiving);
+
+            if (layers.size() == 0) {
+                layers.add(layerGenesisLiving);
+                continue;
+            }
+
+            for (int j = 0; j < layers.size(); j++) {
+                if (layerGenesisLiving.getZIndex() <= layers.get(j).getZIndex()) {
+                    layers.add(j, layerGenesisLiving);
+                break;
+            }
+                layers.add(layerGenesisLiving);
+                break;
+            }
         }
+
+        for (int i = 0; i < layers.size(); i++)
+            addLayer(layers.get(i));
     }
 
 

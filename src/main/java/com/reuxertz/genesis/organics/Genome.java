@@ -10,12 +10,30 @@ public class Genome
     public static final String sequence1Tag = "sequence1";
     public static final String sequence2Tag = "sequence2";
 
-    public String sequence1;
-    public String sequence2;
-    public List<GeneData> sequence1Genes;
-    public List<GeneData> sequence2Genes;
-    public List<GeneData> expressedGenes;
-    public Map<GeneData.GeneType, GeneData> expressedGenesMap = new HashMap<>();
+    protected String sequence1;
+    protected String sequence2;
+    protected List<GeneData> sequence1Genes;
+    protected List<GeneData> sequence2Genes;
+    protected List<GeneData> expressedGenes;
+    protected Map<String, GeneData> expressedGenesMap = new HashMap<>();
+
+    public String getSequence1()
+    {
+        return sequence1;
+    }
+    public String getSequence2()
+    {
+        return sequence1;
+    }
+    public GeneData getGene(String type)
+    {
+        return expressedGenesMap.get(type);
+    }
+
+    public GeneData getGene(GeneData.GeneType type)
+    {
+        return getGene(type.toString().toLowerCase());
+    }
 
     public void setSequence(String sequence1, String sequence2)
     {
@@ -70,12 +88,7 @@ public class Genome
         expressedGenes = GenomeHelper.FilterDominantGenes(allGenes);
 
         for (int i = 0; i < expressedGenes.size(); i++)
-            expressedGenesMap.put(expressedGenes.get(i).geneType, expressedGenes.get(i));
-    }
-
-    public GeneData getGene(GeneData.GeneType type)
-    {
-        return expressedGenesMap.get(type);
+            expressedGenesMap.put("" + expressedGenes.get(i).geneType.toString().toLowerCase(), expressedGenes.get(i));
     }
 
     public NBTTagCompound writeToNBT(NBTTagCompound nbt)

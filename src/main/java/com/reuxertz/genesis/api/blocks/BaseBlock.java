@@ -34,7 +34,6 @@ public class BaseBlock extends Block implements IBaseBlock {
         ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, normal);
     }
 
-
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
     {
         return false;

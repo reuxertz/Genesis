@@ -94,7 +94,7 @@ public class GenomeHelper {
                 break;
 
             String remainderString = genomeSequence.substring(i, genomeSequence.length());
-            int stopIndex = remainderString.indexOf(GeneHelper.stopCodon);
+            int stopIndex = remainderString.indexOf(GeneHelper.stopCodon + GeneHelper.stopCodon);
 
             String subString = remainderString.substring(0, stopIndex);
             int geneLength = subString.length();

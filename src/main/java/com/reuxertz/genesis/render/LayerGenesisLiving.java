@@ -5,6 +5,7 @@ import com.reuxertz.genesis.api.organisms.GeneData;
 import com.reuxertz.genesis.api.organisms.SpeciesFeature;
 import com.reuxertz.genesis.organics.Genome;
 import com.reuxertz.genesis.organics.Organism;
+import com.reuxertz.genesis.registry.RegistryObject;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
@@ -19,9 +20,14 @@ public class LayerGenesisLiving<E extends EntityGenesisAnimal> implements LayerR
 {
     private final RenderGenesisLiving renderer;
     private final String layerName;
-    private final ResourceLocation resourceLocation;
+    private final RegistryObject.LayerResourceLocation resourceLocation;
 
-    public LayerGenesisLiving(RenderGenesisLiving renderer, String layerName, ResourceLocation resourceLocation)
+    public int getZIndex()
+    {
+        return resourceLocation.zIndex;
+    }
+
+    public LayerGenesisLiving(RenderGenesisLiving renderer, String layerName, RegistryObject.LayerResourceLocation resourceLocation)
     {
         this.renderer = renderer;
         this.layerName = layerName;
@@ -33,13 +39,12 @@ public class LayerGenesisLiving<E extends EntityGenesisAnimal> implements LayerR
     {
         if (!entity.isInvisible())
         {
-            ResourceLocation texture = resourceLocation;
+            RegistryObject.LayerResourceLocation texture = resourceLocation;
             if (texture != null)
             {
                 ITextureObject textureObject = Minecraft.getMinecraft().getTextureManager().getTexture(texture);
                 if (textureObject != TextureUtil.MISSING_TEXTURE)
                 {
-                    String layerName = this.layerName;
                     Organism organism = entity.getOrganism();
 
                     if (organism == null)
@@ -49,12 +54,24 @@ public class LayerGenesisLiving<E extends EntityGenesisAnimal> implements LayerR
                     if (genome == null)
                         return;
 
-                    //entity.getOrganism().getGenome().expressedGenes
 
-                    //GlStateManager.color(0f, 1f, 1f);
+                    GeneData geneData = entity.getOrganism().getGenome().getGene(layerName + "layer");
+                    //GeneData hairData = entity.getOrganism().getGenome().getGene(GeneData.GeneType.HairLayer);
+
+                    if (geneData != null) {
+                        double red = geneData.values.get(0);
+                        double green = geneData.values.get(1);
+                        double blue = geneData.values.get(2);
+                        GlStateManager.color((float)red, (float)green, (float)blue);
+                    }
+
                     this.renderer.bindTexture(texture);
                     this.renderer.getMainModel().render(entity, limbSwing, limbSwingAmount, age, yaw, pitch, scale);
                     this.renderer.setLightmap(entity);
+
+
+
+                    GlStateManager.color(1f, 1f, 1f);
                 }
             }
         }

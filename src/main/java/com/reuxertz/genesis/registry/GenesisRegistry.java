@@ -7,6 +7,7 @@ import com.reuxertz.genesis.api.blocks.BaseBlockMetal;
 import com.reuxertz.genesis.api.blocks.BaseBlockOre;
 import com.reuxertz.genesis.api.items.BaseIngot;
 import com.reuxertz.genesis.api.items.BaseNugget;
+import com.reuxertz.genesis.api.items.EntitySpawnEgg;
 import com.reuxertz.genesis.api.organisms.GeneData;
 import com.reuxertz.genesis.blocks.BaseBlockGrowable;
 import com.reuxertz.genesis.items.BaseCropSeed;
@@ -19,6 +20,7 @@ import net.minecraft.client.model.ModelBase;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
@@ -39,12 +41,23 @@ import static com.reuxertz.genesis.Genesis.registry;
 @Mod.EventBusSubscriber(modid = Genesis.MODID)
 public class GenesisRegistry implements IGenesisRegistry
 {
+    public interface IRegistryObjectAction{
+
+        void onAction(RegistryObject registryObject);
+    }
+
     private static Map<String, RegistryObject> registryObjectHashMap = new HashMap<>();
     private static Map<Item, String> registryItemHashMap = new HashMap<>();
     private static List<RegistryObject> registryObjectList = new ArrayList<>();
     private static List<String> registeredModIds = new ArrayList<>();
 
     private final String modId;
+
+    public void iterate(IRegistryObjectAction action)
+    {
+        for (int i = 0 ; i < registryObjectList.size(); i++)
+            action.onAction(registryObjectList.get(i));
+    }
 
     public RegistryObject getRegistryObject(String name)
     {
@@ -80,7 +93,6 @@ public class GenesisRegistry implements IGenesisRegistry
             if (regobj.item != null) {
                 Item item = GenesisRegistry.registryObjectList.get(i).item;
                 event.getRegistry().register(item);
-                regobj.registerItem();
             }
         }
 
@@ -99,7 +111,6 @@ public class GenesisRegistry implements IGenesisRegistry
 
                 RegistryObject regobj = registry.registryObjectList.get(i);
                 event.getRegistry().register((Block)regobj.block);
-                regobj.registerBlock();
             }
     }
 
@@ -113,8 +124,6 @@ public class GenesisRegistry implements IGenesisRegistry
 
                 RegistryObject regobj = registry.registryObjectList.get(i);
                 event.getRegistry().register(regobj.entityEntry);
-
-                regobj.registerEntity();
 
             }
 
@@ -175,6 +184,11 @@ public class GenesisRegistry implements IGenesisRegistry
     public IGenesisRegistry registerItem(String name)
     {
         registerContent(new RegistryObject(modId, name, new BaseItem(name)));
+        return this;
+    }
+    public IGenesisRegistry registerItem(String name, Item item)
+    {
+        registerContent(new RegistryObject(modId, name, item));
         return this;
     }
 
@@ -276,20 +290,30 @@ public class GenesisRegistry implements IGenesisRegistry
         registerContent(new RegistryObject(modId, name, entityEntry, modelBase));
         return this;
     }
-    public IGenesisRegistry registerOverlay(String name, String overlayName)
+    public IGenesisRegistry registerOverlay(String name, String overlayName, int zIndex)
     {
         RegistryObject registryObject = registryObjectHashMap.get(name);
 
-        ResourceLocation re = new ResourceLocation(modId,  "textures/entities/" + name + "/" + name + "_" + overlayName + ".png");
+        RegistryObject.LayerResourceLocation re = new RegistryObject.LayerResourceLocation(modId,  "textures/entities/" + name + "/" + name + "_" + overlayName + ".png", zIndex);
         registryObject.entityLayerResourceMap.put(overlayName, re);
 
         return this;
     }
 
     //Ecosystem
-    public IGenesisRegistry registerSpecies(String name, List<SpeciesFeature> speciesData, List<GeneData> genes)
+//    public IGenesisRegistry registerBreed(String name, List<GeneData> genes)
+//    {
+//        SpeciesRegistry.registerBreed(name, null, genes);
+//        return this;
+//    }
+//    public IGenesisRegistry registerBreed(String name, String subspecies, List<GeneData> genes)
+//    {
+//        SpeciesRegistry.registerBreed(name, subspecies, genes);
+//        return this;
+//    }
+    public IGenesisRegistry registerSpecies(String name, List<SpeciesFeature> speciesData, List<GeneData> geneData)
     {
-        SpeciesRegistry.registerSpecies(name, speciesData, genes);
+        SpeciesRegistry.registerSpecies(name, speciesData, geneData);
         return this;
     }
 }

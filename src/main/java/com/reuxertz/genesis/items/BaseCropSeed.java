@@ -57,7 +57,7 @@ public class BaseCropSeed extends ItemSeeds implements IBaseItem {
             GenomeHelper.validateNBT(itemstack);
 
             Genome genome = Genome.readFromNBT(itemstack.getTagCompound());
-            tileEntityBaseCrop.getOrganism().getGenome().setSequence(genome.sequence1, genome.sequence2);
+            tileEntityBaseCrop.getOrganism().getGenome().setSequence(genome.getSequence1(), genome.getSequence2());
             GenomeHelper.validateGenome(tileEntityBaseCrop.getRegistryObject().name, tileEntityBaseCrop.getOrganism().getGenome());
 
             if (player instanceof EntityPlayerMP)

@@ -104,7 +104,7 @@ public class Organism {
 
         return;
     }
-    public Organism(String name, Genome genome, double mass) {
+    public Organism(String name, Genome genome, double age, double mass) {
         this(name, genome);
         this.mass = mass;
         this.energy = EnergyHelper.getEnergyStorageCapacity(mass);
@@ -178,9 +178,13 @@ public class Organism {
         organismContainer.handleGrowth();
 
         //Handle Decay
-        double energyCostPerGramTick = EnergyHelper.getEnergyLossPerGramTick(mass);
+        double mss = mass;
+        if (mass <= 0)
+            mss = 1;
+
+        double energyCostPerGramTick = EnergyHelper.getEnergyLossPerGramTick(mss);
         //double x = energyCostPerGramTick * 20 * 60 * 20;
-        double energyCost = energyCostPerGramTick * tickCounter.getLastTickDif() * mass;
+        double energyCost = energyCostPerGramTick * tickCounter.getLastTickDif() * mss;
         energy -= energyCost;
 
         //Handle Mass Growth
@@ -229,7 +233,7 @@ public class Organism {
         Genome genome = Genome.readFromNBT(nbt);
         String organismName = nbt.getString("name");
         if (organismName == null || organismName == "")
-            organismName = organismContainer.getOrganismName();
+            organismName = organismContainer.getRegistryObject().name;
 
         Organism organism;
         if (GenomeHelper.validateGenome(organismName, genome))

@@ -132,7 +132,7 @@ public class BaseBlockGrowable extends BlockCrops implements IBaseBlock, ITileEn
         String shortName = name.substring(name.lastIndexOf("_") + 1, name.length());
         Genome g = new Genome("", "");//SpeciesRegistry.getSpeciesGenome(shortName);
 
-        Organism o = new Organism(shortName, g, 10);
+        Organism o = new Organism(shortName, g, 10, 0);
         TileEntityBaseCrop newTileEntity = new TileEntityBaseCrop(o, shortName);
 
         o.addEnergy(o.getMass());

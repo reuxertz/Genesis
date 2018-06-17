@@ -36,37 +36,38 @@ public class Fauna implements IGenesisPlugin
                 .id(new ResourceLocation(Fauna.MODID, "human"), 0)
                 .name("human")
                 .tracker(80, 3, false)
-                .egg(MapColor.BROWN.colorValue, MapColor.GOLD.colorValue)
+                //.egg(MapColor.BROWN.colorValue, MapColor.GOLD.colorValue)
                 //.spawn(EnumCreatureType.CREATURE, 20, 1, 5, BiomeDictionary.getBiomes(BiomeDictionary.Type.FOREST))
                 .build(), new ModelPlayer(1.0f, false))
                 .registerSpecies("human",
-                        Arrays.asList(
-                                new SpeciesFeature(SpeciesFeature.FeatureTypes.AdultMass, 70000),
-                                new SpeciesFeature(SpeciesFeature.FeatureTypes.AdultAgeTicks, TimeHelper.ConvertYearsToTicks(20)),
-                                new SpeciesFeature(SpeciesFeature.FeatureTypes.NewbornMass, 3500),
-                                new SpeciesFeature(SpeciesFeature.FeatureTypes.ClutchSize, 1.01),
+                    Arrays.asList(
+                        new SpeciesFeature(SpeciesFeature.FeatureTypes.AdultMass, 70000),
+                        new SpeciesFeature(SpeciesFeature.FeatureTypes.AdultAgeTicks, TimeHelper.ConvertYearsToTicks(20)),
+                        new SpeciesFeature(SpeciesFeature.FeatureTypes.NewbornMass, 3500),
+                        new SpeciesFeature(SpeciesFeature.FeatureTypes.ClutchSize, 1.01),
 
-                                new SpeciesFeature(SpeciesFeature.FeatureTypes.HairLayer, 1),
-                                new SpeciesFeature(SpeciesFeature.FeatureTypes.EyeLayer, 1),
-                                new SpeciesFeature(SpeciesFeature.FeatureTypes.SkinLayer, 1),
-                                new SpeciesFeature(SpeciesFeature.FeatureTypes.MouthLayer, 1)),
-                        Arrays.asList(
-                                new GeneData(GeneData.GeneType.AdultMassFactor, 0, 0),
-                                new GeneData(GeneData.GeneType.GrowthFactor, 0, 0),
-                                new GeneData(GeneData.GeneType.NewBornMassFactor, 0, 0),
-                                new GeneData(GeneData.GeneType.ClutchSizeFactor, 0, 0),
+                        new SpeciesFeature(SpeciesFeature.FeatureTypes.SkinLayer, 1),
+                        new SpeciesFeature(SpeciesFeature.FeatureTypes.HairLayer, 1),
+                        new SpeciesFeature(SpeciesFeature.FeatureTypes.EyeLayer, 1),
+                        new SpeciesFeature(SpeciesFeature.FeatureTypes.MouthLayer, 1)),
+                //.registerBreed("human",
+                    Arrays.asList(
 
-                              new GeneData(GeneData.GeneType.HairLayer, 1, 1, 1),
-                              new GeneData(GeneData.GeneType.EyeLayer, 1, 1, 1),
-                              new GeneData(GeneData.GeneType.SkinLayer, 1, 1, 1),
-                              new GeneData(GeneData.GeneType.MouthLayer, 1, 1, 1)
+                        new GeneData(GeneData.GeneType.AdultMassFactor, 0, 0),
+                        new GeneData(GeneData.GeneType.GrowthFactor, 0, 0),
+                        new GeneData(GeneData.GeneType.NewBornMassFactor, 0, 0),
+                        new GeneData(GeneData.GeneType.ClutchSizeFactor, 0, 0),
 
-
-                        ))
-                .registerOverlay("human", "skin")
-                .registerOverlay("human", "eyes")
-                .registerOverlay("human", "hair")
-                .registerOverlay("human", "mouth")
+                        new GeneData(GeneData.GeneType.SkinLayer, 1, 1, 1),
+                        new GeneData(GeneData.GeneType.HairLayer, 1, 1, 0),
+                        new GeneData(GeneData.GeneType.EyesLayer, .2, .7, 1),
+                        new GeneData(GeneData.GeneType.MouthLayer, 1, 1, 1)
+                    ))
+                .registerOverlay("human", "skin", 0)
+                .registerOverlay("human", "eyes", 1)
+                .registerOverlay("human", "eyes_white", 1)
+                .registerOverlay("human", "hair", 1)
+                .registerOverlay("human", "mouth", 1)
         ;
 
         //registry.registerEntity("human", registree);
