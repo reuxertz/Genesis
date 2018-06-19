@@ -112,7 +112,7 @@ public class GeneHelper
         double geneDominance = ConvertCodonToDouble(geneString.substring(3, 6));
         //double geneValue = ConvertCodonToDouble(geneString.substring(9, 12));
 
-        String valueSubstring = geneString.substring(3, geneString.length());
+        String valueSubstring = geneString.substring(6, geneString.length());
         int valueCount = valueSubstring.length() / GeneHelper.codonLength;
 
         List<Double> values = new ArrayList<>();

@@ -41,7 +41,7 @@ public class GeneData {
         this.dominance = dominance;
 
         this.values = new ArrayList<>();
-        for (int i = 0 ;i < values.length; i++)
+        for (int i = 0 ; i < values.length; i++)
             this.values.add(values[i]);
     }
 

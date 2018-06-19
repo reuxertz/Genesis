@@ -73,7 +73,9 @@ public class SpeciesRegistry {
     }
     public static Genome getSpeciesGenome(String speciesName, String subspecies)
     {
-        return new Genome(breedRegistry.get(speciesName).get(subspecies).geneData);
+        Map<String, BreedRegistryObject> breedRegistryMap = breedRegistry.get(speciesName);
+        BreedRegistryObject breedRegistryObject = breedRegistryMap.get(subspecies);
+        return new Genome(breedRegistryObject.geneData);
     }
     public static SpeciesFeature getSpeciesFeature(String speciesName, SpeciesFeature.FeatureTypes featureType)
     {

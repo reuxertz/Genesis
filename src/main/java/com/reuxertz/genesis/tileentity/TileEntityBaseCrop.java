@@ -11,6 +11,7 @@ import com.reuxertz.genesis.util.EnergyHelper;
 import com.reuxertz.genesis.util.RandomHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockCrops;
+import net.minecraft.block.BlockFarmland;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
@@ -86,20 +87,24 @@ public class TileEntityBaseCrop extends BaseTileEntity implements
         double limit = 9;
         double light = world.getLightFromNeighbors(pos.up());
         double lightFactor = (light - limit) / (15.0 - limit);
-        if (lightFactor > 0)
-        {
+        if (lightFactor > 0) {
             double lastTickDif = organism.getTickCounter().getLastTickDif();
+            double efficiency = 1.0;
+            boolean isRaining = world.isRainingAt(pos.up());
 
             Block cropBlock = world.getBlockState(pos).getBlock();
             IBlockState soilBlock = world.getBlockState(pos.down());
 
-            double soilFactor = 1.0;
             if (soilBlock.getBlock() != Blocks.FARMLAND)
-                soilFactor *= .5;
+                efficiency *= .5;
 
             //double t = SunlightEnergyPerGramTick * (20 * 60 * 20) * 10;
+            if (!isRaining && soilBlock.getBlock() == Blocks.FARMLAND) {
+                double moistureLevel = soilBlock.getValue(BlockFarmland.MOISTURE);
+                efficiency *= .5 + (.5 * (moistureLevel / 7.0));
+            }
 
-            double energyInput = SunlightEnergyPerGramTick * lastTickDif * organism.getMass() * lightFactor * soilFactor;
+            double energyInput = SunlightEnergyPerGramTick * efficiency * lastTickDif * organism.getMass() * lightFactor;
             organism.addEnergy(energyInput);
             return;
         }

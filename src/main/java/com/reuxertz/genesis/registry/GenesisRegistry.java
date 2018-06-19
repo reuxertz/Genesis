@@ -303,7 +303,7 @@ public class GenesisRegistry implements IGenesisRegistry
     //Ecosystem
     public IGenesisRegistry registerBreed(String name, List<GeneData> genes)
     {
-        SpeciesRegistry.registerBreed(name, null, genes);
+        SpeciesRegistry.registerBreed(name, "", genes);
         return this;
     }
     public IGenesisRegistry registerBreed(String name, String subspecies, List<GeneData> genes)
