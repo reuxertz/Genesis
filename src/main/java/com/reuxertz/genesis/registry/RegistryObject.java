@@ -6,6 +6,7 @@ import com.reuxertz.genesis.render.LayerGenesisLiving;
 import com.reuxertz.genesis.render.RenderGenesisLiving;
 import net.minecraft.block.Block;
 import net.minecraft.client.model.ModelBase;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
@@ -35,6 +36,7 @@ public class RegistryObject {
     public Map<String, LayerResourceLocation> entityLayerResourceMap = new HashMap<>();
     public RenderGenesisLiving renderGenesisLiving;
     public ModelBase entityModel;
+    public ModelResourceLocation entityModelResourceLocation;
 
     public Block block;
     public Class tileEntityClass;

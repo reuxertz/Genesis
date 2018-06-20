@@ -226,8 +226,9 @@ public class EntitySpawnEgg extends BaseItem {
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn)
     {
+        NBTTagCompound nbt = stack.getTagCompound();
 
-
-        tooltip.add("test");
+        String line = nbt.getString("subspecies") + "." + nbt.getString("name");
+        tooltip.add(line);
     }
 }

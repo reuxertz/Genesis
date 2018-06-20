@@ -17,11 +17,13 @@ import com.reuxertz.genesis.render.RenderGenesisLiving;
 import com.reuxertz.genesis.tileentity.TileEntityBaseCrop;
 import net.minecraft.block.Block;
 import net.minecraft.client.model.ModelBase;
+import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.event.ModelBakeEvent;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
@@ -41,7 +43,7 @@ import static com.reuxertz.genesis.Genesis.registry;
 @Mod.EventBusSubscriber(modid = Genesis.MODID)
 public class GenesisRegistry implements IGenesisRegistry
 {
-    public interface IRegistryObjectAction{
+    public interface IRegistryObjectAction {
 
         void onAction(RegistryObject registryObject);
     }
@@ -129,6 +131,26 @@ public class GenesisRegistry implements IGenesisRegistry
 
         return;
     }
+
+
+    @SubscribeEvent
+    public void onModelBake(ModelBakeEvent event)
+    {
+        for (int i = 0; i < GenesisRegistry.registryObjectList.size(); i++) {
+
+            RegistryObject registryObject = GenesisRegistry.registryObjectList.get(i);
+            if (registryObject.entityModelResourceLocation == null)
+                continue;
+
+            try {
+                IBakedModel teBasic = event.getModelRegistry().getObject(registryObject.entityModelResourceLocation);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 
     @SuppressWarnings("unchecked")
     public static void registerEntityRenderers()

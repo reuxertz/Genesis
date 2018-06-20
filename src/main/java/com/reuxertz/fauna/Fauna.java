@@ -5,6 +5,7 @@ import com.reuxertz.genesis.api.IGenesisPlugin;
 import com.reuxertz.genesis.api.IGenesisRegistry;
 import com.reuxertz.genesis.api.organisms.GeneData;
 import com.reuxertz.genesis.api.organisms.SpeciesFeature;
+import com.reuxertz.genesis.entities.EntityAnt;
 import com.reuxertz.genesis.entities.EntityHuman;
 import com.reuxertz.genesis.util.TimeHelper;
 import net.minecraft.block.material.MapColor;
@@ -93,7 +94,7 @@ public class Fauna implements IGenesisPlugin
                 .registerOverlay("human", "mouth", 1);
 
         registry.registerEntity("ant", EntityEntryBuilder.create()
-                .entity(EntityHuman.class)
+                .entity(EntityAnt.class)
                 .id(new ResourceLocation(Fauna.MODID, "ant"), 0)
                 .name("ant")
                 .tracker(80, 3, false)
@@ -123,8 +124,8 @@ public class Fauna implements IGenesisPlugin
                         new GeneData(GeneData.GeneType.EyesLayer, 1, .2, .7, 1),
                         new GeneData(GeneData.GeneType.MouthLayer, 1, 1, 1, 1)
                         ))
-                .registerOverlay("ant", "skin", 0)
-                .registerOverlay("ant", "eyes", 1)
+                .registerOverlay("ant", "ant_worker", 0)
+                .registerOverlay("ant", "ant_worker_eyes", 1)
         ;
 
         //registry.registerEntity("human", registree);
