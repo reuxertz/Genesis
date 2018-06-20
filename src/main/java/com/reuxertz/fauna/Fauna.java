@@ -90,7 +90,41 @@ public class Fauna implements IGenesisPlugin
                 .registerOverlay("human", "eyes", 1)
                 .registerOverlay("human", "eyes_white", 1)
                 .registerOverlay("human", "hair", 1)
-                .registerOverlay("human", "mouth", 1)
+                .registerOverlay("human", "mouth", 1);
+
+        registry.registerEntity("ant", EntityEntryBuilder.create()
+                .entity(EntityHuman.class)
+                .id(new ResourceLocation(Fauna.MODID, "ant"), 0)
+                .name("ant")
+                .tracker(80, 3, false)
+                //.egg(MapColor.BROWN.colorValue, MapColor.GOLD.colorValue)
+                //.spawn(EnumCreatureType.CREATURE, 20, 1, 5, BiomeDictionary.getBiomes(BiomeDictionary.Type.FOREST))
+                .build(), new ModelPlayer(1.0f, false))
+                .registerSpecies("ant",
+                    Arrays.asList(
+                        new SpeciesFeature(SpeciesFeature.FeatureTypes.AdultMass, 70000),
+                        new SpeciesFeature(SpeciesFeature.FeatureTypes.AdultAgeTicks, TimeHelper.ConvertYearsToTicks(20)),
+                        new SpeciesFeature(SpeciesFeature.FeatureTypes.NewbornMass, 3500),
+                        new SpeciesFeature(SpeciesFeature.FeatureTypes.ClutchSize, 1.01),
+
+                        new SpeciesFeature(SpeciesFeature.FeatureTypes.SkinLayer, 1),
+                        new SpeciesFeature(SpeciesFeature.FeatureTypes.HairLayer, 1),
+                        new SpeciesFeature(SpeciesFeature.FeatureTypes.EyeLayer, 1),
+                        new SpeciesFeature(SpeciesFeature.FeatureTypes.MouthLayer, 1)))
+                .registerBreed("ant", "wood",
+                    Arrays.asList(
+                        new GeneData(GeneData.GeneType.AdultMassFactor, 0, 0),
+                        new GeneData(GeneData.GeneType.GrowthFactor, 0, 0),
+                        new GeneData(GeneData.GeneType.NewBornMassFactor, 0, 0),
+                        new GeneData(GeneData.GeneType.ClutchSizeFactor, 0, 0),
+
+                        new GeneData(GeneData.GeneType.SkinLayer, 0, 1, 1, 1),
+                        new GeneData(GeneData.GeneType.HairLayer, 1, 1, 1, 0),
+                        new GeneData(GeneData.GeneType.EyesLayer, 1, .2, .7, 1),
+                        new GeneData(GeneData.GeneType.MouthLayer, 1, 1, 1, 1)
+                        ))
+                .registerOverlay("ant", "skin", 0)
+                .registerOverlay("ant", "eyes", 1)
         ;
 
         //registry.registerEntity("human", registree);

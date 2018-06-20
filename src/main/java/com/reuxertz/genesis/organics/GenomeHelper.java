@@ -260,7 +260,7 @@ public class GenomeHelper {
         if (!genome.isValid())
         {
             NBTTagCompound nbtGenome = new NBTTagCompound();
-            Genome speciesGenome = SpeciesRegistry.getSpeciesGenome(name, null).clone();
+            Genome speciesGenome = SpeciesRegistry.getSpeciesGenome(name, "").clone();
             genome.setSequence(speciesGenome.sequence1, speciesGenome.sequence2);
             return false;
         }
