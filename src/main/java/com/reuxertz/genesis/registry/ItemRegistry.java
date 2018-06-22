@@ -1,6 +1,6 @@
 package com.reuxertz.genesis.registry;
 
-import com.reuxertz.genesis.Genesis;
+import com.reuxertz.genesis.mod.Genesis;
 import com.reuxertz.genesis.api.items.BaseIngot;
 import com.reuxertz.genesis.api.items.BaseNugget;
 import com.reuxertz.genesis.api.items.tools.*;

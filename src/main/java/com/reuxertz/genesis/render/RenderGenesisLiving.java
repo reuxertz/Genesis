@@ -1,18 +1,13 @@
 package com.reuxertz.genesis.render;
 
-import com.reuxertz.genesis.Genesis;
+import com.reuxertz.genesis.mod.Genesis;
 import com.reuxertz.genesis.registry.RegistryObject;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.client.util.SearchTreeManager;
-import net.minecraft.util.ResourceLocation;
-import sun.plugin.javascript.navig4.Layer;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 public abstract class RenderGenesisLiving extends RenderLiving {
 

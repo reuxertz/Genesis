@@ -1,25 +1,19 @@
 package com.reuxertz.genesis.items;
 
-import com.reuxertz.genesis.Genesis;
+import com.reuxertz.genesis.mod.Genesis;
 import com.reuxertz.genesis.api.items.BaseItem;
-import com.reuxertz.genesis.api.organisms.GeneData;
 import com.reuxertz.genesis.api.organisms.SpeciesFeature;
-import com.reuxertz.genesis.entities.EntityHuman;
 import com.reuxertz.genesis.entities.EntityOrganism;
-import com.reuxertz.genesis.registry.GenesisRegistry;
 import com.reuxertz.genesis.registry.RegistryObject;
 import com.reuxertz.genesis.registry.SpeciesRegistry;
 import net.minecraft.block.BlockFence;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.MobSpawnerBaseLogic;
@@ -28,17 +22,12 @@ import net.minecraft.tileentity.TileEntityMobSpawner;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.TextComponentString;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
-import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Locale;
 
 public class EntitySpawnEgg extends BaseItem {
     public EntitySpawnEgg() {

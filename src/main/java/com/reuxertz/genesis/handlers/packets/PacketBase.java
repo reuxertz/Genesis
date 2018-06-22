@@ -1,6 +1,6 @@
 package com.reuxertz.genesis.handlers.packets;
 
-import com.reuxertz.genesis.Genesis;
+import com.reuxertz.genesis.mod.Genesis;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.network.PacketBuffer;

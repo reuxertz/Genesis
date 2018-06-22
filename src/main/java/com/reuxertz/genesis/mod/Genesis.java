@@ -1,10 +1,9 @@
-package com.reuxertz.genesis;
+package com.reuxertz.genesis.mod;
 
 import com.reuxertz.genesis.api.IGenesisPlugin;
 import com.reuxertz.genesis.command.GenesisCommand;
 import com.reuxertz.genesis.handlers.ForgeHandler;
 import com.reuxertz.genesis.handlers.NetworkHandler;
-import com.reuxertz.genesis.internal.GenesisApiHandler;
 import com.reuxertz.genesis.proxy.CommonProxy;
 import com.reuxertz.genesis.registry.*;
 import net.minecraftforge.common.MinecraftForge;

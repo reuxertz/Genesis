@@ -1,17 +1,15 @@
 package com.reuxertz.genesis.registry;
 
-import com.reuxertz.genesis.Genesis;
+import com.reuxertz.genesis.mod.Genesis;
 import com.reuxertz.genesis.api.IGenesisRegistry;
 import com.reuxertz.genesis.api.blocks.BaseBlock;
 import com.reuxertz.genesis.api.blocks.BaseBlockMetal;
 import com.reuxertz.genesis.api.blocks.BaseBlockOre;
 import com.reuxertz.genesis.api.items.BaseIngot;
 import com.reuxertz.genesis.api.items.BaseNugget;
-import com.reuxertz.genesis.api.organisms.GeneData;
 import com.reuxertz.genesis.blocks.BaseBlockGrowable;
 import com.reuxertz.genesis.items.BaseCropSeed;
 import com.reuxertz.genesis.api.items.BaseItem;
-import com.reuxertz.genesis.api.organisms.SpeciesFeature;
 import com.reuxertz.genesis.render.RenderGenesisLiving;
 import com.reuxertz.genesis.tileentity.TileEntityBaseCrop;
 import net.minecraft.block.Block;
@@ -37,7 +35,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.reuxertz.genesis.Genesis.registry;
+import static com.reuxertz.genesis.mod.Genesis.registry;
 
 @Mod.EventBusSubscriber(modid = Genesis.MODID)
 public class GenesisRegistry implements IGenesisRegistry

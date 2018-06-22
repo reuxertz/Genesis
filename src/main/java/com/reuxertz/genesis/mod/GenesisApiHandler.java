@@ -1,6 +1,5 @@
-package com.reuxertz.genesis.internal;
+package com.reuxertz.genesis.mod;
 
-import com.reuxertz.genesis.Genesis;
 import com.reuxertz.genesis.api.GenesisPlugin;
 import com.reuxertz.genesis.api.IGenesisPlugin;
 import com.reuxertz.genesis.registry.GenesisRegistry;

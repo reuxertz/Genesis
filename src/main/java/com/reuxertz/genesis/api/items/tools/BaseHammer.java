@@ -1,7 +1,7 @@
 package com.reuxertz.genesis.api.items.tools;
 
 import com.google.common.collect.Sets;
-import com.reuxertz.genesis.Genesis;
+import com.reuxertz.genesis.mod.Genesis;
 import com.reuxertz.genesis.api.items.IBaseItem;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;

@@ -1,13 +1,11 @@
 package com.reuxertz.genesis.tileentity;
 
-import com.reuxertz.genesis.Genesis;
+import com.reuxertz.genesis.mod.Genesis;
 import com.reuxertz.genesis.blocks.BaseBlockGrowable;
-import com.reuxertz.genesis.organics.Genome;
 import com.reuxertz.genesis.organics.IOrganismContainer;
 import com.reuxertz.genesis.organics.Organism;
 import com.reuxertz.genesis.registry.RegistryObject;
 import com.reuxertz.genesis.util.BlockHelper;
-import com.reuxertz.genesis.util.EnergyHelper;
 import com.reuxertz.genesis.util.RandomHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockCrops;

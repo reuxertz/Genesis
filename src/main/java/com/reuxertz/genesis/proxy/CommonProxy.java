@@ -1,8 +1,7 @@
 package com.reuxertz.genesis.proxy;
 
-import com.reuxertz.genesis.Genesis;
+import com.reuxertz.genesis.mod.*;
 import com.reuxertz.genesis.handlers.GuiHandler;
-import com.reuxertz.genesis.internal.GenesisApiHandler;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;

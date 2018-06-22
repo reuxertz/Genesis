@@ -1,8 +1,6 @@
 package com.reuxertz.genesis.entities;
 
-import com.reuxertz.genesis.Genesis;
-import com.reuxertz.genesis.handlers.NetworkHandler;
-import com.reuxertz.genesis.handlers.packets.PacketOrganismNBT;
+import com.reuxertz.genesis.mod.Genesis;
 import com.reuxertz.genesis.organics.Genome;
 import com.reuxertz.genesis.organics.IOrganismContainer;
 import com.reuxertz.genesis.organics.Organism;

@@ -1,6 +1,6 @@
 package com.reuxertz.genesis.handlers;
 
-import com.reuxertz.genesis.Genesis;
+import com.reuxertz.genesis.mod.Genesis;
 import com.reuxertz.genesis.handlers.packets.PacketBase;
 import com.reuxertz.genesis.handlers.packets.PacketOrganismNBT;
 import net.minecraft.entity.player.EntityPlayer;

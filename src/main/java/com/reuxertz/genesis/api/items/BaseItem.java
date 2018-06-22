@@ -1,6 +1,5 @@
 package com.reuxertz.genesis.api.items;
 
-import com.reuxertz.genesis.Genesis;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;

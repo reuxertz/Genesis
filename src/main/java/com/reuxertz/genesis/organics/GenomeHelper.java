@@ -1,16 +1,12 @@
 package com.reuxertz.genesis.organics;
 
-import com.reuxertz.genesis.Genesis;
 import com.reuxertz.genesis.api.organisms.GeneData;
 import com.reuxertz.genesis.api.organisms.SpeciesFeature;
-import com.reuxertz.genesis.registry.RegistryObject;
 import com.reuxertz.genesis.registry.SpeciesRegistry;
 import com.reuxertz.genesis.util.MathHelper;
 import com.reuxertz.genesis.util.RandomHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraftforge.common.util.Constants;
 
 import java.util.ArrayList;
 import java.util.HashMap;
