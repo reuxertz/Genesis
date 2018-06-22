@@ -26,22 +26,21 @@ public class Flora implements IGenesisPlugin
     public String getModID() { return Flora.MODID; }
     public void register(IGenesisRegistry registry)
     {
-        registry
-            .registerCrop("onion")
-            .registerSpecies("onion",
-                Arrays.asList(
-                    new SpeciesFeature(SpeciesFeature.FeatureTypes.AdultMass, 2000),
-                    new SpeciesFeature(SpeciesFeature.FeatureTypes.AdultAgeTicks, 0),
-                    new SpeciesFeature(SpeciesFeature.FeatureTypes.NewbornMass, 10),
-                    new SpeciesFeature(SpeciesFeature.FeatureTypes.ClutchSize, 1.5)))
+        registry.registerCrop("onion")
+                .autoRegister(true)
+                .registerSpecies("onion",
+                        Arrays.asList(
+                            new SpeciesFeature(SpeciesFeature.FeatureTypes.AdultMass, 2000),
+                            new SpeciesFeature(SpeciesFeature.FeatureTypes.AdultAgeTicks, 0),
+                            new SpeciesFeature(SpeciesFeature.FeatureTypes.NewbornMass, 10),
+                            new SpeciesFeature(SpeciesFeature.FeatureTypes.ClutchSize, 1.5)))
                 .registerBreed("onion", "",
-                Arrays.asList(
-                    new GeneData(GeneData.GeneType.AdultMassFactor, 0, 0),
-                    new GeneData(GeneData.GeneType.GrowthFactor, 0, 0),
-                    new GeneData(GeneData.GeneType.NewBornMassFactor, 0, 0),
-                    new GeneData(GeneData.GeneType.ClutchSizeFactor, 0, 0))
-            )
-        ;
+                        Arrays.asList(
+                            new GeneData(GeneData.GeneType.AdultMassFactor, 0, 0),
+                            new GeneData(GeneData.GeneType.GrowthFactor, 0, 0),
+                            new GeneData(GeneData.GeneType.NewBornMassFactor, 0, 0),
+                            new GeneData(GeneData.GeneType.ClutchSizeFactor, 0, 0)));
+
 
         return;
     }

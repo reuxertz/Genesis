@@ -40,6 +40,12 @@ public class Fauna implements IGenesisPlugin
                 //.egg(MapColor.BROWN.colorValue, MapColor.GOLD.colorValue)
                 //.spawn(EnumCreatureType.CREATURE, 20, 1, 5, BiomeDictionary.getBiomes(BiomeDictionary.Type.FOREST))
                 .build(), new ModelPlayer(1.0f, false))
+                .autoRegister(true)
+                .registerOverlay("human", "skin", 0)
+                .registerOverlay("human", "eyes", 1)
+                .registerOverlay("human", "eyes_white", 1)
+                .registerOverlay("human", "hair", 1)
+                .registerOverlay("human", "mouth", 1)
                 .registerSpecies("human",
                     Arrays.asList(
                         new SpeciesFeature(SpeciesFeature.FeatureTypes.AdultMass, 70000),
@@ -63,7 +69,7 @@ public class Fauna implements IGenesisPlugin
                         new GeneData(GeneData.GeneType.EyesLayer, 1, .2, .7, 1),
                         new GeneData(GeneData.GeneType.MouthLayer, 1, 1, 1, 1)
                     ))
-                .registerBreed("human", "negroid",
+                    .registerBreed("human", "negroid",
                     Arrays.asList(
                         new GeneData(GeneData.GeneType.AdultMassFactor, 0, 0),
                         new GeneData(GeneData.GeneType.GrowthFactor, 0, 0),
@@ -75,7 +81,7 @@ public class Fauna implements IGenesisPlugin
                         new GeneData(GeneData.GeneType.EyesLayer, 1, .3, .2, .2),
                         new GeneData(GeneData.GeneType.MouthLayer, 1, 1, 1, 1)
                     ))
-                .registerBreed("human", "mongoloid",
+                    .registerBreed("human", "mongoloid",
                     Arrays.asList(
                         new GeneData(GeneData.GeneType.AdultMassFactor, 0, 0),
                         new GeneData(GeneData.GeneType.GrowthFactor, 0, 0),
@@ -86,12 +92,7 @@ public class Fauna implements IGenesisPlugin
                         new GeneData(GeneData.GeneType.HairLayer, 1, .5, .5, .4),
                         new GeneData(GeneData.GeneType.EyesLayer, 1, .4, .2, 0),
                         new GeneData(GeneData.GeneType.MouthLayer, 1, 1, 1, 1)
-                    ))
-                .registerOverlay("human", "skin", 0)
-                .registerOverlay("human", "eyes", 1)
-                .registerOverlay("human", "eyes_white", 1)
-                .registerOverlay("human", "hair", 1)
-                .registerOverlay("human", "mouth", 1);
+                    ));
 
         registry.registerEntity("ant", EntityEntryBuilder.create()
                 .entity(EntityAnt.class)

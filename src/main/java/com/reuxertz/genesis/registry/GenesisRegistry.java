@@ -201,12 +201,12 @@ public class GenesisRegistry implements IGenesisRegistry
         return;
     }
 
-    public IGenesisRegistry registerContent(RegistryObject registryObject)
+    public RegistryObject registerContent(RegistryObject registryObject)
     {
         if (registryObjectHashMap.keySet().contains(registryObject.name) ||
             registryObjectHashMap.values().contains(registryObject)  ||
             registryObjectList.contains(registryObject))
-            return this;
+            return registryObject;
 
         registryObjectHashMap.put(registryObject.name, registryObject);
         registryObjectList.add(registryObject);
@@ -217,69 +217,68 @@ public class GenesisRegistry implements IGenesisRegistry
         if (registryObject.item != null)
             registryItemHashMap.put(registryObject.item, registryObject.name);
 
-        return this;
+        return registryObject;
     }
-    public IGenesisRegistry registerItem(String name)
+    public RegistryObject registerItem(String name)
     {
-        registerContent(new RegistryObject(modId, name, new BaseItem(name)));
-        return this;
+        return registerContent(new RegistryObject(registry, modId, name, new BaseItem(name)));
+        
     }
-    public IGenesisRegistry registerItem(String name, Item item)
+    public RegistryObject registerItem(String name, Item item)
     {
-        registerContent(new RegistryObject(modId, name, item));
-        return this;
+        return registerContent(new RegistryObject(registry, modId, name, item));
     }
 
     //Environment
-    public IGenesisRegistry registerOre(String name)
+    public RegistryObject registerOre(String name)
     {
-        registerContent(new RegistryObject(modId, "ore_" + name, new BaseBlockOre("ore_" + name)));
-        return this;
+        return registerContent(new RegistryObject(registry, modId, "ore_" + name, new BaseBlockOre("ore_" + name)));
+        
     }
-    public IGenesisRegistry registerMetal(String name)
+    public RegistryObject registerMetal(String name)
     {
-        this.registerMetal(name, true, true, true);
-        return this;
+        return this.registerMetal(name, true, true, true);
     }
-    public IGenesisRegistry registerMetal(String name, boolean isAlloy, boolean hasNuggetIngot, boolean enableArmorSet)
+    public RegistryObject registerMetal(String name, boolean isAlloy, boolean hasNuggetIngot, boolean enableArmorSet)
     {
+        RegistryObject result;
         if (!isAlloy) {
             registerOre(name);
         }
 
-        registerMetalBlock(name);
+        result = registerMetalBlock(name);
 
         if (hasNuggetIngot)
         {
-            registerIngot(name);
+            result = registerIngot(name);
             registerNugget(name);
         }
 
         if (enableArmorSet) {
-            registerContent(new RegistryObject(modId, "chain_" + name, new BaseItem("chain_" + name)));
+            registerContent(new RegistryObject(registry, modId, "chain_" + name, new BaseItem("chain_" + name)));
             registerArmorSet(name);
         }
 
-        return this;
+        return result;
     }
-    public IGenesisRegistry registerMetalBlock(String name)
+    public RegistryObject registerMetalBlock(String name)
     {
-        registerContent(new RegistryObject(modId, "block_" + name, new BaseBlockMetal("block_" + name)));
-        return this;
+        return registerContent(new RegistryObject(registry, modId, "block_" + name, new BaseBlockMetal("block_" + name)));
+        
     }
-    public IGenesisRegistry registerIngot(String name)
+    public RegistryObject registerIngot(String name)
     {
-        registerContent(new RegistryObject(modId, "ingot_" + name, new BaseIngot("ingot_" + name)));
-        return this;
+        return registerContent(new RegistryObject(registry, modId, "ingot_" + name, new BaseIngot("ingot_" + name)));
+        
     }
-    public IGenesisRegistry registerNugget(String name)
+    public RegistryObject registerNugget(String name)
     {
-        registerContent(new RegistryObject(modId, "nugget_" + name, new BaseNugget("nugget_" + name)));
-        return this;
+        return registerContent(new RegistryObject(registry, modId, "nugget_" + name, new BaseNugget("nugget_" + name)));
+        
     }
 
     //Player
-    public IGenesisRegistry registerArmor(String name, String type)
+    public RegistryObject registerArmor(String name, String type)
     {
         if (type != null)
             type = type + "_";
@@ -287,81 +286,56 @@ public class GenesisRegistry implements IGenesisRegistry
         if (type == null)
             type = "";
 
-        registerContent(new RegistryObject(modId, "chestplate_" + type + name, new BaseBlockMetal("chestplate_" + name)));
-        registerContent(new RegistryObject(modId, "boots_" + type + name, new BaseBlockMetal("boots_" + name)));
-        registerContent(new RegistryObject(modId, "leggings_" + type + name, new BaseBlockMetal("leggings_" + name)));
-        registerContent(new RegistryObject(modId, "helmet_" + type + name, new BaseBlockMetal("helmet_" + name)));
 
-        return this;
+        RegistryObject result = registerContent(new RegistryObject(registry, modId, "chestplate_" + type + name, new BaseBlockMetal("chestplate_" + name)));
+        registerContent(new RegistryObject(registry, modId, "boots_" + type + name, new BaseBlockMetal("boots_" + name)));
+        registerContent(new RegistryObject(registry, modId, "leggings_" + type + name, new BaseBlockMetal("leggings_" + name)));
+        registerContent(new RegistryObject(registry, modId, "helmet_" + type + name, new BaseBlockMetal("helmet_" + name)));
+
+        return result;
     }
-    public IGenesisRegistry registerArmorSet(String name)
+    public RegistryObject registerArmorSet(String name)
     {
-        registerArmor(name, null);
+        RegistryObject result = registerArmor(name, null);
         registerArmor(name, "chain");
         registerArmor(name, "studded");
 
-        return this;
+        return result;
     }
 
     //Plants
-    public IGenesisRegistry registerCrop(String name)
+    public RegistryObject registerCrop(String name)
     {
         BaseBlockGrowable blockCrop = new BaseBlockGrowable("crop_" + name);
         BaseCropSeed crop = new BaseCropSeed(name, blockCrop);
         BaseCropSeed seed = new BaseCropSeed("seed_" + name, blockCrop);
 
-        registerContent(new RegistryObject(modId, name, crop));
-        registerContent(new RegistryObject(modId, "seed_" + name, seed));
+        RegistryObject result = registerContent(new RegistryObject(registry, modId, name, crop));
+        registerContent(new RegistryObject(registry, modId, "seed_" + name, seed));
 
-        registerContent(new RegistryObject(modId, "crop_" + name, blockCrop));
+        registerContent(new RegistryObject(registry, modId, "crop_" + name, blockCrop));
 
         seed.setBlockCrop(blockCrop);
         crop.setBlockCrop(blockCrop);
         blockCrop.setSeed(seed).setCrop(crop);
 
-        return this;
+        return result;
     }
 
     //Entities
-    public IGenesisRegistry registerEntity(String name, EntityEntry entityEntry, ModelBase modelBase)
+    public RegistryObject registerEntity(String name, EntityEntry entityEntry, ModelBase modelBase)
     {
-        registerContent(new RegistryObject(modId, name, entityEntry, modelBase));
-        return this;
+        return registerContent(new RegistryObject(registry, modId, name, entityEntry, modelBase));
+        
     }
-    public IGenesisRegistry registerEntity(String name, EntityEntry entityEntry, ModelResourceLocation modelResourceLocation)
+    public RegistryObject registerEntity(String name, EntityEntry entityEntry, ModelResourceLocation modelResourceLocation)
     {
-        registerContent(new RegistryObject(modId, name, entityEntry, modelResourceLocation));
-        return this;
+        return registerContent(new RegistryObject(registry, modId, name, entityEntry, modelResourceLocation));
+        
     }
-    public IGenesisRegistry registerOverlay(String name, String overlayName, int zIndex)
-    {
-        RegistryObject registryObject = registryObjectHashMap.get(name);
-
-        RegistryObject.LayerResourceLocation re = new RegistryObject.LayerResourceLocation(modId,  "textures/entities/" + name + "/" + name + "_" + overlayName + ".png", zIndex);
-        registryObject.entityLayerResourceMap.put(overlayName, re);
-
-        return this;
-    }
-
-    //Ecosystem
-    public IGenesisRegistry registerBreed(String name, List<GeneData> genes)
-    {
-        SpeciesRegistry.registerBreed(name, "", genes);
-        return this;
-    }
-    public IGenesisRegistry registerBreed(String name, String subspecies, List<GeneData> genes)
-    {
-        SpeciesRegistry.registerBreed(name, subspecies, genes);
-        return this;
-    }
-    public IGenesisRegistry registerSpecies(String name, List<SpeciesFeature> speciesData)
-    {
-        SpeciesRegistry.registerSpecies(name, speciesData);
-        return this;
-    }
-//    public IGenesisRegistry registerSpecies(String name, List<SpeciesFeature> speciesData, List<GeneData> geneData)
+//    public RegistryObject registerSpecies(String name, List<SpeciesFeature> speciesData, List<GeneData> geneData)
 //    {
 //        SpeciesRegistry.registerSpecies(name, speciesData, geneData);
-//        return this;
+//        
 //    }
 }
