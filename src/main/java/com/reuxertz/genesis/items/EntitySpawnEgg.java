@@ -1,6 +1,7 @@
-package com.reuxertz.genesis.api.items;
+package com.reuxertz.genesis.items;
 
 import com.reuxertz.genesis.Genesis;
+import com.reuxertz.genesis.api.items.BaseItem;
 import com.reuxertz.genesis.api.organisms.GeneData;
 import com.reuxertz.genesis.api.organisms.SpeciesFeature;
 import com.reuxertz.genesis.entities.EntityHuman;

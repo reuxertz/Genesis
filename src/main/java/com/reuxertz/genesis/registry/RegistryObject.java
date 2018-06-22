@@ -31,6 +31,7 @@ public class RegistryObject {
 
     public String name;
     public String modId;
+    public boolean autoRegister = false;
 
     public EntityEntry entityEntry;
     public Map<String, LayerResourceLocation> entityLayerResourceMap = new HashMap<>();
@@ -98,19 +99,17 @@ public class RegistryObject {
         this.entityEntry = entry;
         this.entityModel = modelbase;
     }
+    public RegistryObject(String modId, String name, EntityEntry entry, ModelResourceLocation modelResourceLocation)
+    {
+        this(modId, name);
+        this.entityEntry = entry;
+        this.entityModelResourceLocation = modelResourceLocation;
+    }
 
-//    public void registerItem()
-//    {
-//        _isItemRegistered = true;
-//    }
-//    public void registerBlock()
-//    {
-//        _isBlockRegistered = true;
-//    }
-//    public void registerEntity()
-//    {
-//        _isEntityRegistered = true;
-//    }
+    public void autoRegister(boolean autoRegister)
+    {
+        this.autoRegister = autoRegister;
+    }
 
     public void initModel()
     {

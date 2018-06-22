@@ -4,7 +4,7 @@ import com.reuxertz.genesis.Genesis;
 import com.reuxertz.genesis.api.GenesisPlugin;
 import com.reuxertz.genesis.api.IGenesisPlugin;
 import com.reuxertz.genesis.api.IGenesisRegistry;
-import com.reuxertz.genesis.api.items.EntitySpawnEgg;
+import com.reuxertz.genesis.items.EntitySpawnEgg;
 
 @GenesisPlugin
 public class GenesisInternalPlugin implements IGenesisPlugin {

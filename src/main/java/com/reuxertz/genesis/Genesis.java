@@ -8,6 +8,7 @@ import com.reuxertz.genesis.internal.GenesisApiHandler;
 import com.reuxertz.genesis.proxy.CommonProxy;
 import com.reuxertz.genesis.registry.*;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.client.model.obj.OBJLoader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -41,6 +42,7 @@ public class Genesis
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event){
 
+        OBJLoader.INSTANCE.addDomain(MODID);
         GenesisApiHandler.loadPlugins(event.getAsmData());
         MinecraftForge.EVENT_BUS.register(new ForgeHandler());
         NetworkHandler.preInit();

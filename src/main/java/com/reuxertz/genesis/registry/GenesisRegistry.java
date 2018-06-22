@@ -7,7 +7,6 @@ import com.reuxertz.genesis.api.blocks.BaseBlockMetal;
 import com.reuxertz.genesis.api.blocks.BaseBlockOre;
 import com.reuxertz.genesis.api.items.BaseIngot;
 import com.reuxertz.genesis.api.items.BaseNugget;
-import com.reuxertz.genesis.api.items.EntitySpawnEgg;
 import com.reuxertz.genesis.api.organisms.GeneData;
 import com.reuxertz.genesis.blocks.BaseBlockGrowable;
 import com.reuxertz.genesis.items.BaseCropSeed;
@@ -18,10 +17,10 @@ import com.reuxertz.genesis.tileentity.TileEntityBaseCrop;
 import net.minecraft.block.Block;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.block.model.IBakedModel;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelBakeEvent;
 import net.minecraftforge.event.RegistryEvent;
@@ -81,7 +80,10 @@ public class GenesisRegistry implements IGenesisRegistry
 
             RegistryObject regobj = GenesisRegistry.registryObjectList.get(i);
 
-            if (regobj.block != null && regobj.item == null &&
+                if (!regobj.autoRegister)
+                    continue;
+
+                if (regobj.block != null && regobj.item == null &&
                     regobj.block instanceof BaseBlock && ((BaseBlock)regobj.block).isSimple)
             {
                 Block block =(Block)regobj.block;
@@ -106,21 +108,32 @@ public class GenesisRegistry implements IGenesisRegistry
 
         GameRegistry.registerTileEntity(TileEntityBaseCrop.class, "genesis:tileEntityBaseCrop");
 
-        for (int i = 0; i < GenesisRegistry.registryObjectList.size(); i++)
+        for (int i = 0; i < GenesisRegistry.registryObjectList.size(); i++) {
+            RegistryObject registryObject = GenesisRegistry.registryObjectList.get(i);
+
+            if (!registryObject.autoRegister)
+                continue;
+
             if (GenesisRegistry.registryObjectList.get(i).block != null) {
                 if (GenesisRegistry.registryObjectList.get(i).isBlockRegistered())
                     continue;
 
                 RegistryObject regobj = registry.registryObjectList.get(i);
-                event.getRegistry().register((Block)regobj.block);
+                event.getRegistry().register((Block) regobj.block);
             }
+        }
     }
 
     @SubscribeEvent
     public static void registerEntities(RegistryEvent.Register<EntityEntry> event)
     {
-        for (int i = 0; i < GenesisRegistry.registryObjectList.size(); i++)
-            if (GenesisRegistry.registryObjectList.get(i).entityEntry != null) {
+        for (int i = 0; i < GenesisRegistry.registryObjectList.size(); i++) {
+            RegistryObject registryObject = GenesisRegistry.registryObjectList.get(i);
+
+            if (!registryObject.autoRegister)
+                continue;
+
+            if (registryObject.entityEntry != null) {
 //                if (registryObjectList.get(i).isEntityRegistered())
 //                    continue;
 
@@ -128,10 +141,9 @@ public class GenesisRegistry implements IGenesisRegistry
                 event.getRegistry().register(regobj.entityEntry);
 
             }
-
+        }
         return;
     }
-
 
     @SubscribeEvent
     public void onModelBake(ModelBakeEvent event)
@@ -158,6 +170,10 @@ public class GenesisRegistry implements IGenesisRegistry
         for (int i = 0; i < GenesisRegistry.registryObjectList.size(); i++)
         {
             RegistryObject regobj = registry.registryObjectList.get(i);
+
+            if (!regobj.autoRegister)
+                continue;
+
             if (regobj.entityEntry != null)
             {
                 RenderingRegistry.registerEntityRenderingHandler(regobj.entityEntry.getEntityClass(),
@@ -310,6 +326,11 @@ public class GenesisRegistry implements IGenesisRegistry
     public IGenesisRegistry registerEntity(String name, EntityEntry entityEntry, ModelBase modelBase)
     {
         registerContent(new RegistryObject(modId, name, entityEntry, modelBase));
+        return this;
+    }
+    public IGenesisRegistry registerEntity(String name, EntityEntry entityEntry, ModelResourceLocation modelResourceLocation)
+    {
+        registerContent(new RegistryObject(modId, name, entityEntry, modelResourceLocation));
         return this;
     }
     public IGenesisRegistry registerOverlay(String name, String overlayName, int zIndex)
