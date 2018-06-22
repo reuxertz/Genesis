@@ -25,7 +25,7 @@ public class GenetiCraft implements IGenesisPlugin
     public String getModID() { return com.reuxertz.geneticraft.GenetiCraft.MODID; }
     public void register(IGenesisRegistry registry)
     {
-        registry.registerItem("syringe");
+        //registry.registerItem("syringe").autoRegister();
 
         return;
     }

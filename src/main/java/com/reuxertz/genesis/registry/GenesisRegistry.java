@@ -242,39 +242,38 @@ public class GenesisRegistry implements IGenesisRegistry
     public RegistryObject registerMetal(String name, boolean isAlloy, boolean hasNuggetIngot, boolean enableArmorSet)
     {
         RegistryObject result;
+        List<RegistryObject> group = new ArrayList<>();
         if (!isAlloy) {
-            registerOre(name);
+            group.add(registerOre(name));
         }
 
         result = registerMetalBlock(name);
 
         if (hasNuggetIngot)
         {
-            result = registerIngot(name);
-            registerNugget(name);
+            group.add(registerIngot(name));
+            group.add(registerNugget(name));
         }
 
         if (enableArmorSet) {
-            registerContent(new RegistryObject(registry, modId, "chain_" + name, new BaseItem("chain_" + name)));
-            registerArmorSet(name);
+            group.add(registerContent(new RegistryObject(registry, modId, "chain_" + name, new BaseItem("chain_" + name))));
+            group.addAll(registerArmorSet(name).getGroup());
         }
 
+        result.groupWith(group);
         return result;
     }
     public RegistryObject registerMetalBlock(String name)
     {
         return registerContent(new RegistryObject(registry, modId, "block_" + name, new BaseBlockMetal("block_" + name)));
-        
     }
     public RegistryObject registerIngot(String name)
     {
         return registerContent(new RegistryObject(registry, modId, "ingot_" + name, new BaseIngot("ingot_" + name)));
-        
     }
     public RegistryObject registerNugget(String name)
     {
         return registerContent(new RegistryObject(registry, modId, "nugget_" + name, new BaseNugget("nugget_" + name)));
-        
     }
 
     //Player
@@ -286,20 +285,25 @@ public class GenesisRegistry implements IGenesisRegistry
         if (type == null)
             type = "";
 
-
         RegistryObject result = registerContent(new RegistryObject(registry, modId, "chestplate_" + type + name, new BaseBlockMetal("chestplate_" + name)));
-        registerContent(new RegistryObject(registry, modId, "boots_" + type + name, new BaseBlockMetal("boots_" + name)));
-        registerContent(new RegistryObject(registry, modId, "leggings_" + type + name, new BaseBlockMetal("leggings_" + name)));
-        registerContent(new RegistryObject(registry, modId, "helmet_" + type + name, new BaseBlockMetal("helmet_" + name)));
+        List<RegistryObject> group = new ArrayList<>();
 
+        group.add(registerContent(new RegistryObject(registry, modId, "boots_" + type + name, new BaseBlockMetal("boots_" + name))));
+        group.add(registerContent(new RegistryObject(registry, modId, "leggings_" + type + name, new BaseBlockMetal("leggings_" + name))));
+        group.add(registerContent(new RegistryObject(registry, modId, "helmet_" + type + name, new BaseBlockMetal("helmet_" + name))));
+
+        result.groupWith(group);
         return result;
     }
     public RegistryObject registerArmorSet(String name)
     {
         RegistryObject result = registerArmor(name, null);
-        registerArmor(name, "chain");
-        registerArmor(name, "studded");
+        List<RegistryObject> group = new ArrayList<>();
 
+        group.addAll(registerArmor(name, "chain").getGroup());
+        group.addAll(registerArmor(name, "studded").getGroup());
+
+        result.groupWith(group);
         return result;
     }
 
@@ -311,14 +315,17 @@ public class GenesisRegistry implements IGenesisRegistry
         BaseCropSeed seed = new BaseCropSeed("seed_" + name, blockCrop);
 
         RegistryObject result = registerContent(new RegistryObject(registry, modId, name, crop));
-        registerContent(new RegistryObject(registry, modId, "seed_" + name, seed));
+        List<RegistryObject> group = new ArrayList<>();
 
-        registerContent(new RegistryObject(registry, modId, "crop_" + name, blockCrop));
+        group.add(registerContent(new RegistryObject(registry, modId, "seed_" + name, seed)));
+
+        group.add(registerContent(new RegistryObject(registry, modId, "crop_" + name, blockCrop)));
 
         seed.setBlockCrop(blockCrop);
         crop.setBlockCrop(blockCrop);
         blockCrop.setSeed(seed).setCrop(crop);
 
+        result.groupWith(group);
         return result;
     }
 

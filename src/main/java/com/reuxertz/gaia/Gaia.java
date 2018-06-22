@@ -21,22 +21,22 @@ public class Gaia implements IGenesisPlugin
     public String getModID() { return Gaia.MODID; }
     public void register(IGenesisRegistry registry)
     {
-        registry.registerMetal("sulfur", false, false, false);
-        registry.registerMetal("salt", false, false, false);
+        registry.registerMetal("sulfur", false, false, false).autoRegister();
+        registry.registerMetal("salt", false, false, false).autoRegister();
 
-        registry.registerMetal("lead", false, true, false);
-        registry.registerMetal("silver", false, true, false);
-        registry.registerMetal("aluminum", false, true, false);
-        registry.registerMetal("nickel", false, true, false);
-        registry.registerMetal("zinc", false, true, false);
+        registry.registerMetal("lead", false, true, false).autoRegister();
+        registry.registerMetal("silver", false, true, false).autoRegister();
+        registry.registerMetal("aluminum", false, true, false).autoRegister();
+        registry.registerMetal("nickel", false, true, false).autoRegister();
+        registry.registerMetal("zinc", false, true, false).autoRegister();
 
-        registry.registerMetal("sapphire", false, false, false);
-        registry.registerMetal("ruby", false, false, false);
+        registry.registerMetal("sapphire", false, false, false).autoRegister();
+        registry.registerMetal("ruby", false, false, false).autoRegister();
 
-        registry.registerMetal("copper");
-        registry.registerMetal("bronze", true, true, true);
-        registry.registerMetal("iron");
-        registry.registerMetal("steel", true, true, true);
+        registry.registerMetal("copper").autoRegister();
+        registry.registerMetal("bronze", true, true, true).autoRegister();
+        registry.registerMetal("iron").autoRegister();
+        registry.registerMetal("steel", true, true, true).autoRegister();
 
         return;
     }

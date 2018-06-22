@@ -5,20 +5,15 @@ import com.reuxertz.genesis.api.blocks.IBaseBlock;
 import com.reuxertz.genesis.api.items.IBaseItem;
 import com.reuxertz.genesis.api.organisms.GeneData;
 import com.reuxertz.genesis.api.organisms.SpeciesFeature;
-import com.reuxertz.genesis.render.LayerGenesisLiving;
 import com.reuxertz.genesis.render.RenderGenesisLiving;
 import net.minecraft.block.Block;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.EntityEntry;
-import sun.plugin.javascript.navig4.Layer;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class RegistryObject {
 
@@ -33,11 +28,12 @@ public class RegistryObject {
         }
     }
 
-    protected boolean _isItemRegistered;
-    protected boolean _isBlockRegistered;
-    protected boolean _isModelInitialized;
-    protected boolean _isEntityRegistered;
+    protected boolean isItemRegistered;
+    protected boolean isBlockRegistered;
+    protected boolean isModelInitialized;
+    protected boolean isEntityRegistered;
     protected boolean autoRegister = false;
+    protected Set<RegistryObject> registryGroupSet = new HashSet<>();
 
     public String name;
     public String modId;
@@ -54,22 +50,68 @@ public class RegistryObject {
 
     public Item item;
 
-    public void setAutoRegister(boolean autoRegister)
+    public RegistryObject autoRegister()
     {
-        this.autoRegister = autoRegister;
+        return autoRegister(true);
+    }
+    public RegistryObject autoRegister(boolean includeGroup)
+    {
+        this.autoRegister = true;
+
+        if (includeGroup) {
+            Object[] groupArray = registryGroupSet.toArray();
+            for (int i = 0; i < groupArray.length; i++)
+                ((RegistryObject)groupArray[i]).autoRegister(false);
+        }
+
+        return this;
+    }
+    public void groupWith(List<RegistryObject> registryObjects)
+    {
+        for (int i = 0; i < registryObjects.size(); i++)
+            groupWith(registryObjects.get(i));
+    }
+    public void groupWith(RegistryObject registryObject)
+    {
+        List<RegistryObject> groupedRegistryObjects = new ArrayList<RegistryObject>();
+        groupedRegistryObjects.addAll(this.registryGroupSet);
+        groupedRegistryObjects.add(this);
+
+        for (int i = 0; i < groupedRegistryObjects.size(); i++)
+        {
+            RegistryObject groupedRegistryObject = groupedRegistryObjects.get(i);
+
+            if (!groupedRegistryObject.registryGroupSet.contains(registryObject))
+                groupedRegistryObject.registryGroupSet.add(registryObject);
+            else
+                i = i;
+
+
+            if (!registryObject.registryGroupSet.contains(groupedRegistryObject))
+                registryObject.registryGroupSet.add(groupedRegistryObject);
+            else
+                i = i;
+        }
     }
 
+    public List<RegistryObject> getGroup()
+    {
+        List<RegistryObject> result = new ArrayList<>();
+        result.add(this);
+        result.addAll(this.registryGroupSet);
+        return result;
+    }
     public boolean isItemRegistered()
     {
-        return _isItemRegistered;
+        return isItemRegistered;
     }
     public boolean isBlockRegistered()
     {
-        return _isBlockRegistered;
+        return isBlockRegistered;
     }
     public boolean isModelInitialized()
     {
-        return _isModelInitialized;
+        return isModelInitialized;
     }
 
     public String getUnlocalizedString()
@@ -116,11 +158,6 @@ public class RegistryObject {
         this.entityModelResourceLocation = modelResourceLocation;
     }
 
-    public RegistryObject autoRegister(boolean autoRegister)
-    {
-        this.autoRegister = autoRegister;
-        return this;
-    }
     public RegistryObject registerOverlay(String name, String overlayName, int zIndex)
     {
         RegistryObject.LayerResourceLocation re = new RegistryObject.LayerResourceLocation(modId,  "textures/entities/" + name + "/" + name + "_" + overlayName + ".png", zIndex);
@@ -158,6 +195,6 @@ public class RegistryObject {
         if (block != null && block instanceof IBaseBlock)
             ((IBaseBlock)block).initModel();
 
-        _isModelInitialized = true;
+        isModelInitialized = true;
     }
 }

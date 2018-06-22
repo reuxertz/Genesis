@@ -27,7 +27,7 @@ public class Flora implements IGenesisPlugin
     public void register(IGenesisRegistry registry)
     {
         registry.registerCrop("onion")
-                .autoRegister(true)
+                .autoRegister()
                 .registerSpecies("onion",
                         Arrays.asList(
                             new SpeciesFeature(SpeciesFeature.FeatureTypes.AdultMass, 2000),
