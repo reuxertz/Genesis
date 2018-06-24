@@ -1,5 +1,6 @@
 package com.reuxertz.genesis.registry;
 
+import com.reuxertz.genesis.api.IEventHandler;
 import com.reuxertz.genesis.api.IGenesisRegistry;
 import com.reuxertz.genesis.api.blocks.IBaseBlock;
 import com.reuxertz.genesis.api.items.IBaseItem;
@@ -165,6 +166,14 @@ public class RegistryObject {
 
         return this;
     }
+
+    //Events
+    public RegistryObject registerEventHandler(String name, IEventHandler eventHandler)
+    {
+        EventRegistry.registerEventHandler(name, eventHandler);
+        return this;
+    }
+
     //Ecosystem
     public RegistryObject registerBreed(String name, List<GeneData> genes)
     {

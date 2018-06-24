@@ -1,5 +1,8 @@
 package com.reuxertz.genesis.registry;
 
+import com.reuxertz.genesis.api.IEventHandler;
+import com.reuxertz.genesis.api.organisms.GeneData;
+import com.reuxertz.genesis.api.organisms.SpeciesFeature;
 import com.reuxertz.genesis.mod.Genesis;
 import com.reuxertz.genesis.api.IGenesisRegistry;
 import com.reuxertz.genesis.api.blocks.BaseBlock;
@@ -161,7 +164,6 @@ public class GenesisRegistry implements IGenesisRegistry
         }
     }
 
-
     @SuppressWarnings("unchecked")
     public static void registerEntityRenderers()
     {
@@ -217,92 +219,12 @@ public class GenesisRegistry implements IGenesisRegistry
 
         return registryObject;
     }
-    public RegistryObject registerItem(String name)
-    {
-        return registerContent(new RegistryObject(registry, modId, name, new BaseItem(name)));
-        
-    }
     public RegistryObject registerItem(String name, Item item)
     {
         return registerContent(new RegistryObject(registry, modId, name, item));
     }
-
-    //Environment
-    public RegistryObject registerOre(String name)
-    {
-        return registerContent(new RegistryObject(registry, modId, "ore_" + name, new BaseBlockOre("ore_" + name)));
-        
-    }
-    public RegistryObject registerMetal(String name)
-    {
-        return this.registerMetal(name, true, true, true);
-    }
-    public RegistryObject registerMetal(String name, boolean isAlloy, boolean hasNuggetIngot, boolean enableArmorSet)
-    {
-        RegistryObject result;
-        List<RegistryObject> group = new ArrayList<>();
-        if (!isAlloy) {
-            group.add(registerOre(name));
-        }
-
-        result = registerMetalBlock(name);
-
-        if (hasNuggetIngot)
-        {
-            group.add(registerIngot(name));
-            group.add(registerNugget(name));
-        }
-
-        if (enableArmorSet) {
-            group.add(registerContent(new RegistryObject(registry, modId, "chain_" + name, new BaseItem("chain_" + name))));
-            group.addAll(registerArmorSet(name).getGroup());
-        }
-
-        result.groupWith(group);
-        return result;
-    }
-    public RegistryObject registerMetalBlock(String name)
-    {
-        return registerContent(new RegistryObject(registry, modId, "block_" + name, new BaseBlockMetal("block_" + name)));
-    }
-    public RegistryObject registerIngot(String name)
-    {
-        return registerContent(new RegistryObject(registry, modId, "ingot_" + name, new BaseIngot("ingot_" + name)));
-    }
-    public RegistryObject registerNugget(String name)
-    {
-        return registerContent(new RegistryObject(registry, modId, "nugget_" + name, new BaseNugget("nugget_" + name)));
-    }
-
-    //Player
-    public RegistryObject registerArmor(String name, String type)
-    {
-        if (type != null)
-            type = type + "_";
-
-        if (type == null)
-            type = "";
-
-        RegistryObject result = registerContent(new RegistryObject(registry, modId, "chestplate_" + type + name, new BaseBlockMetal("chestplate_" + name)));
-        List<RegistryObject> group = new ArrayList<>();
-
-        group.add(registerContent(new RegistryObject(registry, modId, "boots_" + type + name, new BaseBlockMetal("boots_" + name))));
-        group.add(registerContent(new RegistryObject(registry, modId, "leggings_" + type + name, new BaseBlockMetal("leggings_" + name))));
-        group.add(registerContent(new RegistryObject(registry, modId, "helmet_" + type + name, new BaseBlockMetal("helmet_" + name))));
-
-        result.groupWith(group);
-        return result;
-    }
-    public RegistryObject registerArmorSet(String name)
-    {
-        RegistryObject result = registerArmor(name, null);
-        List<RegistryObject> group = new ArrayList<>();
-
-        group.addAll(registerArmor(name, "chain").getGroup());
-        group.addAll(registerArmor(name, "studded").getGroup());
-
-        result.groupWith(group);
-        return result;
+    public RegistryObject registerBlock(String name, Block block) {
+        return Genesis.registry.registerContent(new RegistryObject(registry, modId, name, block));
     }
 
     //Plants
@@ -326,7 +248,6 @@ public class GenesisRegistry implements IGenesisRegistry
         result.groupWith(group);
         return result;
     }
-
     //Entities
     public RegistryObject registerEntity(String name, EntityEntry entityEntry, ModelBase modelBase)
     {
@@ -338,9 +259,24 @@ public class GenesisRegistry implements IGenesisRegistry
         return registerContent(new RegistryObject(registry, modId, name, entityEntry, modelResourceLocation));
         
     }
-//    public RegistryObject registerSpecies(String name, List<SpeciesFeature> speciesData, List<GeneData> geneData)
-//    {
-//        SpeciesRegistry.registerSpecies(name, speciesData, geneData);
-//        
-//    }
+
+    //Genetics
+    public void registerEventHandler(String name, IEventHandler eventHandler)
+    {
+        EventRegistry.registerEventHandler(name, eventHandler);
+    }
+    public void registerBreed(String name, List<GeneData> genes)
+    {
+        SpeciesRegistry.registerBreed(name, "", genes);
+    }
+    public void registerBreed(String name, String subspecies, List<GeneData> genes)
+    {
+        SpeciesRegistry.registerBreed(name, subspecies, genes);
+    }
+    public void registerSpecies(String name, List<SpeciesFeature> speciesData)
+    {
+        SpeciesRegistry.registerSpecies(name, speciesData);
+
+    }
+
 }

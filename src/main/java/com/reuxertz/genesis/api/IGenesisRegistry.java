@@ -4,6 +4,7 @@ import com.reuxertz.genesis.api.organisms.GeneData;
 import com.reuxertz.genesis.api.organisms.SpeciesFeature;
 import com.reuxertz.genesis.registry.RegistryObject;
 import com.reuxertz.genesis.render.LayerGenesisLiving;
+import net.minecraft.block.Block;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
@@ -14,27 +15,20 @@ import java.util.Map;
 
 public interface IGenesisRegistry {
 
-    RegistryObject registerItem(String name);
     RegistryObject registerItem(String name, Item item);
-
-    //Metal/Ore registers
-    RegistryObject registerOre(String name);
-    RegistryObject registerNugget(String name);
-    RegistryObject registerIngot(String name);
-    RegistryObject registerMetalBlock(String name);
-    RegistryObject registerMetal(String name);
-    RegistryObject registerMetal(String name, boolean isAlloy, boolean hasNuggetIngot, boolean enableArmorSet);
+    RegistryObject registerBlock(String name, Block block);
 
     //Plant registers
     RegistryObject registerCrop(String name);
 
     //Entity registers
     RegistryObject registerEntity(String name, EntityEntry entityEntry, ModelBase modelBase);
-//    RegistryObject registerOverlay(String name, String overlayName, int zIndex);
+
+    void registerEventHandler(String name, IEventHandler eventHandler);
 
     //Ecosystem registers
-//    RegistryObject registerBreed(String name, List<GeneData> genes);
-//    RegistryObject registerBreed(String name, String subspecies, List<GeneData> genes);
-//    RegistryObject registerSpecies(String name, List<SpeciesFeature> speciesData);
+    void registerBreed(String name, List<GeneData> genes);
+    void registerBreed(String name, String subspecies, List<GeneData> genes);
+    void registerSpecies(String name, List<SpeciesFeature> speciesData);
 
 }

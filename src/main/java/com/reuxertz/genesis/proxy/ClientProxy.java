@@ -32,17 +32,6 @@ public class ClientProxy extends CommonProxy {
     @Override
     public void init(FMLInitializationEvent event) {
         super.init(event);
-
-        //GenesisRegistry.registerEntityLayerRenderers();
-
-
-//        for (int i = 0; i < Genesis.registry.)
-//            for (Map.Entry<String, ResourceLocation> entry : regobj.entityLayerResourceMap.entrySet() ) {
-//                String key = entry.getKey();
-//                ResourceLocation resourceLocation = entry.getValue();
-//            }
-
-        int a = 8;
     }
 
     @Override
@@ -54,22 +43,10 @@ public class ClientProxy extends CommonProxy {
         renderItem = Minecraft.getMinecraft().getRenderItem();
         itemModelMesher = renderItem.getItemModelMesher();
 
-        registerEntityRenderers();
-        registerObjRegRenderers();
-
         ((IReloadableResourceManager) Minecraft.getMinecraft().getResourceManager()).registerReloadListener(resourceManager -> {
             GenesisApiHandler.register();
             Genesis.logger.info("Reloaded API");
         });
-    }
-
-    // Protected Functions
-    protected void registerObjRegRenderers() {
-
-    }
-
-    protected void registerEntityRenderers() {
-
     }
 
     @SubscribeEvent
