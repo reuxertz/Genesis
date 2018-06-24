@@ -5,6 +5,8 @@ import com.reuxertz.genesis.api.blocks.BaseBlockOre;
 import com.reuxertz.genesis.api.items.BaseIngot;
 import com.reuxertz.genesis.api.items.BaseItem;
 import com.reuxertz.genesis.api.items.BaseNugget;
+import com.reuxertz.genesis.blocks.BaseBlockGrowable;
+import com.reuxertz.genesis.items.BaseCropSeed;
 import com.reuxertz.genesis.mod.Genesis;
 import com.reuxertz.genesis.registry.RegistryObject;
 
@@ -97,9 +99,25 @@ public class RegistryHelper {
         return result;
     }
 
-    public RegistryObject registerItem(String name, String modId)
+    //Plants
+    public static RegistryObject registerCrop(String name, String modId)
     {
-        return Genesis.registry.registerContent(new RegistryObject(registry, modId, name, new BaseItem(name)));
+        BaseBlockGrowable blockCrop = new BaseBlockGrowable("crop_" + name);
+        BaseCropSeed crop = new BaseCropSeed(name, blockCrop);
+        BaseCropSeed seed = new BaseCropSeed("seed_" + name, blockCrop);
 
+        RegistryObject result = Genesis.registry.registerContent(new RegistryObject(registry, modId, name, crop));
+        List<RegistryObject> group = new ArrayList<>();
+
+        group.add(Genesis.registry.registerContent(new RegistryObject(registry, modId, "seed_" + name, seed)));
+
+        group.add(Genesis.registry.registerContent(new RegistryObject(registry, modId, "crop_" + name, blockCrop)));
+
+        seed.setBlockCrop(blockCrop);
+        crop.setBlockCrop(blockCrop);
+        blockCrop.setSeed(seed).setCrop(crop);
+
+        result.groupWith(group);
+        return result;
     }
 }

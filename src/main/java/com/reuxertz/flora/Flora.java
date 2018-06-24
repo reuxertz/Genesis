@@ -5,6 +5,7 @@ import com.reuxertz.genesis.api.IGenesisPlugin;
 import com.reuxertz.genesis.api.IGenesisRegistry;
 import com.reuxertz.genesis.api.organisms.GeneData;
 import com.reuxertz.genesis.api.organisms.SpeciesFeature;
+import com.reuxertz.genesis.util.RegistryHelper;
 import com.reuxertz.genesis.util.TimeHelper;
 import net.minecraftforge.fml.common.Mod;
 
@@ -26,7 +27,7 @@ public class Flora implements IGenesisPlugin
     public String getModID() { return Flora.MODID; }
     public void register(IGenesisRegistry registry)
     {
-        registry.registerCrop("onion")
+        RegistryHelper.registerCrop("onion", getModID())
                 .autoRegister()
                 .registerSpecies("onion",
                         Arrays.asList(

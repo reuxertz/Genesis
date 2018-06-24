@@ -227,27 +227,6 @@ public class GenesisRegistry implements IGenesisRegistry
         return Genesis.registry.registerContent(new RegistryObject(registry, modId, name, block));
     }
 
-    //Plants
-    public RegistryObject registerCrop(String name)
-    {
-        BaseBlockGrowable blockCrop = new BaseBlockGrowable("crop_" + name);
-        BaseCropSeed crop = new BaseCropSeed(name, blockCrop);
-        BaseCropSeed seed = new BaseCropSeed("seed_" + name, blockCrop);
-
-        RegistryObject result = registerContent(new RegistryObject(registry, modId, name, crop));
-        List<RegistryObject> group = new ArrayList<>();
-
-        group.add(registerContent(new RegistryObject(registry, modId, "seed_" + name, seed)));
-
-        group.add(registerContent(new RegistryObject(registry, modId, "crop_" + name, blockCrop)));
-
-        seed.setBlockCrop(blockCrop);
-        crop.setBlockCrop(blockCrop);
-        blockCrop.setSeed(seed).setCrop(crop);
-
-        result.groupWith(group);
-        return result;
-    }
     //Entities
     public RegistryObject registerEntity(String name, EntityEntry entityEntry, ModelBase modelBase)
     {

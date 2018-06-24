@@ -17,11 +17,6 @@ public interface IGenesisRegistry {
 
     RegistryObject registerItem(String name, Item item);
     RegistryObject registerBlock(String name, Block block);
-
-    //Plant registers
-    RegistryObject registerCrop(String name);
-
-    //Entity registers
     RegistryObject registerEntity(String name, EntityEntry entityEntry, ModelBase modelBase);
 
     void registerEventHandler(String name, IEventHandler eventHandler);
