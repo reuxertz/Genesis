@@ -4,11 +4,11 @@ import com.reuxertz.genesis.api.IGenesisPlugin;
 import com.reuxertz.genesis.api.IGenesisRegistry;
 import net.minecraftforge.fml.common.Mod;
 
-@Mod(
-        modid = com.reuxertz.geneticraft.GenetiCraft.MODID,
-        name = com.reuxertz.geneticraft.GenetiCraft.NAME,
-        version = com.reuxertz.geneticraft.GenetiCraft.VERSION,
-        dependencies = "required-after:forge@[14.23.3.2655,)", useMetadata = true)
+//@Mod(
+//        modid = com.reuxertz.geneticraft.GenetiCraft.MODID,
+//        name = com.reuxertz.geneticraft.GenetiCraft.NAME,
+//        version = com.reuxertz.geneticraft.GenetiCraft.VERSION,
+//        dependencies = "required-after:forge@[14.23.3.2655,)", useMetadata = true)
 
 public class GenetiCraft implements IGenesisPlugin
 {
@@ -16,7 +16,7 @@ public class GenetiCraft implements IGenesisPlugin
     public static final String NAME = "GenetiCraft";
     public static final String VERSION = "1.0";
 
-    @GenesisPlugin
+    //@GenesisPlugin
     public GenetiCraft()
     {
         return;

@@ -2,9 +2,6 @@ package com.reuxertz.genesis.organics;
 
 import com.reuxertz.genesis.api.organisms.GeneData;
 import com.reuxertz.genesis.api.organisms.SpeciesFeature;
-import com.reuxertz.genesis.handlers.NetworkHandler;
-import com.reuxertz.genesis.handlers.packets.PacketOrganismNBT;
-import com.reuxertz.genesis.tileentity.TileEntityBaseCrop;
 import com.reuxertz.genesis.util.EnergyHelper;
 import com.reuxertz.genesis.util.MathHelper;
 import com.reuxertz.genesis.util.TickCounter;

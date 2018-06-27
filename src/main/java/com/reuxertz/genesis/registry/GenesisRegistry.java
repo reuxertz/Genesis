@@ -6,15 +6,8 @@ import com.reuxertz.genesis.api.organisms.SpeciesFeature;
 import com.reuxertz.genesis.mod.Genesis;
 import com.reuxertz.genesis.api.IGenesisRegistry;
 import com.reuxertz.genesis.api.blocks.BaseBlock;
-import com.reuxertz.genesis.api.blocks.BaseBlockMetal;
-import com.reuxertz.genesis.api.blocks.BaseBlockOre;
-import com.reuxertz.genesis.api.items.BaseIngot;
-import com.reuxertz.genesis.api.items.BaseNugget;
-import com.reuxertz.genesis.blocks.BaseBlockGrowable;
-import com.reuxertz.genesis.items.BaseCropSeed;
-import com.reuxertz.genesis.api.items.BaseItem;
 import com.reuxertz.genesis.render.RenderGenesisLiving;
-import com.reuxertz.genesis.tileentity.TileEntityBaseCrop;
+import com.reuxertz.genesis.tileentities.TileEntityBaseCrop;
 import net.minecraft.block.Block;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.block.model.IBakedModel;
@@ -27,11 +20,8 @@ import net.minecraftforge.client.event.ModelBakeEvent;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -74,7 +64,7 @@ public class GenesisRegistry implements IGenesisRegistry
         this.modId = modId;
     }
 
-    @SubscribeEvent
+    //@SubscribeEvent
     public static void registerItems(RegistryEvent.Register<Item> event) {
 
         for (int i = 0; i < GenesisRegistry.registryObjectList.size(); i++) {
@@ -103,8 +93,39 @@ public class GenesisRegistry implements IGenesisRegistry
 
         return;
     }
+    public static void registerModItems(RegistryEvent.Register<Item> event, String modId) {
 
-    @SubscribeEvent
+        for (int i = 0; i < GenesisRegistry.registryObjectList.size(); i++) {
+
+            RegistryObject regobj = GenesisRegistry.registryObjectList.get(i);
+
+            if (!regobj.autoRegister)
+                continue;
+
+            if (modId != null && regobj.modId != modId)
+                continue;
+
+            if (regobj.block != null && regobj.item == null &&
+                    regobj.block instanceof BaseBlock && ((BaseBlock)regobj.block).isSimple)
+            {
+                Block block =(Block)regobj.block;
+
+                ItemBlock bl = new ItemBlock(block);
+                bl.setRegistryName(block.getUnlocalizedName());
+                bl.setUnlocalizedName(block.getUnlocalizedName());
+                regobj.item = bl;
+            }
+
+            if (regobj.item != null) {
+                Item item = GenesisRegistry.registryObjectList.get(i).item;
+                event.getRegistry().register(item);
+            }
+        }
+
+        return;
+    }
+
+    //@SubscribeEvent
     public static void registerBlocks(RegistryEvent.Register<Block> event) {
 
         GameRegistry.registerTileEntity(TileEntityBaseCrop.class, "genesis:tileEntityBaseCrop");
@@ -124,8 +145,30 @@ public class GenesisRegistry implements IGenesisRegistry
             }
         }
     }
+    public static void registerModBlocks(RegistryEvent.Register<Block> event, String modId) {
 
-    @SubscribeEvent
+        GameRegistry.registerTileEntity(TileEntityBaseCrop.class, "genesis:tileEntityBaseCrop");
+
+        for (int i = 0; i < GenesisRegistry.registryObjectList.size(); i++) {
+            RegistryObject registryObject = GenesisRegistry.registryObjectList.get(i);
+
+            if (!registryObject.autoRegister)
+                continue;
+
+            if (modId != null && registryObject.modId != modId)
+                continue;
+
+            if (GenesisRegistry.registryObjectList.get(i).block != null) {
+                if (GenesisRegistry.registryObjectList.get(i).isBlockRegistered())
+                    continue;
+
+                RegistryObject regobj = registry.registryObjectList.get(i);
+                event.getRegistry().register((Block) regobj.block);
+            }
+        }
+    }
+
+    //@SubscribeEvent
     public static void registerEntities(RegistryEvent.Register<EntityEntry> event)
     {
         for (int i = 0; i < GenesisRegistry.registryObjectList.size(); i++) {
@@ -145,8 +188,30 @@ public class GenesisRegistry implements IGenesisRegistry
         }
         return;
     }
+    public static void registerModEntities(RegistryEvent.Register<EntityEntry> event, String modId)
+    {
+        for (int i = 0; i < GenesisRegistry.registryObjectList.size(); i++) {
+            RegistryObject registryObject = GenesisRegistry.registryObjectList.get(i);
 
-    @SubscribeEvent
+            if (!registryObject.autoRegister)
+                continue;
+
+            if (modId != null && registryObject.modId != modId)
+                continue;
+
+            if (registryObject.entityEntry != null) {
+//                if (registryObjectList.get(i).isEntityRegistered())
+//                    continue;
+
+                RegistryObject regobj = registry.registryObjectList.get(i);
+                event.getRegistry().register(regobj.entityEntry);
+
+            }
+        }
+        return;
+    }
+
+    //@SubscribeEvent
     public void onModelBake(ModelBakeEvent event)
     {
         for (int i = 0; i < GenesisRegistry.registryObjectList.size(); i++) {
@@ -165,13 +230,16 @@ public class GenesisRegistry implements IGenesisRegistry
     }
 
     @SuppressWarnings("unchecked")
-    public static void registerEntityRenderers()
+    public static void registerEntityRenderers(String modId)
     {
         for (int i = 0; i < GenesisRegistry.registryObjectList.size(); i++)
         {
             RegistryObject regobj = registry.registryObjectList.get(i);
 
             if (!regobj.autoRegister)
+                continue;
+
+            if (modId != null && regobj.modId != modId)
                 continue;
 
             if (regobj.entityEntry != null)
@@ -192,11 +260,11 @@ public class GenesisRegistry implements IGenesisRegistry
         }
     }
 
-    @SideOnly(Side.CLIENT)
-    public static void initModels()
+    public static void initModels(String modId)
     {
         for (int i = 0; i < GenesisRegistry.registryObjectList.size(); i++)
-            GenesisRegistry.registryObjectList.get(i).initModel();
+            if (GenesisRegistry.registryObjectList.get(i).autoRegister && GenesisRegistry.registryObjectList.get(i).modId == modId)
+                GenesisRegistry.registryObjectList.get(i).initModel();
 
         return;
     }

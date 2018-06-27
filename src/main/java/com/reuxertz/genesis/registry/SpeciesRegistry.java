@@ -31,7 +31,6 @@ public class SpeciesRegistry {
     public static class BreedRegistryObject
     {
         public List<GeneData> geneData;
-        public Map<String, List<GeneData>> breedDataMap = new HashMap<>();
         public String speciesName;
         public String breedName;
 
@@ -40,8 +39,6 @@ public class SpeciesRegistry {
             this.geneData = geneData;
             this.speciesName = speciesName;
             this.breedName = breedName;
-
-            breedDataMap.put(breedName, new ArrayList<>(geneData));
         }
     }
 

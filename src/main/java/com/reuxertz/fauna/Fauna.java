@@ -1,5 +1,6 @@
 package com.reuxertz.fauna;
 
+import com.reuxertz.fauna.entities.*;
 import com.reuxertz.genesis.api.GenesisPlugin;
 import com.reuxertz.genesis.api.IGenesisPlugin;
 import com.reuxertz.genesis.api.IGenesisRegistry;
@@ -7,16 +8,22 @@ import com.reuxertz.genesis.api.organisms.GeneData;
 import com.reuxertz.genesis.api.organisms.SpeciesFeature;
 import com.reuxertz.genesis.entities.EntityAnt;
 import com.reuxertz.genesis.entities.EntityHuman;
+import com.reuxertz.genesis.registry.GenesisRegistry;
 import com.reuxertz.genesis.util.TimeHelper;
-import net.minecraft.block.material.MapColor;
+import net.minecraft.block.Block;
 import net.minecraft.client.model.ModelPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.EntityEntryBuilder;
 
 import java.util.Arrays;
 
 @Mod(modid = Fauna.MODID, name = Fauna.NAME, version = Fauna.VERSION, dependencies = "required-after:forge@[14.23.3.2655,)", useMetadata = true)
+@Mod.EventBusSubscriber(modid = Fauna.MODID)
 public class Fauna implements IGenesisPlugin
 {
     public static final String MODID = "fauna";
@@ -32,6 +39,8 @@ public class Fauna implements IGenesisPlugin
     public String getModID() { return Fauna.MODID; }
     public void register(IGenesisRegistry registry)
     {
+        registry.registerItem("entity_spawn_egg", new EntitySpawnEgg()).autoRegister();
+
         registry.registerEntity("human", EntityEntryBuilder.create()
                 .entity(EntityHuman.class)
                 .id(new ResourceLocation(Fauna.MODID, "human"), 0)
@@ -101,7 +110,7 @@ public class Fauna implements IGenesisPlugin
                 .tracker(80, 3, false)
                 //.egg(MapColor.BROWN.colorValue, MapColor.GOLD.colorValue)
                 //.spawn(EnumCreatureType.CREATURE, 20, 1, 5, BiomeDictionary.getBiomes(BiomeDictionary.Type.FOREST))
-                .build(), new ModelPlayer(1.0f, false))
+                .build(), new ModelAnt())
                 .autoRegister()
                 .registerSpecies("ant",
                     Arrays.asList(
@@ -131,6 +140,31 @@ public class Fauna implements IGenesisPlugin
         ;
 
         //registry.registerEntity("human", registree);
+
+        return;
+    }
+
+
+    @SubscribeEvent
+    public static void registerEntities(RegistryEvent.Register<EntityEntry> event) {
+
+        GenesisRegistry.registerModEntities(event, Fauna.MODID);
+
+        return;
+    }
+
+    @SubscribeEvent
+    public static void registerBlocks(RegistryEvent.Register<Block> event) {
+
+        GenesisRegistry.registerModBlocks(event, Fauna.MODID);
+
+        return;
+    }
+
+    @SubscribeEvent
+    public static void registerItems(RegistryEvent.Register<Item> event) {
+
+        GenesisRegistry.registerModItems(event, Fauna.MODID);
 
         return;
     }

@@ -1,12 +1,12 @@
 package com.reuxertz.genesis.util;
 
-import com.reuxertz.genesis.api.blocks.BaseBlockMetal;
-import com.reuxertz.genesis.api.blocks.BaseBlockOre;
-import com.reuxertz.genesis.api.items.BaseIngot;
+import com.reuxertz.gaia.blocks.BaseBlockMetal;
+import com.reuxertz.gaia.blocks.BaseBlockOre;
+import com.reuxertz.gaia.items.BaseIngot;
 import com.reuxertz.genesis.api.items.BaseItem;
-import com.reuxertz.genesis.api.items.BaseNugget;
-import com.reuxertz.genesis.blocks.BaseBlockGrowable;
-import com.reuxertz.genesis.items.BaseCropSeed;
+import com.reuxertz.gaia.items.BaseNugget;
+import com.reuxertz.flora.blocks.BaseBlockGrowable;
+import com.reuxertz.flora.items.BaseCropSeed;
 import com.reuxertz.genesis.mod.Genesis;
 import com.reuxertz.genesis.registry.RegistryObject;
 

@@ -1,6 +1,8 @@
-package com.reuxertz.genesis.proxy;
+package com.reuxertz.fauna;
 
-import com.reuxertz.genesis.mod.*;
+import com.reuxertz.genesis.mod.Genesis;
+import com.reuxertz.genesis.mod.GenesisApiHandler;
+import com.reuxertz.genesis.proxy.CommonProxy;
 import com.reuxertz.genesis.registry.GenesisRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemModelMesher;
@@ -8,6 +10,7 @@ import net.minecraft.client.renderer.RenderItem;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.resources.IReloadableResourceManager;
 import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.fml.common.FMLModContainer;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
@@ -15,29 +18,24 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 
-@Mod.EventBusSubscriber(value = Side.CLIENT, modid = Genesis.MODID)
-public class ClientProxy extends CommonProxy {
+@Mod.EventBusSubscriber(value = Side.CLIENT, modid = Fauna.MODID)
+public class ClientProxy
+{
     public RenderManager renderManager;
     public RenderItem renderItem;
     public ItemModelMesher itemModelMesher;
 
-    @Override
     public void preInit(FMLPreInitializationEvent event) {
 
-        super.preInit(event);
-
-        //Genesis.registry.registerEntityRenderers();
+        Genesis.registry.registerEntityRenderers(Fauna.MODID);
     }
 
-    @Override
     public void init(FMLInitializationEvent event) {
-        super.init(event);
+
     }
 
-    @Override
     public void postInit(FMLPostInitializationEvent event) {
 
-        super.postInit(event);
 
         renderManager = Minecraft.getMinecraft().getRenderManager();
         renderItem = Minecraft.getMinecraft().getRenderItem();
@@ -49,10 +47,8 @@ public class ClientProxy extends CommonProxy {
         });
     }
 
-    //@SubscribeEvent
+    @SubscribeEvent
     public static void registerModels(ModelRegistryEvent event) {
-        //GenesisRegistry.initModels();
-        return;
+        GenesisRegistry.initModels(Fauna.MODID);
     }
-
 }
