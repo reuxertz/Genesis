@@ -17,7 +17,7 @@ public class GenesisMod implements IGenesisPlugin {
     
     @Override
     public String getModID() {
-	return Genesis.MODID;
+	    return Genesis.MODID;
     }
 
 

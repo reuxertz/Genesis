@@ -34,7 +34,7 @@ import java.util.Map;
 
 import static com.reuxertz.genesis.mod.Genesis.registry;
 
-//@Mod.EventBusSubscriber(modid = Genesis.MODID)
+@Mod.EventBusSubscriber(modid = Genesis.MODID)
 public class GenesisRegistry implements IGenesisRegistry
 {
     public interface IRegistryObjectAction {

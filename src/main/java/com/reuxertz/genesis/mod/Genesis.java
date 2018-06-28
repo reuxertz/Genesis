@@ -22,7 +22,7 @@ import org.apache.logging.log4j.Logger;
 import java.util.ArrayList;
 import java.util.List;
 
-//@Mod(modid = Genesis.MODID, name = Genesis.NAME, version = Genesis.VERSION, dependencies = "required-after:forge@[14.23.3.2655,)", useMetadata = true)
+@Mod(modid = Genesis.MODID, name = Genesis.NAME, version = Genesis.VERSION, dependencies = "required-after:forge@[14.23.3.2655,)", useMetadata = true)
 public class Genesis
 {
     public static final String MODID = "genesis";
@@ -33,7 +33,7 @@ public class Genesis
     public static CommonProxy proxy;
 
     //@Mod.Instance
-    //public static List<IGenesisPlugin> plugins = new ArrayList();
+    public static List<IGenesisPlugin> plugins = new ArrayList();
     public static GenesisRegistry registry = new GenesisRegistry();
     public static SimpleNetworkWrapper networkInstance = NetworkRegistry.INSTANCE.newSimpleChannel(Genesis.MODID);
     public static Logger logger;
