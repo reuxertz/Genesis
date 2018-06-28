@@ -1,4 +1,4 @@
-package com.reuxertz.fauna;
+package com.reuxertz.fauna.items;
 
 import com.reuxertz.genesis.mod.Genesis;
 import com.reuxertz.genesis.api.items.BaseItem;
@@ -163,6 +163,8 @@ public class EntitySpawnEgg extends BaseItem {
                 yOffset = 0.5D;
             }
 
+            boolean b = this.bFull3D;
+
             RegistryObject registryObject = Genesis.registry.getRegistryObject(stack.getTagCompound().getString("name"));
             String subspecies = stack.getTagCompound().getString("subspecies");
 
@@ -170,6 +172,7 @@ public class EntitySpawnEgg extends BaseItem {
             double adultMass = SpeciesRegistry.getSpeciesFeature(registryObject.name, SpeciesFeature.FeatureTypes.AdultMass).values.get(0);
             Entity entity = null;
             try {
+
                 entity = entityClass.getConstructor(World.class, RegistryObject.class, String.class, Double.class, Double.class)
                         .newInstance(player.world, registryObject, subspecies, ((Double)1.0d), ((Double)adultMass));
 

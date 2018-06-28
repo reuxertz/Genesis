@@ -120,7 +120,7 @@ public class RegistryObject {
         return modId + "." + name;
     }
 
-    public void setRender(RenderGenesisLiving renderGenesisLiving) { this.renderGenesisLiving = renderGenesisLiving; }
+    //public void setRender(RenderGenesisLiving renderGenesisLiving) { this.renderGenesisLiving = renderGenesisLiving; }
 
     protected RegistryObject(IGenesisRegistry registry, String modId, String name) {
         this.modId = modId;

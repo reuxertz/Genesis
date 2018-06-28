@@ -3,6 +3,7 @@ package com.reuxertz.genesis.mod;
 import com.reuxertz.genesis.api.IGenesisPlugin;
 import com.reuxertz.genesis.command.GenesisCommand;
 import com.reuxertz.genesis.handlers.ForgeHandler;
+import com.reuxertz.genesis.handlers.GuiHandler;
 import com.reuxertz.genesis.handlers.NetworkHandler;
 import com.reuxertz.genesis.proxy.CommonProxy;
 import com.reuxertz.genesis.registry.*;
@@ -21,7 +22,7 @@ import org.apache.logging.log4j.Logger;
 import java.util.ArrayList;
 import java.util.List;
 
-@Mod(modid = Genesis.MODID, name = Genesis.NAME, version = Genesis.VERSION, dependencies = "required-after:forge@[14.23.3.2655,)", useMetadata = true)
+//@Mod(modid = Genesis.MODID, name = Genesis.NAME, version = Genesis.VERSION, dependencies = "required-after:forge@[14.23.3.2655,)", useMetadata = true)
 public class Genesis
 {
     public static final String MODID = "genesis";
@@ -31,10 +32,9 @@ public class Genesis
     @SidedProxy(clientSide = "com.reuxertz.genesis.proxy.ClientProxy", serverSide = "com.reuxertz.genesis.proxy.ServerProxy")
     public static CommonProxy proxy;
 
-    @Mod.Instance
-    public static Genesis instance;
+    //@Mod.Instance
     public static List<IGenesisPlugin> plugins = new ArrayList();
-    public static GenesisRegistry registry = new GenesisRegistry("genesis");
+    public static GenesisRegistry registry = new GenesisRegistry();
     public static SimpleNetworkWrapper networkInstance = NetworkRegistry.INSTANCE.newSimpleChannel(Genesis.MODID);
     public static Logger logger;
 
@@ -53,6 +53,7 @@ public class Genesis
     @Mod.EventHandler
     public void init(FMLInitializationEvent e) {
         proxy.init(e);
+        NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
     }
 
     @Mod.EventHandler

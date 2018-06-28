@@ -29,7 +29,6 @@ public class CommonProxy implements IGuiHandler {
     }
 
     public void init(FMLInitializationEvent e) {
-        NetworkRegistry.INSTANCE.registerGuiHandler(Genesis.instance, new GuiHandler());
     }
 
     public void postInit(FMLPostInitializationEvent e) {

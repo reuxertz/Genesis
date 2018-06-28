@@ -19,7 +19,9 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelBakeEvent;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.ModContainer;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -43,8 +45,6 @@ public class GenesisRegistry implements IGenesisRegistry
     private static List<RegistryObject> registryObjectList = new ArrayList<>();
     private static List<String> registeredModIds = new ArrayList<>();
 
-    private final String modId;
-
     public void iterate(IRegistryObjectAction action)
     {
         for (int i = 0 ; i < registryObjectList.size(); i++)
@@ -60,8 +60,7 @@ public class GenesisRegistry implements IGenesisRegistry
         return registryObjectHashMap.get(registryItemHashMap.get(item));
     }
 
-    public GenesisRegistry(String modId) {
-        this.modId = modId;
+    public GenesisRegistry() {
     }
 
     //@SubscribeEvent
@@ -199,6 +198,9 @@ public class GenesisRegistry implements IGenesisRegistry
             if (modId != null && registryObject.modId != modId)
                 continue;
 
+
+            ModContainer mc = Loader.instance().activeModContainer();
+
             if (registryObject.entityEntry != null) {
 //                if (registryObjectList.get(i).isEntityRegistered())
 //                    continue;
@@ -252,7 +254,7 @@ public class GenesisRegistry implements IGenesisRegistry
                                     return new ResourceLocation(regobj.modId + ":" + "textures/entities/" + regobj.name + "/" + regobj.name + ".png");
                                 }
                         };
-                        regobj.setRender(renderGenesisLiving);
+                        //regobj.setRender(renderGenesisLiving);
                         return renderGenesisLiving;
                     }
                 );
@@ -287,21 +289,21 @@ public class GenesisRegistry implements IGenesisRegistry
 
         return registryObject;
     }
-    public RegistryObject registerItem(String name, Item item)
+    public RegistryObject registerItem(String name, String modId, Item item)
     {
         return registerContent(new RegistryObject(registry, modId, name, item));
     }
-    public RegistryObject registerBlock(String name, Block block) {
+    public RegistryObject registerBlock(String name, String modId, Block block) {
         return Genesis.registry.registerContent(new RegistryObject(registry, modId, name, block));
     }
 
     //Entities
-    public RegistryObject registerEntity(String name, EntityEntry entityEntry, ModelBase modelBase)
+    public RegistryObject registerEntity(String name, String modId, EntityEntry entityEntry, ModelBase modelBase)
     {
         return registerContent(new RegistryObject(registry, modId, name, entityEntry, modelBase));
         
     }
-    public RegistryObject registerEntity(String name, EntityEntry entityEntry, ModelResourceLocation modelResourceLocation)
+    public RegistryObject registerEntity(String name, String modId, EntityEntry entityEntry, ModelResourceLocation modelResourceLocation)
     {
         return registerContent(new RegistryObject(registry, modId, name, entityEntry, modelResourceLocation));
         

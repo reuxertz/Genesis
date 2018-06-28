@@ -13,7 +13,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 
-public abstract class EntityOrganism extends EntityCreature implements IOrganismContainer, IEntityAdditionalSpawnData
+public abstract class EntityOrganism extends EntityCreature implements IOrganismContainer//, IEntityAdditionalSpawnData
         //,IEntityAdditionalSpawnData
 {
     protected Organism organism;
@@ -74,6 +74,8 @@ public abstract class EntityOrganism extends EntityCreature implements IOrganism
 
     public void writeSpawnData(ByteBuf buffer) {
 
+        boolean isClient = world.isRemote;
+
         NBTTagCompound nbtTagCompound = new NBTTagCompound();
         writeEntityToNBT(nbtTagCompound);
 
@@ -84,6 +86,9 @@ public abstract class EntityOrganism extends EntityCreature implements IOrganism
         ByteBufUtils.writeTag(buffer, nbtTagCompound);
     }
     public void readSpawnData(ByteBuf additionalData) {
+
+        boolean isClient = world.isRemote;
+
         NBTTagCompound nbtTagCompound = ByteBufUtils.readTag(additionalData);
         readEntityFromNBT(nbtTagCompound);
         registryObject = Genesis.registry.getRegistryObject(nbtTagCompound.getString("name"));
@@ -91,6 +96,8 @@ public abstract class EntityOrganism extends EntityCreature implements IOrganism
 
     public void writeEntityToNBT(NBTTagCompound compound)
     {
+        boolean isClient = world.isRemote;
+
         compound = organism.writeToNBT(compound);
 
         super.writeEntityToNBT(compound);
@@ -98,6 +105,8 @@ public abstract class EntityOrganism extends EntityCreature implements IOrganism
 
     public void readEntityFromNBT(NBTTagCompound compound)
     {
+        boolean isClient = world.isRemote;
+
         super.readEntityFromNBT(compound);
 
         readOrganismFromNBT(compound);

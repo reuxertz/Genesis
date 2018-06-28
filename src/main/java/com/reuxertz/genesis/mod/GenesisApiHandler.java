@@ -32,7 +32,7 @@ public class GenesisApiHandler {
 	    long time = System.currentTimeMillis();
 	    Genesis.logger.info("Sending registry event to: {}" , plugin.getModID());
 	    try {
-		plugin.register(new GenesisRegistry(plugin.getModID()));
+		plugin.register(Genesis.registry);
 	    } catch (Throwable t) {
 		throw new RuntimeException("Exception while loading Genesis plugin :" + plugin.getModID(), t);
 	    }

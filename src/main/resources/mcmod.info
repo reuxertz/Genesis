@@ -8,7 +8,21 @@
   "url": "",
   "updateUrl": "",
   "authorList": ["reuxertz"],
-  "credits": "reuxertz, JurassiCraft Team",
+  "credits": "reuxertz, wyn-price",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+},
+{
+  "modid": "fauna",
+  "name": "Fauna",
+  "description": "Brings Animals to minecraft.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["reuxertz"],
+  "credits": "reuxertz",
   "logoFile": "",
   "screenshots": [],
   "dependencies": []

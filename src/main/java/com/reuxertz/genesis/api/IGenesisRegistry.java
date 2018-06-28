@@ -15,9 +15,9 @@ import java.util.Map;
 
 public interface IGenesisRegistry {
 
-    RegistryObject registerItem(String name, Item item);
-    RegistryObject registerBlock(String name, Block block);
-    RegistryObject registerEntity(String name, EntityEntry entityEntry, ModelBase modelBase);
+    RegistryObject registerItem(String name, String modId, Item item);
+    RegistryObject registerBlock(String name, String modId, Block block);
+    RegistryObject registerEntity(String name, String modId, EntityEntry entityEntry, ModelBase modelBase);
 
     void registerEventHandler(String name, IEventHandler eventHandler);
 
