@@ -33,7 +33,7 @@ public class Genesis
     public static CommonProxy proxy;
 
     //@Mod.Instance
-    public static List<IGenesisPlugin> plugins = new ArrayList();
+    //public static List<IGenesisPlugin> plugins = new ArrayList();
     public static GenesisRegistry registry = new GenesisRegistry();
     public static SimpleNetworkWrapper networkInstance = NetworkRegistry.INSTANCE.newSimpleChannel(Genesis.MODID);
     public static Logger logger;
@@ -42,7 +42,7 @@ public class Genesis
     public void preInit(FMLPreInitializationEvent event){
 
         OBJLoader.INSTANCE.addDomain(MODID);
-        GenesisApiHandler.loadPlugins(event.getAsmData());
+        //GenesisApiHandler.loadPlugins(event.getAsmData());
         MinecraftForge.EVENT_BUS.register(new ForgeHandler());
         NetworkHandler.preInit();
 

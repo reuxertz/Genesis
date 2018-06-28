@@ -23,6 +23,7 @@ import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.ModContainer;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -33,7 +34,7 @@ import java.util.Map;
 
 import static com.reuxertz.genesis.mod.Genesis.registry;
 
-@Mod.EventBusSubscriber(modid = Genesis.MODID)
+//@Mod.EventBusSubscriber(modid = Genesis.MODID)
 public class GenesisRegistry implements IGenesisRegistry
 {
     public interface IRegistryObjectAction {
@@ -99,7 +100,7 @@ public class GenesisRegistry implements IGenesisRegistry
 
             RegistryObject regobj = GenesisRegistry.registryObjectList.get(i);
 
-            if (!regobj.autoRegister)
+            if (regobj.autoRegister)
                 continue;
 
             if (modId != null && regobj.modId != modId)
@@ -152,7 +153,7 @@ public class GenesisRegistry implements IGenesisRegistry
         for (int i = 0; i < GenesisRegistry.registryObjectList.size(); i++) {
             RegistryObject registryObject = GenesisRegistry.registryObjectList.get(i);
 
-            if (!registryObject.autoRegister)
+            if (registryObject.autoRegister)
                 continue;
 
             if (modId != null && registryObject.modId != modId)
@@ -178,9 +179,6 @@ public class GenesisRegistry implements IGenesisRegistry
                 continue;
 
             if (registryObject.entityEntry != null) {
-//                if (registryObjectList.get(i).isEntityRegistered())
-//                    continue;
-
                 RegistryObject regobj = registry.registryObjectList.get(i);
                 event.getRegistry().register(regobj.entityEntry);
 
@@ -193,18 +191,13 @@ public class GenesisRegistry implements IGenesisRegistry
         for (int i = 0; i < GenesisRegistry.registryObjectList.size(); i++) {
             RegistryObject registryObject = GenesisRegistry.registryObjectList.get(i);
 
-            if (!registryObject.autoRegister)
+            if (registryObject.autoRegister)
                 continue;
 
             if (modId != null && registryObject.modId != modId)
                 continue;
 
-            ModContainer mc = Loader.instance().activeModContainer();
-
             if (registryObject.entityEntry != null) {
-//                if (registryObjectList.get(i).isEntityRegistered())
-//                    continue;
-
                 RegistryObject regobj = registry.registryObjectList.get(i);
                 event.getRegistry().register(regobj.entityEntry);
 
@@ -238,7 +231,7 @@ public class GenesisRegistry implements IGenesisRegistry
         {
             RegistryObject regobj = registry.registryObjectList.get(i);
 
-            if (!regobj.autoRegister)
+            if (regobj.autoRegister)
                 continue;
 
             if (modId != null && regobj.modId != modId)
@@ -265,7 +258,7 @@ public class GenesisRegistry implements IGenesisRegistry
     public static void initModels(String modId)
     {
         for (int i = 0; i < GenesisRegistry.registryObjectList.size(); i++)
-            if (GenesisRegistry.registryObjectList.get(i).autoRegister && GenesisRegistry.registryObjectList.get(i).modId == modId)
+            if (!GenesisRegistry.registryObjectList.get(i).autoRegister && GenesisRegistry.registryObjectList.get(i).modId == modId)
                 GenesisRegistry.registryObjectList.get(i).initModel();
 
         return;

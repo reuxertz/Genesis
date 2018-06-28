@@ -21,7 +21,7 @@ public class CommonProxy implements IGuiHandler {
 
     public void preInit(FMLPreInitializationEvent e) {
 
-        GenesisApiHandler.register();
+        //GenesisApiHandler.register();
 
         File directory = e.getModConfigurationDirectory();
         config = new Configuration(new File(directory.getPath(), "genesis.cfg"));

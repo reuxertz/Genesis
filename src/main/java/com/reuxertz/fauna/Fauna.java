@@ -47,7 +47,7 @@ public class Fauna implements IGenesisPlugin
     @SidedProxy(clientSide = "com.reuxertz.fauna.proxy.ClientProxy", serverSide = "com.reuxertz.fauna.proxy.ServerProxy")
     public static ServerProxy proxy;
 
-    @GenesisPlugin
+    //@GenesisPlugin
     public Fauna()
     {
         register(Genesis.registry);
@@ -57,7 +57,9 @@ public class Fauna implements IGenesisPlugin
     public String getModID() { return Fauna.MODID; }
     public void register(IGenesisRegistry registry)
     {
-        registry.registerItem("entity_spawn_egg", Fauna.MODID, new EntitySpawnEgg()).autoRegister();
+        registry.registerItem("entity_spawn_egg", Fauna.MODID, new EntitySpawnEgg())
+                //.autoRegister()
+        ;
 
         registry.registerEntity("human", Fauna.MODID, EntityEntryBuilder.create()
                 .entity(EntityHuman.class)
@@ -67,7 +69,7 @@ public class Fauna implements IGenesisPlugin
                 //.egg(MapColor.BROWN.colorValue, MapColor.GOLD.colorValue)
                 //.spawn(EnumCreatureType.CREATURE, 20, 1, 5, BiomeDictionary.getBiomes(BiomeDictionary.Type.FOREST))
                 .build(), new ModelPlayer(1.0f, false))
-                .autoRegister()
+                //.autoRegister()
                 .registerOverlay("human", "skin", 0)
                 .registerOverlay("human", "eyes", 1)
                 .registerOverlay("human", "eyes_white", 1)
@@ -129,7 +131,7 @@ public class Fauna implements IGenesisPlugin
                 //.egg(MapColor.BROWN.colorValue, MapColor.GOLD.colorValue)
                 //.spawn(EnumCreatureType.CREATURE, 20, 1, 5, BiomeDictionary.getBiomes(BiomeDictionary.Type.FOREST))
                 .build(), new ModelAnt())
-                .autoRegister()
+                //.autoRegister()
                 .registerSpecies("ant",
                     Arrays.asList(
                         new SpeciesFeature(SpeciesFeature.FeatureTypes.AdultMass, 20),

@@ -1,9 +1,10 @@
 package com.reuxertz.genesis.mod;
 
+import com.reuxertz.genesis.api.GenesisPlugin;
 import com.reuxertz.genesis.api.IGenesisPlugin;
 import com.reuxertz.genesis.api.IGenesisRegistry;
 
-//@GenesisPlugin
+@GenesisPlugin
 public class GenesisMod implements IGenesisPlugin {
 
     @Override
