@@ -8,6 +8,7 @@ import com.reuxertz.genesis.api.IGenesisRegistry;
 import com.reuxertz.genesis.api.blocks.BaseBlock;
 import com.reuxertz.genesis.render.RenderGenesisLiving;
 import com.reuxertz.genesis.tileentities.TileEntityBaseCrop;
+import com.reuxertz.genesis.util.RegistryHelper;
 import net.minecraft.block.Block;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.block.model.IBakedModel;
@@ -197,7 +198,6 @@ public class GenesisRegistry implements IGenesisRegistry
 
             if (modId != null && registryObject.modId != modId)
                 continue;
-
 
             ModContainer mc = Loader.instance().activeModContainer();
 

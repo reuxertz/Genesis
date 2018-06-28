@@ -16,6 +16,7 @@ import com.reuxertz.genesis.mod.Genesis;
 import com.reuxertz.genesis.mod.GenesisApiHandler;
 import com.reuxertz.genesis.proxy.CommonProxy;
 import com.reuxertz.genesis.registry.GenesisRegistry;
+import com.reuxertz.genesis.util.IDHelper;
 import com.reuxertz.genesis.util.TimeHelper;
 import net.minecraft.block.Block;
 import net.minecraft.client.model.ModelPlayer;
@@ -60,7 +61,7 @@ public class Fauna implements IGenesisPlugin
 
         registry.registerEntity("human", Fauna.MODID, EntityEntryBuilder.create()
                 .entity(EntityHuman.class)
-                .id(new ResourceLocation(Fauna.MODID, "human"), 0)
+                .id(new ResourceLocation(Fauna.MODID, "human"), IDHelper.getNextID("fauna"))
                 .name("human")
                 .tracker(80, 3, false)
                 //.egg(MapColor.BROWN.colorValue, MapColor.GOLD.colorValue)
@@ -122,7 +123,7 @@ public class Fauna implements IGenesisPlugin
 
         registry.registerEntity("ant", Fauna.MODID, EntityEntryBuilder.create()
                 .entity(EntityAnt.class)
-                .id(new ResourceLocation(Fauna.MODID, "ant"), 1)
+                .id(new ResourceLocation(Fauna.MODID, "ant"), IDHelper.getNextID("fauna"))
                 .name("ant")
                 .tracker(80, 3, false)
                 //.egg(MapColor.BROWN.colorValue, MapColor.GOLD.colorValue)

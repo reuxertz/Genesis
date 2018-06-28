@@ -13,8 +13,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 
-public abstract class EntityOrganism extends EntityCreature implements IOrganismContainer//, IEntityAdditionalSpawnData
-        //,IEntityAdditionalSpawnData
+public abstract class EntityOrganism extends EntityCreature implements IOrganismContainer, IEntityAdditionalSpawnData
 {
     protected Organism organism;
     protected RegistryObject registryObject;
