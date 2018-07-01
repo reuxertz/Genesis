@@ -42,7 +42,7 @@ public class Genesis
     public void preInit(FMLPreInitializationEvent event){
 
         OBJLoader.INSTANCE.addDomain(MODID);
-        //GenesisApiHandler.loadPlugins(event.getAsmData());
+        GenesisApiHandler.loadPlugins(event.getAsmData());
         MinecraftForge.EVENT_BUS.register(new ForgeHandler());
         NetworkHandler.preInit();
 
