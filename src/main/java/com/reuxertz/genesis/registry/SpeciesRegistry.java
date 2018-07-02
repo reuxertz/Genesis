@@ -18,6 +18,7 @@ public class SpeciesRegistry {
         public List<SpeciesFeature> speciesData;
         public Map<SpeciesFeature.FeatureTypes, SpeciesFeature> speciesDataMap = new HashMap<>();
         public String speciesName;
+        public Map<String, String> speciesStates = new HashMap<>();
 
         public SpeciesRegistryObject(String speciesName, List<SpeciesFeature> speciesData)
         {
@@ -68,6 +69,10 @@ public class SpeciesRegistry {
     {
         speciesRegistry.put(speciesName, new SpeciesRegistryObject(speciesName, speciesData));
     }
+    public static void registerSpeciesState(String speciesName, String speciesState)
+    {
+        speciesRegistry.get(speciesName).speciesStates.put(speciesState, speciesState);
+    }
     public static Genome getSpeciesGenome(String speciesName, String subspecies)
     {
         Map<String, BreedRegistryObject> breedRegistryMap = breedRegistry.get(speciesName);
@@ -77,5 +82,9 @@ public class SpeciesRegistry {
     public static SpeciesFeature getSpeciesFeature(String speciesName, SpeciesFeature.FeatureTypes featureType)
     {
         return speciesRegistry.get(speciesName).speciesDataMap.get(featureType);
+    }
+    public static String getSpeciesStates(String speciesName, String speciesState)
+    {
+        return speciesRegistry.get(speciesName).speciesStates.get(speciesState);
     }
 }

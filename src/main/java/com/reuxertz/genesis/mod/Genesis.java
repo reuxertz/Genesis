@@ -7,14 +7,17 @@ import com.reuxertz.genesis.handlers.GuiHandler;
 import com.reuxertz.genesis.handlers.NetworkHandler;
 import com.reuxertz.genesis.proxy.CommonProxy;
 import com.reuxertz.genesis.registry.*;
+import net.minecraft.item.Item;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.client.model.obj.OBJLoader;
+import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import org.apache.logging.log4j.Logger;
@@ -22,7 +25,10 @@ import org.apache.logging.log4j.Logger;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.reuxertz.genesis.registry.GenesisRegistry.registerModItems;
+
 @Mod(modid = Genesis.MODID, name = Genesis.NAME, version = Genesis.VERSION, dependencies = "required-after:forge@[14.23.3.2655,)", useMetadata = true)
+@Mod.EventBusSubscriber(modid = Genesis.MODID)
 public class Genesis
 {
     public static final String MODID = "genesis";
@@ -32,7 +38,8 @@ public class Genesis
     @SidedProxy(clientSide = "com.reuxertz.genesis.proxy.ClientProxy", serverSide = "com.reuxertz.genesis.proxy.ServerProxy")
     public static CommonProxy proxy;
 
-    //@Mod.Instance
+    @Mod.Instance
+    public static Genesis instance;
     public static List<IGenesisPlugin> plugins = new ArrayList();
     public static GenesisRegistry registry = new GenesisRegistry();
     public static SimpleNetworkWrapper networkInstance = NetworkRegistry.INSTANCE.newSimpleChannel(Genesis.MODID);
@@ -64,5 +71,13 @@ public class Genesis
     @Mod.EventHandler
     public void serverLoad(FMLServerStartingEvent event) {
         event.registerServerCommand(new GenesisCommand());
+    }
+
+    @SubscribeEvent
+    public static void registerItems(RegistryEvent.Register<Item> event) {
+
+        registerModItems(event, null);
+
+        return;
     }
 }

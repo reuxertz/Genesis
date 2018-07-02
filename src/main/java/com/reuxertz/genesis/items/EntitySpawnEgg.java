@@ -1,4 +1,4 @@
-package com.reuxertz.fauna.items;
+package com.reuxertz.genesis.items;
 
 import com.reuxertz.genesis.mod.Genesis;
 import com.reuxertz.genesis.api.items.BaseItem;
@@ -102,18 +102,22 @@ public class EntitySpawnEgg extends BaseItem {
         Genesis.registry.iterate(registryObject -> {
             if (registryObject.entityEntry != null) {
                 List<SpeciesRegistry.BreedRegistryObject> breeds = SpeciesRegistry.getBreeds(registryObject.name);
+                //List<String> speciesStates = SpeciesRegistry.getBreeds(registryObject.name);
                 for (int i = 0; i < breeds.size(); i++) {
-                    NBTTagCompound nbt = new NBTTagCompound();
-                    ItemStack itemStack = new ItemStack(this, 1);
-                    itemStack.setStackDisplayName("item.entityspawnegg." + registryObject.name);
-                    nbt.setString("name", registryObject.name);
 
-                    if (breeds.get(i).breedName == null)
-                        continue;
+                    //for (int j = 0; j < SpeciesRegistry.) {
+                        NBTTagCompound nbt = new NBTTagCompound();
+                        ItemStack itemStack = new ItemStack(this, 1);
+                        itemStack.setStackDisplayName("item.entityspawnegg." + registryObject.name);
+                        nbt.setString("name", registryObject.name);
 
-                    nbt.setString("subspecies", breeds.get(i).breedName);
-                    itemStack.setTagCompound(nbt);
-                    subtypes.add(itemStack);
+                        if (breeds.get(i).breedName == null)
+                            continue;
+
+                        nbt.setString("subspecies", breeds.get(i).breedName);
+                        itemStack.setTagCompound(nbt);
+                        subtypes.add(itemStack);
+                    //}
                 }
             }
         });

@@ -192,6 +192,12 @@ public class RegistryObject {
         return this;
 
     }
+    public RegistryObject registerSpeciesState(String stateName)
+    {
+        SpeciesRegistry.registerSpeciesState(this.name, stateName);
+        return this;
+
+    }
 
     public void initModel()
     {

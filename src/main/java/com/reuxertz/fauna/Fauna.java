@@ -1,19 +1,17 @@
 package com.reuxertz.fauna;
 
-import com.reuxertz.fauna.entities.*;
-import com.reuxertz.fauna.items.EntitySpawnEgg;
+import com.reuxertz.fauna.entities.EntityCrab;
+import com.reuxertz.fauna.entities.models.ModelCrab;
 import com.reuxertz.genesis.api.GenesisPlugin;
+import com.reuxertz.genesis.items.EntitySpawnEgg;
+import com.reuxertz.fauna.entities.models.ModelAnt;
 import com.reuxertz.genesis.api.IGenesisPlugin;
 import com.reuxertz.genesis.api.IGenesisRegistry;
 import com.reuxertz.genesis.api.organisms.GeneData;
 import com.reuxertz.genesis.api.organisms.SpeciesFeature;
-import com.reuxertz.genesis.entities.EntityAnt;
-import com.reuxertz.genesis.entities.EntityHuman;
-import com.reuxertz.genesis.handlers.ForgeHandler;
-import com.reuxertz.genesis.handlers.NetworkHandler;
+import com.reuxertz.fauna.entities.EntityAnt;
+import com.reuxertz.fauna.entities.EntityHuman;
 import com.reuxertz.genesis.mod.Genesis;
-import com.reuxertz.genesis.mod.GenesisApiHandler;
-import com.reuxertz.genesis.proxy.CommonProxy;
 import com.reuxertz.genesis.registry.GenesisRegistry;
 import com.reuxertz.genesis.util.IDHelper;
 import com.reuxertz.genesis.util.TimeHelper;
@@ -23,10 +21,8 @@ import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.obj.OBJLoader;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -44,11 +40,10 @@ public class Fauna implements IGenesisPlugin
     public static final String NAME = "Fauna";
     public static final String VERSION = "1.0";
 
-    //@GenesisPlugin
+    @GenesisPlugin
     public Fauna()
     {
-        register(Genesis.registry);
-        return;
+        OBJLoader.INSTANCE.addDomain(MODID);
     }
 
     public String getModID() { return Fauna.MODID; }
@@ -95,7 +90,7 @@ public class Fauna implements IGenesisPlugin
                         new GeneData(GeneData.GeneType.EyesLayer, 1, .2, .7, 1),
                         new GeneData(GeneData.GeneType.MouthLayer, 1, 1, 1, 1)
                     ))
-                    .registerBreed("human", "negroid",
+                .registerBreed("human", "negroid",
                     Arrays.asList(
                         new GeneData(GeneData.GeneType.AdultMassFactor, 0, 0),
                         new GeneData(GeneData.GeneType.GrowthFactor, 0, 0),
@@ -107,7 +102,7 @@ public class Fauna implements IGenesisPlugin
                         new GeneData(GeneData.GeneType.EyesLayer, 1, .3, .2, .2),
                         new GeneData(GeneData.GeneType.MouthLayer, 1, 1, 1, 1)
                     ))
-                    .registerBreed("human", "mongoloid",
+                .registerBreed("human", "mongoloid",
                     Arrays.asList(
                         new GeneData(GeneData.GeneType.AdultMassFactor, 0, 0),
                         new GeneData(GeneData.GeneType.GrowthFactor, 0, 0),
@@ -118,7 +113,9 @@ public class Fauna implements IGenesisPlugin
                         new GeneData(GeneData.GeneType.HairLayer, 1, .5, .5, .4),
                         new GeneData(GeneData.GeneType.EyesLayer, 1, .4, .2, 0),
                         new GeneData(GeneData.GeneType.MouthLayer, 1, 1, 1, 1)
-                    ));
+                    ))
+                .registerSpeciesState("male")
+                .registerSpeciesState("female");
 
         registry.registerEntity("ant", Fauna.MODID, EntityEntryBuilder.create()
                 .entity(EntityAnt.class)
@@ -134,66 +131,55 @@ public class Fauna implements IGenesisPlugin
                         new SpeciesFeature(SpeciesFeature.FeatureTypes.AdultMass, 20),
                         new SpeciesFeature(SpeciesFeature.FeatureTypes.AdultAgeTicks, TimeHelper.ConvertYearsToTicks(20)),
                         new SpeciesFeature(SpeciesFeature.FeatureTypes.NewbornMass, 5),
-                        new SpeciesFeature(SpeciesFeature.FeatureTypes.ClutchSize, 0),
+                        new SpeciesFeature(SpeciesFeature.FeatureTypes.ClutchSize, 0)
 
-                        new SpeciesFeature(SpeciesFeature.FeatureTypes.SkinLayer, 1),
-                        new SpeciesFeature(SpeciesFeature.FeatureTypes.HairLayer, 1),
-                        new SpeciesFeature(SpeciesFeature.FeatureTypes.EyeLayer, 1),
-                        new SpeciesFeature(SpeciesFeature.FeatureTypes.MouthLayer, 1)))
+//                        new SpeciesFeature(SpeciesFeature.FeatureTypes.SkinLayer, 1),
+//                        new SpeciesFeature(SpeciesFeature.FeatureTypes.HairLayer, 1),
+//                        new SpeciesFeature(SpeciesFeature.FeatureTypes.EyeLayer, 1),
+//                        new SpeciesFeature(SpeciesFeature.FeatureTypes.MouthLayer, 1)
+                    ))
                 .registerBreed("ant", "wood",
                     Arrays.asList(
                         new GeneData(GeneData.GeneType.AdultMassFactor, 0, 0),
                         new GeneData(GeneData.GeneType.GrowthFactor, 0, 0),
                         new GeneData(GeneData.GeneType.NewBornMassFactor, 0, 0),
-                        new GeneData(GeneData.GeneType.ClutchSizeFactor, 0, 0),
+                        new GeneData(GeneData.GeneType.ClutchSizeFactor, 0, 0)
 
-                        new GeneData(GeneData.GeneType.SkinLayer, 0, 1, 1, 1),
-                        new GeneData(GeneData.GeneType.HairLayer, 1, 1, 1, 0),
-                        new GeneData(GeneData.GeneType.EyesLayer, 1, .2, .7, 1),
-                        new GeneData(GeneData.GeneType.MouthLayer, 1, 1, 1, 1)
+//                        new GeneData(GeneData.GeneType.SkinLayer, 0, 1, 1, 1),
+//                        new GeneData(GeneData.GeneType.HairLayer, 1, 1, 1, 0),
+//                        new GeneData(GeneData.GeneType.EyesLayer, 1, .2, .7, 1),
+//                        new GeneData(GeneData.GeneType.MouthLayer, 1, 1, 1, 1)
                         ))
-                //.registerOverlay("ant", "worker", 0)
+                .registerOverlay("ant", "worker", 0)
                 .registerOverlay("ant", "eyes", 1)
                 .registerOverlay("ant", "wings", 1)
         ;
 
-
-//        registry.registerEntity("crab", Fauna.MODID, EntityEntryBuilder.create()
-//                .entity(EntityAnt.class)
-//                .id(new ResourceLocation(Fauna.MODID, "crab"), IDHelper.getNextID("fauna_animal"))
-//                .name("crab")
-//                .tracker(80, 3, false)
-//                //.egg(MapColor.BROWN.colorValue, MapColor.GOLD.colorValue)
-//                //.spawn(EnumCreatureType.CREATURE, 20, 1, 5, BiomeDictionary.getBiomes(BiomeDictionary.Type.FOREST))
-//                .build(), new ModelAnt())
-//                //.autoRegister()
-//                .registerSpecies("crab",
-//                        Arrays.asList(
-//                                new SpeciesFeature(SpeciesFeature.FeatureTypes.AdultMass, 20),
-//                                new SpeciesFeature(SpeciesFeature.FeatureTypes.AdultAgeTicks, TimeHelper.ConvertYearsToTicks(20)),
-//                                new SpeciesFeature(SpeciesFeature.FeatureTypes.NewbornMass, 5),
-//                                new SpeciesFeature(SpeciesFeature.FeatureTypes.ClutchSize, 0),
-//
-//                                new SpeciesFeature(SpeciesFeature.FeatureTypes.SkinLayer, 1),
-//                                new SpeciesFeature(SpeciesFeature.FeatureTypes.HairLayer, 1),
-//                                new SpeciesFeature(SpeciesFeature.FeatureTypes.EyeLayer, 1),
-//                                new SpeciesFeature(SpeciesFeature.FeatureTypes.MouthLayer, 1)))
-//                .registerBreed("crab", "wood",
-//                        Arrays.asList(
-//                                new GeneData(GeneData.GeneType.AdultMassFactor, 0, 0),
-//                                new GeneData(GeneData.GeneType.GrowthFactor, 0, 0),
-//                                new GeneData(GeneData.GeneType.NewBornMassFactor, 0, 0),
-//                                new GeneData(GeneData.GeneType.ClutchSizeFactor, 0, 0),
-//
-//                                new GeneData(GeneData.GeneType.SkinLayer, 0, 1, 1, 1),
-//                                new GeneData(GeneData.GeneType.HairLayer, 1, 1, 1, 0),
-//                                new GeneData(GeneData.GeneType.EyesLayer, 1, .2, .7, 1),
-//                                new GeneData(GeneData.GeneType.MouthLayer, 1, 1, 1, 1)
-//                        ))
-//                .registerOverlay("ant", "worker", 0)
-//                .registerOverlay("ant", "eyes", 1)
-//                .registerOverlay("ant", "wings", 1)
+        registry.registerEntity("crab", Fauna.MODID, EntityEntryBuilder.create()
+                .entity(EntityCrab.class)
+                .id(new ResourceLocation(Fauna.MODID, "crab"), IDHelper.getNextID("fauna_animal"))
+                .name("crab")
+                .tracker(80, 3, false)
+                //.egg(MapColor.BROWN.colorValue, MapColor.GOLD.colorValue)
+                //.spawn(EnumCreatureType.CREATURE, 20, 1, 5, BiomeDictionary.getBiomes(BiomeDictionary.Type.FOREST))
+                .build(), new ModelCrab())
+                //.autoRegister()
+                .registerSpecies("crab",
+                        Arrays.asList(
+                            new SpeciesFeature(SpeciesFeature.FeatureTypes.AdultMass, 20),
+                            new SpeciesFeature(SpeciesFeature.FeatureTypes.AdultAgeTicks, TimeHelper.ConvertYearsToTicks(20)),
+                            new SpeciesFeature(SpeciesFeature.FeatureTypes.NewbornMass, 5),
+                            new SpeciesFeature(SpeciesFeature.FeatureTypes.ClutchSize, 0)
+                        ))
+                .registerBreed("crab", "brown",
+                        Arrays.asList(
+                            new GeneData(GeneData.GeneType.AdultMassFactor, 0, 0),
+                            new GeneData(GeneData.GeneType.GrowthFactor, 0, 0),
+                            new GeneData(GeneData.GeneType.NewBornMassFactor, 0, 0),
+                            new GeneData(GeneData.GeneType.ClutchSizeFactor, 0, 0)
+                        ))
         ;
+
 
 
 
@@ -230,18 +216,5 @@ public class Fauna implements IGenesisPlugin
 
         GenesisRegistry.registerEntityRenderers(Fauna.MODID);
         GenesisRegistry.initModels(Fauna.MODID);
-    }
-
-    @Mod.EventHandler
-    public void preInit(FMLPreInitializationEvent event){
-        OBJLoader.INSTANCE.addDomain(MODID);
-    }
-
-    @Mod.EventHandler
-    public void init(FMLInitializationEvent e) {
-    }
-
-    @Mod.EventHandler
-    public void postInit(FMLPostInitializationEvent e) {
     }
 }

@@ -18,6 +18,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelBakeEvent;
+import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Loader;
@@ -68,29 +69,30 @@ public class GenesisRegistry implements IGenesisRegistry
     //@SubscribeEvent
     public static void registerItems(RegistryEvent.Register<Item> event) {
 
-        for (int i = 0; i < GenesisRegistry.registryObjectList.size(); i++) {
-
-            RegistryObject regobj = GenesisRegistry.registryObjectList.get(i);
-
-                if (!regobj.autoRegister)
-                    continue;
-
-                if (regobj.block != null && regobj.item == null &&
-                    regobj.block instanceof BaseBlock && ((BaseBlock)regobj.block).isSimple)
-            {
-                Block block =(Block)regobj.block;
-
-                ItemBlock bl = new ItemBlock(block);
-                bl.setRegistryName(block.getUnlocalizedName());
-                bl.setUnlocalizedName(block.getUnlocalizedName());
-                regobj.item = bl;
-            }
-
-            if (regobj.item != null) {
-                Item item = GenesisRegistry.registryObjectList.get(i).item;
-                event.getRegistry().register(item);
-            }
-        }
+//        for (int i = 0; i < GenesisRegistry.registryObjectList.size(); i++) {
+//
+//            RegistryObject regobj = GenesisRegistry.registryObjectList.get(i);
+//
+//                if (!regobj.autoRegister)
+//                    continue;
+//
+//                if (regobj.block != null && regobj.item == null &&
+//                    regobj.block instanceof BaseBlock && ((BaseBlock)regobj.block).isSimple)
+//            {
+//                Block block =(Block)regobj.block;
+//
+//                ItemBlock bl = new ItemBlock(block);
+//                bl.setRegistryName(block.getUnlocalizedName());
+//                bl.setUnlocalizedName(block.getUnlocalizedName());
+//                regobj.item = bl;
+//            }
+//
+//            if (regobj.item != null) {
+//                Item item = GenesisRegistry.registryObjectList.get(i).item;
+//                event.getRegistry().register(item);
+//            }
+//        }
+        registerModItems(event, null);
 
         return;
     }
@@ -100,7 +102,10 @@ public class GenesisRegistry implements IGenesisRegistry
 
             RegistryObject regobj = GenesisRegistry.registryObjectList.get(i);
 
-            if (regobj.autoRegister)
+            if (modId != null && regobj.autoRegister)
+                continue;
+
+            if (modId == null && !regobj.autoRegister)
                 continue;
 
             if (modId != null && regobj.modId != modId)
@@ -151,19 +156,21 @@ public class GenesisRegistry implements IGenesisRegistry
         GameRegistry.registerTileEntity(TileEntityBaseCrop.class, "genesis:tileEntityBaseCrop");
 
         for (int i = 0; i < GenesisRegistry.registryObjectList.size(); i++) {
-            RegistryObject registryObject = GenesisRegistry.registryObjectList.get(i);
+            RegistryObject regobj = GenesisRegistry.registryObjectList.get(i);
 
-            if (registryObject.autoRegister)
+            if (modId != null && regobj.autoRegister)
                 continue;
 
-            if (modId != null && registryObject.modId != modId)
+            if (modId == null && !regobj.autoRegister)
                 continue;
 
-            if (GenesisRegistry.registryObjectList.get(i).block != null) {
-                if (GenesisRegistry.registryObjectList.get(i).isBlockRegistered())
+            if (modId != null && regobj.modId != modId)
+                continue;
+
+            if (regobj.block != null) {
+                if (regobj.isBlockRegistered())
                     continue;
 
-                RegistryObject regobj = registry.registryObjectList.get(i);
                 event.getRegistry().register((Block) regobj.block);
             }
         }
@@ -206,24 +213,13 @@ public class GenesisRegistry implements IGenesisRegistry
         return;
     }
 
+
     //@SubscribeEvent
-    public void onModelBake(ModelBakeEvent event)
-    {
-        for (int i = 0; i < GenesisRegistry.registryObjectList.size(); i++) {
+    public static void registerModels(ModelRegistryEvent event) {
 
-            RegistryObject registryObject = GenesisRegistry.registryObjectList.get(i);
-            if (registryObject.entityModelResourceLocation == null)
-                continue;
-
-            try {
-                IBakedModel teBasic = event.getModelRegistry().getObject(registryObject.entityModelResourceLocation);
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+        GenesisRegistry.registerEntityRenderers(null);
+        GenesisRegistry.initModels(null);
     }
-
     @SuppressWarnings("unchecked")
     public static void registerEntityRenderers(String modId)
     {
@@ -231,7 +227,10 @@ public class GenesisRegistry implements IGenesisRegistry
         {
             RegistryObject regobj = registry.registryObjectList.get(i);
 
-            if (regobj.autoRegister)
+            if (modId != null && regobj.autoRegister)
+                continue;
+
+            if (modId == null && !regobj.autoRegister)
                 continue;
 
             if (modId != null && regobj.modId != modId)
@@ -254,11 +253,11 @@ public class GenesisRegistry implements IGenesisRegistry
             }
         }
     }
-
     public static void initModels(String modId)
     {
         for (int i = 0; i < GenesisRegistry.registryObjectList.size(); i++)
-            if (!GenesisRegistry.registryObjectList.get(i).autoRegister && GenesisRegistry.registryObjectList.get(i).modId == modId)
+            if ((!GenesisRegistry.registryObjectList.get(i).autoRegister && GenesisRegistry.registryObjectList.get(i).modId == modId) ||
+                    (GenesisRegistry.registryObjectList.get(i).autoRegister && GenesisRegistry.registryObjectList.get(i).modId == null))
                 GenesisRegistry.registryObjectList.get(i).initModel();
 
         return;

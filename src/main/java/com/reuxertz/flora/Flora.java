@@ -1,17 +1,29 @@
 package com.reuxertz.flora;
 
+import com.reuxertz.fauna.Fauna;
 import com.reuxertz.genesis.api.GenesisPlugin;
 import com.reuxertz.genesis.api.IGenesisPlugin;
 import com.reuxertz.genesis.api.IGenesisRegistry;
 import com.reuxertz.genesis.api.organisms.GeneData;
 import com.reuxertz.genesis.api.organisms.SpeciesFeature;
+import com.reuxertz.genesis.registry.GenesisRegistry;
 import com.reuxertz.genesis.util.RegistryHelper;
 import com.reuxertz.genesis.util.TimeHelper;
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
+import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.client.model.obj.OBJLoader;
+import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.registry.EntityEntry;
 
 import java.util.Arrays;
 
-//@Mod(modid = Flora.MODID, name = Flora.NAME, version = Flora.VERSION, dependencies = "required-after:forge@[14.23.3.2655,)", useMetadata = true)
+@Mod(modid = Flora.MODID, name = Flora.NAME, version = Flora.VERSION, dependencies = "required-after:forge@[14.23.3.2655,)", useMetadata = true)
 public class Flora implements IGenesisPlugin
 {
     public static final String MODID = "flora";
@@ -35,14 +47,48 @@ public class Flora implements IGenesisPlugin
                             new SpeciesFeature(SpeciesFeature.FeatureTypes.AdultAgeTicks, 0),
                             new SpeciesFeature(SpeciesFeature.FeatureTypes.NewbornMass, 10),
                             new SpeciesFeature(SpeciesFeature.FeatureTypes.ClutchSize, 1.5)))
-                .registerBreed("onion", "",
+                .registerBreed("onion", "wild",
                         Arrays.asList(
                             new GeneData(GeneData.GeneType.AdultMassFactor, 0, 0),
                             new GeneData(GeneData.GeneType.GrowthFactor, 0, 0),
                             new GeneData(GeneData.GeneType.NewBornMassFactor, 0, 0),
                             new GeneData(GeneData.GeneType.ClutchSizeFactor, 0, 0)));
+        return;
+    }
 
+    @SubscribeEvent
+    public static void registerBlocks(RegistryEvent.Register<Block> event) {
+
+        GenesisRegistry.registerModBlocks(event, Fauna.MODID);
 
         return;
+    }
+
+    @SubscribeEvent
+    public static void registerItems(RegistryEvent.Register<Item> event) {
+
+        GenesisRegistry.registerModItems(event, Fauna.MODID);
+
+        return;
+    }
+
+    @SubscribeEvent
+    public static void registerModels(ModelRegistryEvent event) {
+
+        GenesisRegistry.registerEntityRenderers(Fauna.MODID);
+        GenesisRegistry.initModels(Fauna.MODID);
+    }
+
+    @Mod.EventHandler
+    public void preInit(FMLPreInitializationEvent event){
+        OBJLoader.INSTANCE.addDomain(MODID);
+    }
+
+    @Mod.EventHandler
+    public void init(FMLInitializationEvent e) {
+    }
+
+    @Mod.EventHandler
+    public void postInit(FMLPostInitializationEvent e) {
     }
 }

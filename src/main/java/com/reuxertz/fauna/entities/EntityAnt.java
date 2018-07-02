@@ -1,4 +1,4 @@
-package com.reuxertz.genesis.entities;
+package com.reuxertz.fauna.entities;
 
 import com.reuxertz.genesis.api.entities.EntityGenesisAnimal;
 import com.reuxertz.genesis.registry.RegistryObject;

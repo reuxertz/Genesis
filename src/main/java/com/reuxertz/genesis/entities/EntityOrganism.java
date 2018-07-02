@@ -34,7 +34,7 @@ public abstract class EntityOrganism extends EntityCreature implements IOrganism
         super(world);
         NBTTagCompound nbt = this.getEntityData();
         this.registryObject = registryObject;
-//
+
 //        String name = registryObject.name;
 //        if (!(subspecies == null || subspecies == ""))
 //            name += "_" + subspecies;
