@@ -13,7 +13,7 @@ public class Gaia implements IGenesisPlugin
     public static final String NAME = "Gaia";
     public static final String VERSION = "1.0";
 
-    //@GenesisPlugin
+    @GenesisPlugin
     public Gaia()
     {
         return;

@@ -41,7 +41,7 @@ public class Fauna implements IGenesisPlugin
     public static final String NAME = "Fauna";
     public static final String VERSION = "1.0";
 
-    //@GenesisPlugin
+    @GenesisPlugin
     public Fauna()
     {
         OBJLoader.INSTANCE.addDomain(MODID);
@@ -50,7 +50,6 @@ public class Fauna implements IGenesisPlugin
     public String getModID() { return Fauna.MODID; }
     public void register(IGenesisRegistry registry)
     {
-
         registry.registerEntity("human", Fauna.MODID, EntityEntryBuilder.create()
                 .entity(EntityHuman.class)
                 .id(new ResourceLocation(Fauna.MODID, "human"), IDHelper.getNextID("fauna_animal"))

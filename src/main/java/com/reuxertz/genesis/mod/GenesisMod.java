@@ -15,7 +15,7 @@ public class GenesisMod implements IGenesisPlugin {
     @Override
     public void register(IGenesisRegistry registry) {
 
-        registry.registerItem("entity_spawn_egg", Fauna.MODID, new EntitySpawnEgg()).autoRegister();
+        registry.registerItem("entity_spawn_egg", Genesis.MODID, new EntitySpawnEgg()).autoRegister();
 
         registry.registerBlock("block_table_test", Genesis.MODID, new BlockContainerBase("block_table_test"), TileEntityContainerBase.class).autoRegister();
 

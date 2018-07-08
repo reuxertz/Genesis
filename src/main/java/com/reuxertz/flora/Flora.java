@@ -30,7 +30,7 @@ public class Flora implements IGenesisPlugin
     public static final String NAME = "Flora";
     public static final String VERSION = "1.0";
 
-    //@GenesisPlugin
+    @GenesisPlugin
     public Flora()
     {
         return;
