@@ -13,9 +13,9 @@ public class ForgeHandler {
     @SubscribeEvent
     public static void onItemRightClick(PlayerInteractEvent.RightClickItem event){
 
-//        if (event.getItemStack().getItem() instanceof BaseCropSeed)
+//        if (event.getItemStack().getItem() instanceof CropSeedBase)
 //        {
-//            BaseCropSeed seed = (BaseCropSeed)event.getItemStack().getItem();
+//            CropSeedBase seed = (CropSeedBase)event.getItemStack().getItem();
 //            event.getWorld().setBlockState(event.getPos().down(), seed.getBlockCrop().withAge(0));
 //            return;
 //        }

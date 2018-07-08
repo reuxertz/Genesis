@@ -1,0 +1,80 @@
+package com.reuxertz.genesis.api.containers;
+
+import net.minecraft.inventory.IInventory;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextComponentTranslation;
+
+public class InventoryStandard implements IInventory {
+
+    private ItemStack[] inventoryContents;
+
+    public ItemStack getStackInSlot(int index)
+    {
+        return index >= 0 && index < this.inventoryContents.length ? this.inventoryContents[index] : null;
+    }
+
+    public int getInventoryStackLimit()
+    {
+        return 64;
+    }
+
+    public ITextComponent getDisplayName()
+    {
+        return this.hasCustomName() ? new TextComponentString(this.getName()) : new TextComponentTranslation(this.getName());
+    }
+
+    public int getSizeInventory()
+    {
+        return this.inventoryContents.length;
+    }
+
+
+    public int getFieldCount()
+    {
+        return 0;
+    }
+
+    public ItemStack decrStackSize(int index, int count)
+    {
+        if (this.inventoryContents[index] != null)
+        {
+            ItemStack itemstack;
+
+            if (this.inventoryContents[index].getCount() <= count)
+            {
+                itemstack = this.inventoryContents[index];
+                this.inventoryContents[index] = null;
+                this.markDirty();
+                return itemstack;
+            }
+            else
+            {
+                itemstack = this.inventoryContents[index].splitStack(count);
+
+                if (this.inventoryContents[index].getCount() == 0)
+                {
+                    this.inventoryContents[index] = null;
+                }
+
+                this.markDirty();
+                return itemstack;
+            }
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+
+    public void clear()
+    {
+        for (int i = 0; i < this.inventoryContents.length; ++i)
+        {
+            this.inventoryContents[i] = null;
+        }
+    }
+
+}

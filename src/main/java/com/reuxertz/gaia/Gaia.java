@@ -6,7 +6,7 @@ import com.reuxertz.genesis.api.IGenesisRegistry;
 import com.reuxertz.genesis.util.RegistryHelper;
 import net.minecraftforge.fml.common.Mod;
 
-@Mod(modid = Gaia.MODID, name = Gaia.NAME, version = Gaia.VERSION, dependencies = "required-after:forge@[14.23.3.2655,)", useMetadata = true)
+//@Mod(modid = Gaia.MODID, name = Gaia.NAME, version = Gaia.VERSION, dependencies = "required-after:forge@[14.23.3.2655,)", useMetadata = true)
 public class Gaia implements IGenesisPlugin
 {
     public static final String MODID = "gaia";

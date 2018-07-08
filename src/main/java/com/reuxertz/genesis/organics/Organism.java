@@ -30,6 +30,8 @@ public class Organism {
     protected double energy;
     protected double newbornCount;
 
+    protected boolean maleFemaleSwitch;
+
     protected double growthRateValue;
     protected double adultMassValue;
     protected double adultAgeTicksValue;
@@ -233,7 +235,7 @@ public class Organism {
             organismName = organismContainer.getRegistryObject().name;
 
         Organism organism;
-        if (GenomeHelper.validateGenome(organismName, genome))
+        if (GenomeHelper.validateGenome(organismName, "", genome))
         {
             organism = new Organism(organismName, genome);
             organism.setOrganismContainer(organismContainer);

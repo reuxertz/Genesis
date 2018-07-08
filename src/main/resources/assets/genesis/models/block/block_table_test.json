@@ -1,0 +1,8 @@
+{
+  "parent": "block/orientable",
+  "textures": {
+    "top": "genesis:blocks/block_table_test_top",
+    "front": "genesis:blocks/block_table_test_side",
+    "side": "genesis:blocks/block_table_test_side"
+  }
+}

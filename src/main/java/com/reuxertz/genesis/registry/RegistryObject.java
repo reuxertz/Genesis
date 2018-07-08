@@ -3,18 +3,21 @@ package com.reuxertz.genesis.registry;
 import com.reuxertz.genesis.api.IEventHandler;
 import com.reuxertz.genesis.api.IGenesisRegistry;
 import com.reuxertz.genesis.api.blocks.IBaseBlock;
-import com.reuxertz.genesis.api.items.IBaseItem;
+import com.reuxertz.genesis.api.items.IItemBase;
 import com.reuxertz.genesis.api.organisms.GeneData;
 import com.reuxertz.genesis.api.organisms.SpeciesFeature;
+import com.reuxertz.genesis.organics.Organism;
 import com.reuxertz.genesis.render.RenderGenesisLiving;
 import net.minecraft.block.Block;
 import net.minecraft.client.model.ModelBase;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 
+import java.awt.*;
 import java.util.*;
+import java.util.List;
+import java.util.function.Consumer;
 
 public class RegistryObject {
 
@@ -44,7 +47,8 @@ public class RegistryObject {
     public Map<String, LayerResourceLocation> entityLayerResourceMap = new HashMap<>();
     public RenderGenesisLiving renderGenesisLiving;
     public ModelBase entityModel;
-    public ModelResourceLocation entityModelResourceLocation;
+    public int primaryEggColor = Color.BLACK.getRGB();
+    public int secondaryEggColor = Color.WHITE.getRGB();
 
     public Block block;
     public Class tileEntityClass;
@@ -152,14 +156,8 @@ public class RegistryObject {
         this.entityEntry = entry;
         this.entityModel = modelbase;
     }
-    public RegistryObject(IGenesisRegistry registry, String modId, String name, EntityEntry entry, ModelResourceLocation modelResourceLocation)
-    {
-        this(registry, modId, name);
-        this.entityEntry = entry;
-        this.entityModelResourceLocation = modelResourceLocation;
-    }
 
-    public RegistryObject registerOverlay(String name, String overlayName, int zIndex)
+    public RegistryObject registerOverlay(String overlayName, int zIndex)
     {
         RegistryObject.LayerResourceLocation re = new RegistryObject.LayerResourceLocation(modId,  "textures/entities/" + name + "/" + name + "_" + overlayName + ".png", zIndex);
         this.entityLayerResourceMap.put(overlayName, re);
@@ -168,25 +166,20 @@ public class RegistryObject {
     }
 
     //Events
-    public RegistryObject registerEventHandler(String name, IEventHandler eventHandler)
+    public RegistryObject registerEventHandler(IEventHandler eventHandler)
     {
         EventRegistry.registerEventHandler(name, eventHandler);
         return this;
     }
 
     //Ecosystem
-    public RegistryObject registerBreed(String name, List<GeneData> genes)
-    {
-        SpeciesRegistry.registerBreed(name, "", genes);
-        return this;
-    }
-    public RegistryObject registerBreed(String name, String subspecies, List<GeneData> genes)
+    public RegistryObject registerBreed(String subspecies, List<GeneData> genes)
     {
         SpeciesRegistry.registerBreed(name, subspecies, genes);
         return this;
 
     }
-    public RegistryObject registerSpecies(String name, List<SpeciesFeature> speciesData)
+    public RegistryObject registerSpecies(List<SpeciesFeature> speciesData)
     {
         SpeciesRegistry.registerSpecies(name, speciesData);
         return this;
@@ -194,18 +187,29 @@ public class RegistryObject {
     }
     public RegistryObject registerSpeciesState(String stateName)
     {
-        SpeciesRegistry.registerSpeciesState(this.name, stateName);
+        SpeciesRegistry.registerSpeciesState(name, stateName, organism -> { });
         return this;
-
+    }
+    public RegistryObject registerSpeciesState(String stateName, Consumer<Organism> stateConstructor)
+    {
+        SpeciesRegistry.registerSpeciesState(name, stateName, stateConstructor);
+        return this;
+    }
+    public RegistryObject registerSpawnEggColor(int primaryEggColor, int secondaryEggColor)
+    {
+        this.primaryEggColor = primaryEggColor;
+        this.secondaryEggColor = secondaryEggColor;
+        return this;
     }
 
+    //Render
     public void initModel()
     {
         if (isModelInitialized())
             return;
 
-        if (item != null && item instanceof IBaseItem)
-            ((IBaseItem)item).initModel();
+        if (item != null && item instanceof IItemBase)
+            ((IItemBase)item).initModel();
 
         if (block != null && block instanceof IBaseBlock)
             ((IBaseBlock)block).initModel();

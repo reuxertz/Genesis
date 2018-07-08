@@ -1,12 +1,12 @@
 package com.reuxertz.genesis.util;
 
-import com.reuxertz.gaia.blocks.BaseBlockMetal;
-import com.reuxertz.gaia.blocks.BaseBlockOre;
-import com.reuxertz.gaia.items.BaseIngot;
-import com.reuxertz.genesis.api.items.BaseItem;
-import com.reuxertz.gaia.items.BaseNugget;
-import com.reuxertz.flora.blocks.BaseBlockGrowable;
-import com.reuxertz.flora.items.BaseCropSeed;
+import com.reuxertz.gaia.blocks.BlockBaseMetal;
+import com.reuxertz.gaia.blocks.BlockBaseOre;
+import com.reuxertz.gaia.items.IngotBase;
+import com.reuxertz.genesis.api.items.ItemBase;
+import com.reuxertz.gaia.items.NuggetBase;
+import com.reuxertz.genesis.api.blocks.BaseBlockGrowable;
+import com.reuxertz.genesis.api.items.CropSeedBase;
 import com.reuxertz.genesis.mod.Genesis;
 import com.reuxertz.genesis.registry.RegistryObject;
 
@@ -19,7 +19,7 @@ public class RegistryHelper {
 
     public static RegistryObject registerOre(String name, String modId)
     {
-        return Genesis.registry.registerContent(new RegistryObject(registry, modId, "ore_" + name, new BaseBlockOre("ore_" + name)));
+        return Genesis.registry.registerContent(new RegistryObject(registry, modId, "ore_" + name, new BlockBaseOre("ore_" + name)));
 
     }
 
@@ -45,7 +45,7 @@ public class RegistryHelper {
         }
 
         if (enableArmorSet) {
-            group.add(Genesis.registry.registerContent(new RegistryObject(registry, modId, "chain_" + name, new BaseItem("chain_" + name))));
+            group.add(Genesis.registry.registerContent(new RegistryObject(registry, modId, "chain_" + name, new ItemBase("chain_" + name))));
             group.addAll(registerArmorSet(name, modId).getGroup());
         }
 
@@ -55,17 +55,17 @@ public class RegistryHelper {
 
     public static RegistryObject registerMetalBlock(String name, String modId)
     {
-        return Genesis.registry.registerContent(new RegistryObject(registry, modId, "block_" + name, new BaseBlockMetal("block_" + name)));
+        return Genesis.registry.registerContent(new RegistryObject(registry, modId, "block_" + name, new BlockBaseMetal("block_" + name)));
     }
 
     public static RegistryObject registerIngot(String name, String modId)
     {
-        return Genesis.registry.registerContent(new RegistryObject(registry, modId, "ingot_" + name, new BaseIngot("ingot_" + name)));
+        return Genesis.registry.registerContent(new RegistryObject(registry, modId, "ingot_" + name, new IngotBase("ingot_" + name)));
     }
 
     public static RegistryObject registerNugget(String name, String modId)
     {
-        return Genesis.registry.registerContent(new RegistryObject(registry, modId, "nugget_" + name, new BaseNugget("nugget_" + name)));
+        return Genesis.registry.registerContent(new RegistryObject(registry, modId, "nugget_" + name, new NuggetBase("nugget_" + name)));
     }
 
     public static RegistryObject registerArmor(String name, String modId, String type)
@@ -76,12 +76,12 @@ public class RegistryHelper {
         if (type == null)
             type = "";
 
-        RegistryObject result = Genesis.registry.registerContent(new RegistryObject(registry, modId, "chestplate_" + type + name, new BaseBlockMetal("chestplate_" + name)));
+        RegistryObject result = Genesis.registry.registerContent(new RegistryObject(registry, modId, "chestplate_" + type + name, new BlockBaseMetal("chestplate_" + name)));
         List<RegistryObject> group = new ArrayList<>();
 
-        group.add(Genesis.registry.registerContent(new RegistryObject(registry, modId, "boots_" + type + name, new BaseBlockMetal("boots_" + name))));
-        group.add(Genesis.registry.registerContent(new RegistryObject(registry, modId, "leggings_" + type + name, new BaseBlockMetal("leggings_" + name))));
-        group.add(Genesis.registry.registerContent(new RegistryObject(registry, modId, "helmet_" + type + name, new BaseBlockMetal("helmet_" + name))));
+        group.add(Genesis.registry.registerContent(new RegistryObject(registry, modId, "boots_" + type + name, new BlockBaseMetal("boots_" + name))));
+        group.add(Genesis.registry.registerContent(new RegistryObject(registry, modId, "leggings_" + type + name, new BlockBaseMetal("leggings_" + name))));
+        group.add(Genesis.registry.registerContent(new RegistryObject(registry, modId, "helmet_" + type + name, new BlockBaseMetal("helmet_" + name))));
 
         result.groupWith(group);
         return result;
@@ -103,8 +103,8 @@ public class RegistryHelper {
     public static RegistryObject registerCrop(String name, String modId)
     {
         BaseBlockGrowable blockCrop = new BaseBlockGrowable("crop_" + name);
-        BaseCropSeed crop = new BaseCropSeed(name, blockCrop);
-        BaseCropSeed seed = new BaseCropSeed("seed_" + name, blockCrop);
+        CropSeedBase crop = new CropSeedBase(name, blockCrop);
+        CropSeedBase seed = new CropSeedBase("seed_" + name, blockCrop);
 
         RegistryObject result = Genesis.registry.registerContent(new RegistryObject(registry, modId, name, crop));
         List<RegistryObject> group = new ArrayList<>();

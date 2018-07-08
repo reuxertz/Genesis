@@ -2,14 +2,18 @@ package com.reuxertz.genesis.registry;
 
 import com.reuxertz.genesis.api.organisms.GeneData;
 import com.reuxertz.genesis.api.organisms.SpeciesFeature;
+import com.reuxertz.genesis.entities.EntityOrganism;
 import com.reuxertz.genesis.organics.GeneHelper;
 import com.reuxertz.genesis.organics.Genome;
+import com.reuxertz.genesis.organics.Organism;
 import it.unimi.dsi.fastutil.Hash;
+import scala.collection.immutable.Stream;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 
 public class SpeciesRegistry {
 
@@ -18,7 +22,6 @@ public class SpeciesRegistry {
         public List<SpeciesFeature> speciesData;
         public Map<SpeciesFeature.FeatureTypes, SpeciesFeature> speciesDataMap = new HashMap<>();
         public String speciesName;
-        public Map<String, String> speciesStates = new HashMap<>();
 
         public SpeciesRegistryObject(String speciesName, List<SpeciesFeature> speciesData)
         {
@@ -27,6 +30,17 @@ public class SpeciesRegistry {
 
             for (int i = 0; i < speciesData.size(); i++)
                 speciesDataMap.put(speciesData.get(i).featureType, speciesData.get(i));
+        }
+    }
+    public static class StateRegistryObject
+    {
+        public String stateName;
+        public Consumer<Organism> stateConstructor;
+
+        public StateRegistryObject(String stateName, Consumer<Organism> stateConstructor)
+        {
+            this.stateName = stateName;
+            this.stateConstructor = stateConstructor;
         }
     }
     public static class BreedRegistryObject
@@ -44,6 +58,7 @@ public class SpeciesRegistry {
     }
 
     private static final HashMap<String, SpeciesRegistryObject> speciesRegistry = new HashMap<>();
+    private static final HashMap<String, Map<String, StateRegistryObject>> stateRegistry = new HashMap<>();
     private static final HashMap<String, Map<String, BreedRegistryObject>> breedRegistry = new HashMap<>();
 
     public static ArrayList<BreedRegistryObject> getBreeds(String speciesName)
@@ -69,9 +84,12 @@ public class SpeciesRegistry {
     {
         speciesRegistry.put(speciesName, new SpeciesRegistryObject(speciesName, speciesData));
     }
-    public static void registerSpeciesState(String speciesName, String speciesState)
+    public static void registerSpeciesState(String speciesName, String speciesState, Consumer<Organism> stateConstructor)
     {
-        speciesRegistry.get(speciesName).speciesStates.put(speciesState, speciesState);
+        if (!stateRegistry.containsKey(speciesName))
+            stateRegistry.put(speciesName, new HashMap<>());
+
+        stateRegistry.get(speciesName).put(speciesState, new StateRegistryObject(speciesState, stateConstructor));
     }
     public static Genome getSpeciesGenome(String speciesName, String subspecies)
     {
@@ -83,8 +101,8 @@ public class SpeciesRegistry {
     {
         return speciesRegistry.get(speciesName).speciesDataMap.get(featureType);
     }
-    public static String getSpeciesStates(String speciesName, String speciesState)
+    public static Map<String, StateRegistryObject> getSpeciesStates(String speciesName)
     {
-        return speciesRegistry.get(speciesName).speciesStates.get(speciesState);
+        return stateRegistry.get(speciesName);
     }
 }

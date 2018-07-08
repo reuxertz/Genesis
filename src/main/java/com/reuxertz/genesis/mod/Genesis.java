@@ -7,7 +7,10 @@ import com.reuxertz.genesis.handlers.GuiHandler;
 import com.reuxertz.genesis.handlers.NetworkHandler;
 import com.reuxertz.genesis.proxy.CommonProxy;
 import com.reuxertz.genesis.registry.*;
+import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
 import net.minecraft.item.Item;
+import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.client.model.obj.OBJLoader;
 import net.minecraftforge.event.RegistryEvent;
@@ -20,11 +23,14 @@ import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
+import net.minecraftforge.fml.common.registry.EntityEntry;
 import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.reuxertz.genesis.registry.GenesisRegistry.registerModBlocks;
+import static com.reuxertz.genesis.registry.GenesisRegistry.registerModEntities;
 import static com.reuxertz.genesis.registry.GenesisRegistry.registerModItems;
 
 @Mod(modid = Genesis.MODID, name = Genesis.NAME, version = Genesis.VERSION, dependencies = "required-after:forge@[14.23.3.2655,)", useMetadata = true)
@@ -75,9 +81,24 @@ public class Genesis
 
     @SubscribeEvent
     public static void registerItems(RegistryEvent.Register<Item> event) {
-
         registerModItems(event, null);
+    }
 
-        return;
+    @SubscribeEvent
+    public static void registerBlocks(RegistryEvent.Register<Block> event) {
+        registerModBlocks(event, null);
+    }
+
+    @SubscribeEvent
+    public static void registerEntities(RegistryEvent.Register<EntityEntry> event)
+    {
+        registerModEntities(event, null);
+    }
+
+    @SubscribeEvent
+    public static void registerModels(ModelRegistryEvent event) {
+
+        GenesisRegistry.registerEntityRenderers(null);
+        GenesisRegistry.initModels(null);
     }
 }

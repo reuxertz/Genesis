@@ -1,13 +1,14 @@
 package com.reuxertz.genesis.items;
 
 import com.reuxertz.genesis.mod.Genesis;
-import com.reuxertz.genesis.api.items.BaseItem;
+import com.reuxertz.genesis.api.items.ItemBase;
 import com.reuxertz.genesis.api.organisms.SpeciesFeature;
 import com.reuxertz.genesis.entities.EntityOrganism;
 import com.reuxertz.genesis.registry.RegistryObject;
 import com.reuxertz.genesis.registry.SpeciesRegistry;
 import net.minecraft.block.BlockFence;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
@@ -27,48 +28,40 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class EntitySpawnEgg extends BaseItem {
+public class EntitySpawnEgg extends ItemBase implements IItemColor {
+
     public EntitySpawnEgg() {
         super("entitySpawnEgg", CreativeTabs.MISC);
         this.setHasSubtypes(true);
     }
 
+    public int colorMultiplier(ItemStack stack, int tintIndex)
+    {
+        NBTTagCompound nbt = stack.getTagCompound();
+
+        int color = -1;
+
+        if (tintIndex == 0)
+            color = nbt.getInteger("primaryColor");
+        if (tintIndex == 1)
+            color = nbt.getInteger("secondaryColor");
+
+        int primaryColor = nbt.getInteger("primaryColor");
+        int secondaryColor = nbt.getInteger("secondaryColor");
+
+        return color;
+    }
+
+
     @Override
     public boolean itemInteractionForEntity(ItemStack stack, EntityPlayer playerIn, EntityLivingBase target, EnumHand hand) {
         return true;
     }
-//
-//    public EntityOrganism spawnOrganism(World world, EntityPlayer player, ItemStack stack, double x, double y, double z) {
-//        Dinosaur dinosaur = this.getDinosaur(stack);
-//        if (dinosaur != null) {
-//            Class<? extends DinosaurEntity> entityClass = dinosaur.getDinosaurClass();
-//            try {
-//                DinosaurEntity entity = entityClass.getConstructor(World.class).newInstance(player.world);
-//                entity.setDNAQuality(100);
-//
-//                int mode = this.getMode(stack);
-//                if (mode > 0) {
-//                    entity.setMale(mode == 1);
-//                }
-//
-//                if (player.isSneaking()) {
-//                    entity.setAge(0);
-//                }
-//
-//                entity.setPosition(x, y, z);
-//                entity.setLocationAndAngles(x, y, z, MathHelper.wrapDegrees(world.rand.nextFloat() * 360.0F), 0.0F);
-//                entity.rotationYawHead = entity.rotationYaw;
-//                entity.renderYawOffset = entity.rotationYaw;
-//                return entity;
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        }
-//
-//        return null;
-//    }
 
     @Override
     public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
@@ -101,11 +94,21 @@ public class EntitySpawnEgg extends BaseItem {
 
         Genesis.registry.iterate(registryObject -> {
             if (registryObject.entityEntry != null) {
-                List<SpeciesRegistry.BreedRegistryObject> breeds = SpeciesRegistry.getBreeds(registryObject.name);
-                //List<String> speciesStates = SpeciesRegistry.getBreeds(registryObject.name);
-                for (int i = 0; i < breeds.size(); i++) {
 
-                    //for (int j = 0; j < SpeciesRegistry.) {
+                List<SpeciesRegistry.BreedRegistryObject> breeds = SpeciesRegistry.getBreeds(registryObject.name);
+                Map<String, SpeciesRegistry.StateRegistryObject> stateMap = SpeciesRegistry.getSpeciesStates(registryObject.name);
+
+                if (stateMap == null)
+                    stateMap = new HashMap<>();
+
+                if (stateMap.size() == 0)
+                    stateMap.put("", new SpeciesRegistry.StateRegistryObject("", (entity) -> { }));
+
+                List<SpeciesRegistry.StateRegistryObject> states = new ArrayList<>(stateMap.values());
+                for (int i = 0; i < breeds.size(); i++)
+                {
+                    for (int j = 0; j < states.size(); j++)
+                    {
                         NBTTagCompound nbt = new NBTTagCompound();
                         ItemStack itemStack = new ItemStack(this, 1);
                         itemStack.setStackDisplayName("item.entityspawnegg." + registryObject.name);
@@ -114,10 +117,15 @@ public class EntitySpawnEgg extends BaseItem {
                         if (breeds.get(i).breedName == null)
                             continue;
 
-                        nbt.setString("subspecies", breeds.get(i).breedName);
+                        nbt.setString("breed", breeds.get(i).breedName);
+                        nbt.setString("state", states.get(j).stateName);
+
+                        nbt.setInteger("primaryColor", registryObject.primaryEggColor);
+                        nbt.setInteger("secondaryColor", registryObject.secondaryEggColor);
+
                         itemStack.setTagCompound(nbt);
                         subtypes.add(itemStack);
-                    //}
+                    }
                 }
             }
         });
@@ -170,7 +178,7 @@ public class EntitySpawnEgg extends BaseItem {
             boolean b = this.bFull3D;
 
             RegistryObject registryObject = Genesis.registry.getRegistryObject(stack.getTagCompound().getString("name"));
-            String subspecies = stack.getTagCompound().getString("subspecies");
+            String subspecies = stack.getTagCompound().getString("breed");
 
             Class<? extends EntityOrganism> entityClass = (Class<? extends EntityOrganism>)(registryObject.entityEntry.getEntityClass());
             double adultMass = SpeciesRegistry.getSpeciesFeature(registryObject.name, SpeciesFeature.FeatureTypes.AdultMass).values.get(0);
@@ -225,7 +233,11 @@ public class EntitySpawnEgg extends BaseItem {
     {
         NBTTagCompound nbt = stack.getTagCompound();
 
-        String line = nbt.getString("subspecies") + "." + nbt.getString("name");
+        String line = nbt.getString("breed") + "." + nbt.getString("name");
+
+        if (nbt.getString("state") != "")
+            line = nbt.getString("state") + "." + line;
+
         tooltip.add(line);
     }
 }

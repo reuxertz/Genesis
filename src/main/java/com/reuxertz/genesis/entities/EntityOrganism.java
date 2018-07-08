@@ -29,7 +29,7 @@ public abstract class EntityOrganism extends EntityCreature implements IOrganism
     }
     public abstract String getRegistryName();
 
-    public EntityOrganism(World world, RegistryObject registryObject, String subspecies, Double age, Double mass)
+    public EntityOrganism(World world, RegistryObject registryObject, String subspecies, double age, double mass)
     {
         super(world);
         NBTTagCompound nbt = this.getEntityData();

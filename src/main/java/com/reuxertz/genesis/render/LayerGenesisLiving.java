@@ -50,13 +50,11 @@ public class LayerGenesisLiving<E extends EntityGenesisAnimal> implements LayerR
                     if (organism == null)
                         return;
 
-                    Genome genome = entity.getOrganism().getGenome();//.getGene(GeneData.GeneType.EyeLayer);
+                    Genome genome = entity.getOrganism().getGenome();
                     if (genome == null)
                         return;
 
-
                     GeneData geneData = entity.getOrganism().getGenome().getGene(layerName + "layer");
-                    //GeneData hairData = entity.getOrganism().getGenome().getGene(GeneData.GeneType.HairLayer);
 
                     if (geneData != null) {
                         double red = geneData.values.get(0);

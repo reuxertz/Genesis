@@ -251,12 +251,12 @@ public class GenomeHelper {
 
         return true;
     }
-    public static boolean validateGenome(String name, Genome genome)
+    public static boolean validateGenome(String name, String breed, Genome genome)
     {
         if (!genome.isValid())
         {
             NBTTagCompound nbtGenome = new NBTTagCompound();
-            Genome speciesGenome = SpeciesRegistry.getSpeciesGenome(name, "").clone();
+            Genome speciesGenome = SpeciesRegistry.getSpeciesGenome(name, breed).clone();
             genome.setSequence(speciesGenome.sequence1, speciesGenome.sequence2);
             return false;
         }

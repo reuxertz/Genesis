@@ -23,7 +23,7 @@ import net.minecraftforge.fml.common.registry.EntityEntry;
 
 import java.util.Arrays;
 
-@Mod(modid = Flora.MODID, name = Flora.NAME, version = Flora.VERSION, dependencies = "required-after:forge@[14.23.3.2655,)", useMetadata = true)
+//@Mod(modid = Flora.MODID, name = Flora.NAME, version = Flora.VERSION, dependencies = "required-after:forge@[14.23.3.2655,)", useMetadata = true)
 public class Flora implements IGenesisPlugin
 {
     public static final String MODID = "flora";
@@ -41,54 +41,18 @@ public class Flora implements IGenesisPlugin
     {
         RegistryHelper.registerCrop("onion", getModID())
                 .autoRegister()
-                .registerSpecies("onion",
+                .registerSpecies(
                         Arrays.asList(
                             new SpeciesFeature(SpeciesFeature.FeatureTypes.AdultMass, 2000),
                             new SpeciesFeature(SpeciesFeature.FeatureTypes.AdultAgeTicks, 0),
                             new SpeciesFeature(SpeciesFeature.FeatureTypes.NewbornMass, 10),
                             new SpeciesFeature(SpeciesFeature.FeatureTypes.ClutchSize, 1.5)))
-                .registerBreed("onion", "wild",
+                .registerBreed("wild",
                         Arrays.asList(
                             new GeneData(GeneData.GeneType.AdultMassFactor, 0, 0),
                             new GeneData(GeneData.GeneType.GrowthFactor, 0, 0),
                             new GeneData(GeneData.GeneType.NewBornMassFactor, 0, 0),
                             new GeneData(GeneData.GeneType.ClutchSizeFactor, 0, 0)));
         return;
-    }
-
-    @SubscribeEvent
-    public static void registerBlocks(RegistryEvent.Register<Block> event) {
-
-        GenesisRegistry.registerModBlocks(event, Fauna.MODID);
-
-        return;
-    }
-
-    @SubscribeEvent
-    public static void registerItems(RegistryEvent.Register<Item> event) {
-
-        GenesisRegistry.registerModItems(event, Fauna.MODID);
-
-        return;
-    }
-
-    @SubscribeEvent
-    public static void registerModels(ModelRegistryEvent event) {
-
-        GenesisRegistry.registerEntityRenderers(Fauna.MODID);
-        GenesisRegistry.initModels(Fauna.MODID);
-    }
-
-    @Mod.EventHandler
-    public void preInit(FMLPreInitializationEvent event){
-        OBJLoader.INSTANCE.addDomain(MODID);
-    }
-
-    @Mod.EventHandler
-    public void init(FMLInitializationEvent e) {
-    }
-
-    @Mod.EventHandler
-    public void postInit(FMLPostInitializationEvent e) {
     }
 }

@@ -1,0 +1,5 @@
+{
+  "variants": {
+    "normal": { "model": "genesis:block_table_test" }
+  }
+}
