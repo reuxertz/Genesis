@@ -158,7 +158,7 @@ public class GenesisRegistry implements IGenesisRegistry
             {
                 RenderingRegistry.registerEntityRenderingHandler(regobj.entityEntry.getEntityClass(),
                         manager -> {
-                            RenderGenesisLiving renderGenesisLiving = new RenderGenesisLiving(manager, regobj.name, regobj.entityModel, 1f) {
+                            RenderGenesisLiving renderGenesisLiving = new RenderGenesisLiving(manager, regobj.name, regobj.entityModel, 0.1f) {
                                 @Override
                                 protected ResourceLocation getEntityTexture(Entity entity) {
                                     return new ResourceLocation(regobj.modId + ":" + "textures/entities/" + regobj.name + "/" + regobj.name + ".png");

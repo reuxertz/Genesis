@@ -1,7 +1,9 @@
 package com.reuxertz.fauna;
 
 import com.reuxertz.fauna.entities.EntityCrab;
+import com.reuxertz.fauna.entities.EntityCrow;
 import com.reuxertz.fauna.entities.models.ModelCrab;
+import com.reuxertz.fauna.entities.models.ModelCrow;
 import com.reuxertz.genesis.api.GenesisPlugin;
 import com.reuxertz.genesis.items.EntitySpawnEgg;
 import com.reuxertz.fauna.entities.models.ModelAnt;
@@ -16,6 +18,7 @@ import com.reuxertz.genesis.registry.GenesisRegistry;
 import com.reuxertz.genesis.util.IDHelper;
 import com.reuxertz.genesis.util.TimeHelper;
 import net.minecraft.block.Block;
+import net.minecraft.client.model.ModelCow;
 import net.minecraft.client.model.ModelPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
@@ -125,18 +128,28 @@ public class Fauna implements IGenesisPlugin
                         new SpeciesFeature(SpeciesFeature.FeatureTypes.AdultMass, 20),
                         new SpeciesFeature(SpeciesFeature.FeatureTypes.AdultAgeTicks, TimeHelper.ConvertYearsToTicks(20)),
                         new SpeciesFeature(SpeciesFeature.FeatureTypes.NewbornMass, 5),
-                        new SpeciesFeature(SpeciesFeature.FeatureTypes.ClutchSize, 0)
+                        new SpeciesFeature(SpeciesFeature.FeatureTypes.ClutchSize, 0),
+                        new SpeciesFeature(SpeciesFeature.FeatureTypes.SkinLayer, 1)
                     ))
                 .registerBreed("wood",
                     Arrays.asList(
                         new GeneData(GeneData.GeneType.AdultMassFactor, 0, 0),
                         new GeneData(GeneData.GeneType.GrowthFactor, 0, 0),
                         new GeneData(GeneData.GeneType.NewBornMassFactor, 0, 0),
-                        new GeneData(GeneData.GeneType.ClutchSizeFactor, 0, 0)
+                        new GeneData(GeneData.GeneType.ClutchSizeFactor, 0, 0),
+                        new GeneData(GeneData.GeneType.SkinLayer, 0, 0.4, 0.2, 0)
                         ))
-                .registerOverlay("worker", 0)
+                .registerBreed("red",
+                    Arrays.asList(
+                        new GeneData(GeneData.GeneType.AdultMassFactor, 0, 0),
+                        new GeneData(GeneData.GeneType.GrowthFactor, 0, 0),
+                        new GeneData(GeneData.GeneType.NewBornMassFactor, 0, 0),
+                        new GeneData(GeneData.GeneType.ClutchSizeFactor, 0, 0),
+                        new GeneData(GeneData.GeneType.SkinLayer, 0, .6, 0, 0)
+                        ))
                 .registerOverlay("eyes", 1)
                 .registerOverlay("wings", 1)
+                .registerOverlay("skin", 0)
                 .registerSpeciesState("queen")
                 .registerSpeciesState("male")
                 .registerSpeciesState("worker")
@@ -170,7 +183,30 @@ public class Fauna implements IGenesisPlugin
 
 
 
-
+        registry.registerEntity("crow", Fauna.MODID, EntityEntryBuilder.create()
+                .entity(EntityCrow.class)
+                .id(new ResourceLocation(Fauna.MODID, "crow"), IDHelper.getNextID("fauna_animal"))
+                .name("crow")
+                .tracker(80, 3, false)
+                .build(), new ModelCrow())
+                .autoRegister()
+                .registerSpecies(
+                        Arrays.asList(
+                                new SpeciesFeature(SpeciesFeature.FeatureTypes.AdultMass, 2500),
+                                new SpeciesFeature(SpeciesFeature.FeatureTypes.AdultAgeTicks, TimeHelper.ConvertYearsToTicks(20)),
+                                new SpeciesFeature(SpeciesFeature.FeatureTypes.NewbornMass, 5),
+                                new SpeciesFeature(SpeciesFeature.FeatureTypes.ClutchSize, 0)
+                        ))
+                .registerBreed("black",
+                        Arrays.asList(
+                                new GeneData(GeneData.GeneType.AdultMassFactor, 0, 0),
+                                new GeneData(GeneData.GeneType.GrowthFactor, 0, 0),
+                                new GeneData(GeneData.GeneType.NewBornMassFactor, 0, 0),
+                                new GeneData(GeneData.GeneType.ClutchSizeFactor, 0, 0)
+                        ))
+                .registerSpeciesState("male")
+                .registerSpeciesState("female");
+        ;
         return;
     }
 
