@@ -60,7 +60,7 @@ public class ForgeHandler {
 //        boolean b1 = event.getHand() == EnumHand.OFF_HAND;
 //        IBlockState bottomBlock = event.getWorld().getBlockState(event.getPos());
 //        IBlockState topBlock = event.getWorld().getBlockState(event.getPos());
-//        boolean b2 = BlockCropBase.canBlockSustainGenesisPlant(bottomBlock);
+//        boolean b2 = BlockCropBase.canBlockSustainGenesisGrowable(bottomBlock);
 //        boolean b3 = topBlock.getBlock() == Blocks.AIR;
 //
 //        if (b1 && b2 && b3)

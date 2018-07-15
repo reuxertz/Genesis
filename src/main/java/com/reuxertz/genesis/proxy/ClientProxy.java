@@ -5,6 +5,8 @@ import com.reuxertz.genesis.registry.GenesisRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemModelMesher;
 import net.minecraft.client.renderer.RenderItem;
+import net.minecraft.client.renderer.color.BlockColors;
+import net.minecraft.client.renderer.color.IBlockColor;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.resources.IReloadableResourceManager;
@@ -54,6 +56,14 @@ public class ClientProxy extends CommonProxy {
         {
             if (regObj.item instanceof IItemColor)
                 Minecraft.getMinecraft().getItemColors().registerItemColorHandler((IItemColor)regObj.item, regObj.item);
+
+            if (regObj.block instanceof IBlockColor) {
+                Minecraft.getMinecraft().getBlockColors().registerBlockColorHandler((IBlockColor) regObj.block, regObj.block);
+
+                if (!(regObj.item instanceof IItemColor) && regObj.block instanceof IItemColor)
+                    Minecraft.getMinecraft().getItemColors().registerItemColorHandler((IItemColor)regObj.block, regObj.item);
+
+            }
         });
 
 //        items.registerItemColorHandler(new IItemColor()

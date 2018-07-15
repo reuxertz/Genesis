@@ -1,10 +1,10 @@
 package com.reuxertz.genesis.api.blocks;
 
+import com.reuxertz.genesis.util.PlantHelper;
 import net.minecraft.block.BlockCrops;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -34,19 +34,13 @@ public class BlockGrowableBase extends BlockCrops implements IBaseBlock {
     @Override
     public int getAge(IBlockState state)
     {
-        return ((Integer)state.getValue(this.getAgeProperty())).intValue();
-    }
-
-    public static boolean canBlockSustainGenesisPlant(IBlockState state)
-    {
-        return state.getBlock() == Blocks.FARMLAND || state.getBlock() == Blocks.DIRT
-                || state.getBlock() == Blocks.GRASS;
+        return (state.getValue(this.getAgeProperty()));
     }
 
     @Override
     protected boolean canSustainBush(IBlockState state)
     {
-        return canBlockSustainGenesisPlant(state);
+        return PlantHelper.canBlockSustainGenesisGrowable(state.getBlock(), null);
     }
 
     @Override

@@ -4,6 +4,7 @@ import com.reuxertz.genesis.api.blocks.BlockCropBase;
 import com.reuxertz.genesis.organics.Genome;
 import com.reuxertz.genesis.organics.GenomeHelper;
 import com.reuxertz.genesis.api.tileentities.TileEntityCropBase;
+import com.reuxertz.genesis.util.PlantHelper;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.BlockCrops;
 import net.minecraft.block.state.IBlockState;
@@ -45,10 +46,9 @@ public class CropSeedBase extends ItemSeeds implements IItemBase {
         IBlockState state = worldIn.getBlockState(pos);
 
         boolean cpe = player.canPlayerEdit(pos.offset(facing), facing, itemstack);
-        boolean csp = this.blockCrop.canBlockSustainGenesisPlant(state);
+        boolean csp = PlantHelper.canBlockSustainGenesisGrowable(state.getBlock(), worldIn.getBlockState(pos.up()).getBlock());
 
-        if (facing == EnumFacing.UP && cpe && csp &&
-                worldIn.isAirBlock(pos.up()))
+        if (facing == EnumFacing.UP && cpe && csp)
         {
             worldIn.setBlockState(pos.up(), this.blockCrop.getDefaultState());
             TileEntityCropBase tileEntityCropBase = (TileEntityCropBase)worldIn.getTileEntity(pos.up());

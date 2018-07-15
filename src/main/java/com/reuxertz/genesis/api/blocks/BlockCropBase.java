@@ -50,30 +50,7 @@ public class BlockCropBase extends BlockGrowableBase implements ITileEntityProvi
     @Override
     public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand)
     {
-        //super.updateTick(worldIn, pos, state, rand);
         this.checkAndDropBlock(worldIn, pos, state);
-
-        TileEntityCropBase te = (TileEntityCropBase)worldIn.getTileEntity(pos);
-        //te.getOrganism().tick(worldIn);
-        //te.refreshState();
-
-//        if (!worldIn.isAreaLoaded(pos, 1)) return; // Forge: prevent loading unloaded chunks when checking neighbor's light
-//        if (worldIn.getLightFromNeighbors(pos.up()) >= 9 && false)
-//        {
-//            int i = this.getAge(state);
-//            worldIn.setBlockState(pos, this.withAge(i + 1));
-//
-//            if (i < this.getMaxAge())
-//            {
-//                  float f = getGrowthChance(this, worldIn, pos);
-//
-//                if(net.minecraftforge.common.ForgeHooks.onCropsGrowPre(worldIn, pos, state, rand.nextInt((int)(25.0F / f) + 1) == 0))
-//                {
-//                    //worldIn.setBlockState(pos, this.withAge(i + 1));
-//                    //net.minecraftforge.common.ForgeHooks.onCropsGrowPost(worldIn, pos, state, worldIn.getBlockState(pos));
-//                }
-//            }
-//        }
     }
 
 
@@ -128,11 +105,6 @@ public class BlockCropBase extends BlockGrowableBase implements ITileEntityProvi
                 {
                     is.grow(newbornCount);
                     playerIn.setHeldItem(hand, is);
-
-//                    int newbornCountInt = tileEntityCropBase.getOrganism().removeNewborn();
-//                    GenomeHelper.addGenomeToItemStack(is, tileEntityCropBase.getOrganism().getGenome().clone());
-//                    is.grow(newbornCountInt);
-//                    playerIn.setHeldItem(hand, is);
                 }
 
                 tileEntityCropBase.refreshState();
@@ -143,19 +115,4 @@ public class BlockCropBase extends BlockGrowableBase implements ITileEntityProvi
 
         return false;
     }
-
-//    @Override
-//    public TileEntity createTileEntity(World world, IBlockState state) {
-//
-//        String shortName = name.substring(name.lastIndexOf("_") + 1, name.length());
-//        Genome g = SpeciesRegistry.getSpeciesGenome(shortName);
-//
-//        Organism o = new Organism(shortName, g, new Metabolism(), 10);
-//        TileEntityCropBase newTileEntity = new TileEntityCropBase(o);
-//
-//        o.getMetabolism().addEnergy(o.getMass());
-//        o.setOrganismContainer(newTileEntity);
-//
-//        return newTileEntity;
-//    }
 }

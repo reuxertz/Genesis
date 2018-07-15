@@ -38,7 +38,7 @@ import java.util.Arrays;
 
 @Mod(modid = Fauna.MODID, name = Fauna.NAME, version = Fauna.VERSION, dependencies = "required-after:forge@[14.23.3.2655,)", useMetadata = true)
 @Mod.EventBusSubscriber(modid = Fauna.MODID)
-public class Fauna implements IGenesisPlugin
+public class Fauna
 {
     public static final String MODID = "fauna";
     public static final String NAME = "Fauna";

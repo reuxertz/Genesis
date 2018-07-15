@@ -6,6 +6,7 @@ import com.reuxertz.genesis.organics.IOrganismContainer;
 import com.reuxertz.genesis.organics.Organism;
 import com.reuxertz.genesis.registry.RegistryObject;
 import com.reuxertz.genesis.util.BlockHelper;
+import com.reuxertz.genesis.util.PlantHelper;
 import com.reuxertz.genesis.util.RandomHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockCrops;
@@ -114,11 +115,11 @@ public class TileEntityCropBase extends TileEntityBase implements
     {
         BlockPos randBlockPos = BlockHelper.getRandomBlock(pos.down(), 4, 2, RandomHelper.random);
 
-        BlockCropBase parentBlock = (BlockCropBase)world.getBlockState(pos).getBlock();
         IBlockState block = world.getBlockState(randBlockPos);
         IBlockState topBlock = world.getBlockState(randBlockPos.up());
+        BlockCropBase parentBlock = (BlockCropBase)world.getBlockState(pos).getBlock();
 
-        if (parentBlock.canBlockSustainGenesisPlant(block) && topBlock.getBlock() == Blocks.AIR) {
+        if (PlantHelper.canBlockSustainGenesisGrowable(block.getBlock(), topBlock.getBlock())) {
 
             world.setBlockState(randBlockPos.up(), parentBlock.getDefaultState());
             return true;
