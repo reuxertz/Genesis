@@ -47,7 +47,7 @@ public class Flora implements IGenesisPlugin
                             new SpeciesFeature(SpeciesFeature.FeatureTypes.AdultAgeTicks, 0),
                             new SpeciesFeature(SpeciesFeature.FeatureTypes.NewbornMass, 10),
                             new SpeciesFeature(SpeciesFeature.FeatureTypes.ClutchSize, 1.5)))
-                .registerBreed("wild",
+                .registerBreed("",
                         Arrays.asList(
                             new GeneData(GeneData.GeneType.AdultMassFactor, 0, 0),
                             new GeneData(GeneData.GeneType.GrowthFactor, 0, 0),

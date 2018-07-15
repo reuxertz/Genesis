@@ -3,6 +3,9 @@ package com.reuxertz.genesis.api.containers;
 import com.reuxertz.genesis.api.containers.slots.SlotBase;
 import com.reuxertz.genesis.api.items.ItemBase;
 import com.reuxertz.genesis.api.tileentities.TileEntityContainerBase;
+import com.reuxertz.genesis.util.NBTHelper;
+import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
@@ -43,12 +46,12 @@ public class ContainerBase extends Container
 
         if (guiContainer instanceof ItemBase && guiContainerObject instanceof ItemStack)
             ((ItemStack)guiContainerObject).setTagCompound(nbt);
-        if (guiContainer instanceof TileEntityContainerBase && guiContainerObject instanceof ItemStack)
-            ((TileEntityContainerBase)guiContainerObject).readFromNBT(nbt);
-
+        if (guiContainer instanceof TileEntityContainerBase && guiContainerObject instanceof ItemStack) {
+            ((TileEntityContainerBase) guiContainerObject).readFromNBT(nbt);
+            ((TileEntityContainerBase) guiContainerObject).markDirty();
+        }
 
     }
-
     public Slot addSlot(Slot slotIn) {
 
         return this.addSlotToContainer(slotIn);
@@ -64,9 +67,9 @@ public class ContainerBase extends Container
         this(entityPlayer);
         this.guiContainer = guiContainer;
         this.guiContainerObject = guiContainerObject;
-        this.inventory = new InventoryBasic("inventory", false, guiContainer.getInventorySize());
         this.construct();
 
+        entityPlayer.inventory.openInventory(entityPlayer);
     }
 
     public void construct()
@@ -100,10 +103,24 @@ public class ContainerBase extends Container
     @Override
     public void onContainerClosed(EntityPlayer playerIn)
     {
+        super.onContainerClosed(playerIn);
         setNBT(nbt -> nbt.setBoolean("isOpen", false));
 
+        if (guiContainerObject instanceof ItemStack)
+            setNBT(nbt -> NBTHelper.writeInventory(nbt, inventory));
 
+        if (guiContainerObject instanceof TileEntityContainerBase) {
+            TileEntityContainerBase tileEntityContainerBase = ((TileEntityContainerBase) guiContainerObject);
+            IBlockState blockState = entityPlayer.world.getBlockState(tileEntityContainerBase.getPos());
+            if (!playerIn.world.isRemote) {
+                playerIn.world.notifyBlockUpdate(tileEntityContainerBase.getPos(), blockState, blockState, 3);
+                playerIn.world.notifyNeighborsOfStateChange(
+                        tileEntityContainerBase.getPos(),
+                        entityPlayer.world.getBlockState(tileEntityContainerBase.getPos()).getBlock(), true);
+            }
+        }
 
+        entityPlayer.inventory.closeInventory(entityPlayer);
     }
 
     //Shift Click

@@ -3,13 +3,10 @@ package com.reuxertz.genesis.api.blocks;
 import com.reuxertz.genesis.organics.Genome;
 import com.reuxertz.genesis.organics.Organism;
 import com.reuxertz.genesis.api.tileentities.TileEntityCropBase;
-import net.minecraft.block.BlockCrops;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -18,73 +15,38 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.Random;
 
-public class BaseBlockGrowable extends BlockCrops implements IBaseBlock, ITileEntityProvider
+public class BlockCropBase extends BlockGrowableBase implements ITileEntityProvider
 {
-    protected String name;
-    protected Item seed;
     protected Item crop;
-
-    @Override
-    protected Item getSeed() {
-        return seed;
-    }
 
     @Override
     protected Item getCrop() {
         return crop;
     }
 
-    @Override
-    public int getAge(IBlockState state)
-    {
-        return ((Integer)state.getValue(this.getAgeProperty())).intValue();
-    }
 
-    public static boolean canBlockSustainGenesisPlant(IBlockState state)
-    {
-        return state.getBlock() == Blocks.FARMLAND || state.getBlock() == Blocks.DIRT
-                || state.getBlock() == Blocks.GRASS;
-    }
-
-    @Override
-    protected boolean canSustainBush(IBlockState state)
-    {
-        return canBlockSustainGenesisPlant(state);
-    }
-
-    public BaseBlockGrowable(String name) {
+    public BlockCropBase(String name) {
         this(name, CreativeTabs.MISC);
     }
-    public BaseBlockGrowable(String name, CreativeTabs tab) {
-        super();
-        this.name = name;
-        setCreativeTab(tab);
+    public BlockCropBase(String name, CreativeTabs tab) {
+        super(name, tab);
 
     }
 
-    public BaseBlockGrowable setSeed(Item seed)
+    public BlockCropBase setSeed(Item seed)
     {
         this.seed = seed;
         return this;
     }
-    public BaseBlockGrowable setCrop(Item crop)
+    public BlockCropBase setCrop(Item crop)
     {
         this.crop = crop;
         return this;
     }
 
-    @SideOnly(Side.CLIENT)
-    public void initModel() {
-
-        ModelResourceLocation normal = new ModelResourceLocation(getRegistryName(), "inventory");
-        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, normal);
-    }
     @Override
     public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand)
     {
@@ -114,12 +76,6 @@ public class BaseBlockGrowable extends BlockCrops implements IBaseBlock, ITileEn
 //        }
     }
 
-    @Override
-    public boolean canPlaceBlockAt(World worldIn, BlockPos pos)
-    {
-        IBlockState soil = worldIn.getBlockState(pos.down());
-        return super.canPlaceBlockAt(worldIn, pos) && soil.getBlock().canSustainPlant(soil, worldIn, pos.down(), net.minecraft.util.EnumFacing.UP, this);
-    }
 
     @Override
     public TileEntity createNewTileEntity(World world, int meta) {

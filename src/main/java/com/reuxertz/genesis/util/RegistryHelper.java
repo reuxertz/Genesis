@@ -1,11 +1,11 @@
 package com.reuxertz.genesis.util;
 
-import com.reuxertz.gaia.blocks.BlockBaseMetal;
-import com.reuxertz.gaia.blocks.BlockBaseOre;
+import com.reuxertz.gaia.blocks.BlockMetalBase;
+import com.reuxertz.gaia.blocks.BlockOreBase;
 import com.reuxertz.gaia.items.IngotBase;
+import com.reuxertz.genesis.api.blocks.BlockCropBase;
 import com.reuxertz.genesis.api.items.ItemBase;
 import com.reuxertz.gaia.items.NuggetBase;
-import com.reuxertz.genesis.api.blocks.BaseBlockGrowable;
 import com.reuxertz.genesis.api.items.CropSeedBase;
 import com.reuxertz.genesis.mod.Genesis;
 import com.reuxertz.genesis.registry.RegistryObject;
@@ -19,7 +19,7 @@ public class RegistryHelper {
 
     public static RegistryObject registerOre(String name, String modId)
     {
-        return Genesis.registry.registerContent(new RegistryObject(registry, modId, "ore_" + name, new BlockBaseOre("ore_" + name)));
+        return Genesis.registry.registerContent(new RegistryObject(registry, modId, "ore_" + name, new BlockOreBase("ore_" + name)));
 
     }
 
@@ -55,7 +55,7 @@ public class RegistryHelper {
 
     public static RegistryObject registerMetalBlock(String name, String modId)
     {
-        return Genesis.registry.registerContent(new RegistryObject(registry, modId, "block_" + name, new BlockBaseMetal("block_" + name)));
+        return Genesis.registry.registerContent(new RegistryObject(registry, modId, "block_" + name, new BlockMetalBase("block_" + name)));
     }
 
     public static RegistryObject registerIngot(String name, String modId)
@@ -76,12 +76,12 @@ public class RegistryHelper {
         if (type == null)
             type = "";
 
-        RegistryObject result = Genesis.registry.registerContent(new RegistryObject(registry, modId, "chestplate_" + type + name, new BlockBaseMetal("chestplate_" + name)));
+        RegistryObject result = Genesis.registry.registerContent(new RegistryObject(registry, modId, "chestplate_" + type + name, new BlockMetalBase("chestplate_" + name)));
         List<RegistryObject> group = new ArrayList<>();
 
-        group.add(Genesis.registry.registerContent(new RegistryObject(registry, modId, "boots_" + type + name, new BlockBaseMetal("boots_" + name))));
-        group.add(Genesis.registry.registerContent(new RegistryObject(registry, modId, "leggings_" + type + name, new BlockBaseMetal("leggings_" + name))));
-        group.add(Genesis.registry.registerContent(new RegistryObject(registry, modId, "helmet_" + type + name, new BlockBaseMetal("helmet_" + name))));
+        group.add(Genesis.registry.registerContent(new RegistryObject(registry, modId, "boots_" + type + name, new BlockMetalBase("boots_" + name))));
+        group.add(Genesis.registry.registerContent(new RegistryObject(registry, modId, "leggings_" + type + name, new BlockMetalBase("leggings_" + name))));
+        group.add(Genesis.registry.registerContent(new RegistryObject(registry, modId, "helmet_" + type + name, new BlockMetalBase("helmet_" + name))));
 
         result.groupWith(group);
         return result;
@@ -102,7 +102,7 @@ public class RegistryHelper {
     //Plants
     public static RegistryObject registerCrop(String name, String modId)
     {
-        BaseBlockGrowable blockCrop = new BaseBlockGrowable("crop_" + name);
+        BlockCropBase blockCrop = new BlockCropBase("crop_" + name);
         CropSeedBase crop = new CropSeedBase(name, blockCrop);
         CropSeedBase seed = new CropSeedBase("seed_" + name, blockCrop);
 

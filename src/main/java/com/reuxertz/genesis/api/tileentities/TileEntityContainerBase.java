@@ -3,11 +3,15 @@ package com.reuxertz.genesis.api.tileentities;
 import com.reuxertz.genesis.api.containers.ContainerBase;
 import com.reuxertz.genesis.api.containers.IGuiContainer;
 import com.reuxertz.genesis.api.gui.GuiContainerBase;
+import com.reuxertz.genesis.util.NBTHelper;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.InventoryBasic;
 import net.minecraft.inventory.Slot;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
@@ -16,6 +20,7 @@ public class TileEntityContainerBase extends TileEntityBase implements IGuiConta
 {
     protected ResourceLocation texture;
     protected boolean isOpen = false;
+    public IInventory inventory;
 
     @Override
     public int getInventorySize()
@@ -32,14 +37,24 @@ public class TileEntityContainerBase extends TileEntityBase implements IGuiConta
     @Override
     public void construct(ContainerBase containerBase) {
 
+        containerBase.inventory = inventory;
         for (int y = 0; y < 3; y++)
             for (int x = 0; x < 9; x++)
                 containerBase.addSlot(new Slot(containerBase.inventory, x + y * 9, 8 + x * 18, 18 + y * 18));
     }
 
+    @Override
+    public NBTTagCompound getUpdateTag()
+    {
+        return writeToNBT(new NBTTagCompound());
+    }
+
     public TileEntityContainerBase(ResourceLocation texture)
     {
+        super();
+
         this.texture = texture;
+        this.inventory = new InventoryBasic("inventory", false, getInventorySize());
     }
 
     @Override
@@ -62,10 +77,11 @@ public class TileEntityContainerBase extends TileEntityBase implements IGuiConta
 
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound)    {
-        NBTTagCompound nbt = super.writeToNBT(compound);
 
-        //compound.setTag("Inventory", this.inventory.serializeNBT());
-        nbt.setBoolean("isOpen", isOpen);
+        compound.setBoolean("isOpen", isOpen);
+        NBTHelper.writeInventory(compound, inventory);
+
+        NBTTagCompound nbt = super.writeToNBT(compound);
 
         return nbt;
     }
@@ -77,5 +93,6 @@ public class TileEntityContainerBase extends TileEntityBase implements IGuiConta
         //this.inventory.deserializeNBT(nbt.getCompoundTag("Inventory"));
         if (nbt.hasKey("isOpen"))
             isOpen = nbt.getBoolean("isOpen");
+        inventory = NBTHelper.readInventory(nbt, getInventorySize());
     }
 }

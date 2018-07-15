@@ -4,13 +4,13 @@ import com.reuxertz.genesis.api.blocks.BlockBase;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 
-public class BlockBaseMetal extends BlockBase {
+public class BlockMetalBase extends BlockBase {
 
-    public BlockBaseMetal(String name, CreativeTabs tab) {
+    public BlockMetalBase(String name, CreativeTabs tab) {
         super(name, Material.IRON, tab);
     }
 
-    public BlockBaseMetal(String name) {
+    public BlockMetalBase(String name) {
         this(name, CreativeTabs.MISC);
     }
 }

@@ -1,7 +1,7 @@
 package com.reuxertz.genesis.api.tileentities;
 
+import com.reuxertz.genesis.api.blocks.BlockCropBase;
 import com.reuxertz.genesis.mod.Genesis;
-import com.reuxertz.genesis.api.blocks.BaseBlockGrowable;
 import com.reuxertz.genesis.organics.IOrganismContainer;
 import com.reuxertz.genesis.organics.Organism;
 import com.reuxertz.genesis.registry.RegistryObject;
@@ -114,7 +114,7 @@ public class TileEntityCropBase extends TileEntityBase implements
     {
         BlockPos randBlockPos = BlockHelper.getRandomBlock(pos.down(), 4, 2, RandomHelper.random);
 
-        BaseBlockGrowable parentBlock = (BaseBlockGrowable)world.getBlockState(pos).getBlock();
+        BlockCropBase parentBlock = (BlockCropBase)world.getBlockState(pos).getBlock();
         IBlockState block = world.getBlockState(randBlockPos);
         IBlockState topBlock = world.getBlockState(randBlockPos.up());
 
@@ -146,7 +146,7 @@ public class TileEntityCropBase extends TileEntityBase implements
         int growthStageInt = (int)growthStage;
 
         IBlockState state = world.getBlockState(pos);
-        int actualGrowthStage = ((BaseBlockGrowable)state.getBlock()).getAge(state);
+        int actualGrowthStage = ((BlockCropBase)state.getBlock()).getAge(state);
         if(net.minecraftforge.common.ForgeHooks.onCropsGrowPre(world, pos, state, true))
         {
             if (actualGrowthStage != growthStageInt && actualGrowthStage < 8)

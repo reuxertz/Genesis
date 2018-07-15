@@ -1,6 +1,6 @@
 package com.reuxertz.genesis.api.items;
 
-import com.reuxertz.genesis.api.blocks.BaseBlockGrowable;
+import com.reuxertz.genesis.api.blocks.BlockCropBase;
 import com.reuxertz.genesis.organics.Genome;
 import com.reuxertz.genesis.organics.GenomeHelper;
 import com.reuxertz.genesis.api.tileentities.TileEntityCropBase;
@@ -25,15 +25,15 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class CropSeedBase extends ItemSeeds implements IItemBase {
 
-    protected BaseBlockGrowable blockCrop;
+    protected BlockCropBase blockCrop;
 
-    public void setBlockCrop(BaseBlockGrowable blockCrop) { this.blockCrop = blockCrop; }
+    public void setBlockCrop(BlockCropBase blockCrop) { this.blockCrop = blockCrop; }
     public BlockCrops getBlockCrop() { return blockCrop; }
 
-    public CropSeedBase(String name, BaseBlockGrowable blockCrop) {
+    public CropSeedBase(String name, BlockCropBase blockCrop) {
         this(name, blockCrop, CreativeTabs.MISC);
     }
-    public CropSeedBase(String name, BaseBlockGrowable blockCrop, CreativeTabs tab) {
+    public CropSeedBase(String name, BlockCropBase blockCrop, CreativeTabs tab) {
         super(blockCrop, Blocks.FARMLAND);
         setCreativeTab(tab);
     }
@@ -58,8 +58,8 @@ public class CropSeedBase extends ItemSeeds implements IItemBase {
             Genome genome = Genome.readFromNBT(itemstack.getTagCompound());
             tileEntityCropBase.getOrganism().getGenome().setSequence(genome.getSequence1(), genome.getSequence2());
             GenomeHelper.validateGenome(
-                    itemstack.getTagCompound().getString("name"),
-                    itemstack.getTagCompound().getString("breed"),
+                    "onion", //itemstack.getTagCompound().getString("name"),
+                    "", //itemstack.getTagCompound().getString("breed"),
                     tileEntityCropBase.getOrganism().getGenome());
 
             if (player instanceof EntityPlayerMP)

@@ -4,11 +4,14 @@ import com.reuxertz.genesis.api.containers.ContainerBase;
 import com.reuxertz.genesis.api.gui.GuiContainerBase;
 import com.reuxertz.genesis.api.containers.IGuiContainer;
 import com.reuxertz.genesis.mod.Genesis;
+import com.reuxertz.genesis.util.NBTHelper;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
+import net.minecraft.inventory.InventoryBasic;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
@@ -33,6 +36,12 @@ public class ItemContainerBase extends ItemBase implements IGuiContainer
         return true;
     }
 
+    @Override
+    public NBTTagCompound getNBTShareTag(ItemStack stack)
+    {
+        return stack.getTagCompound();
+    }
+
     public ItemContainerBase(String name)
     {
         super(name);
@@ -42,6 +51,11 @@ public class ItemContainerBase extends ItemBase implements IGuiContainer
     @Override
     public void construct(ContainerBase containerBase) {
 
+        NBTTagCompound nbtTagCompound = new NBTTagCompound();
+        if (((ItemStack)containerBase.guiContainerObject).hasTagCompound())
+            nbtTagCompound = ((ItemStack)containerBase.guiContainerObject).getTagCompound();
+
+        containerBase.inventory = NBTHelper.readInventory(nbtTagCompound, getInventorySize());
         for (int y = 0; y < 3; y++)
             for (int x = 0; x < 9; x++)
                 containerBase.addSlot(new Slot(containerBase.inventory, x + y * 9, 8 + x * 18, 18 + y * 18));

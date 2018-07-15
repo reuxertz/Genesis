@@ -1,6 +1,7 @@
 package com.reuxertz.genesis.api.blocks;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -18,12 +19,19 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class BlockBase extends Block implements IBaseBlock {
 
     public boolean isSimple = true;
+    public String name;
 
     public BlockBase(String name, Material material) {
         this(name, material, CreativeTabs.MISC);
     }
+//    public BlockBase(String name, Material material, CreativeTabs tab) {
+//        super(material);
+//        this.name = name;
+//        setCreativeTab(tab);
+//    }
     public BlockBase(String name, Material material, CreativeTabs tab) {
-        super(material);
+        super(material, material.getMaterialMapColor());
+        this.name = name;
         setCreativeTab(tab);
     }
 

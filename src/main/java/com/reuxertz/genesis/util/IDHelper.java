@@ -1,7 +1,5 @@
 package com.reuxertz.genesis.util;
 
-import com.sun.xml.internal.bind.v2.model.core.ID;
-
 import java.util.HashMap;
 
 public class IDHelper {
