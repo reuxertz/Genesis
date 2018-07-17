@@ -1,8 +1,7 @@
 package com.reuxertz.genesis.mod;
 
-import com.reuxertz.genesis.api.GenesisPlugin;
-import com.reuxertz.genesis.api.IGenesisPlugin;
-import com.reuxertz.genesis.registry.GenesisRegistry;
+import com.reuxertz.genesisAPI.GenesisPlugin;
+import com.reuxertz.genesisAPI.IGenesisPlugin;
 import net.minecraftforge.fml.common.discovery.ASMDataTable;
 
 import java.util.ArrayList;

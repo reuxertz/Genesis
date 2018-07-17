@@ -4,21 +4,16 @@ import com.reuxertz.fauna.entities.EntityCrab;
 import com.reuxertz.fauna.entities.EntityCrow;
 import com.reuxertz.fauna.entities.models.ModelCrab;
 import com.reuxertz.fauna.entities.models.ModelCrow;
-import com.reuxertz.genesis.api.GenesisPlugin;
-import com.reuxertz.genesis.items.EntitySpawnEgg;
 import com.reuxertz.fauna.entities.models.ModelAnt;
-import com.reuxertz.genesis.api.IGenesisPlugin;
-import com.reuxertz.genesis.api.IGenesisRegistry;
-import com.reuxertz.genesis.api.organisms.GeneData;
-import com.reuxertz.genesis.api.organisms.SpeciesFeature;
+import com.reuxertz.genesisAPI.*;
 import com.reuxertz.fauna.entities.EntityAnt;
 import com.reuxertz.fauna.entities.EntityHuman;
-import com.reuxertz.genesis.mod.Genesis;
 import com.reuxertz.genesis.registry.GenesisRegistry;
 import com.reuxertz.genesis.util.IDHelper;
 import com.reuxertz.genesis.util.TimeHelper;
+import com.reuxertz.genesisAPI.organics.GeneData;
+import com.reuxertz.genesisAPI.organics.SpeciesFeature;
 import net.minecraft.block.Block;
-import net.minecraft.client.model.ModelCow;
 import net.minecraft.client.model.ModelPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
@@ -26,9 +21,6 @@ import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.obj.OBJLoader;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.EntityEntryBuilder;
@@ -36,15 +28,15 @@ import net.minecraftforge.fml.common.registry.EntityEntryBuilder;
 import java.awt.*;
 import java.util.Arrays;
 
-@Mod(modid = Fauna.MODID, name = Fauna.NAME, version = Fauna.VERSION, dependencies = "required-after:forge@[14.23.3.2655,)", useMetadata = true)
+//@Mod(modid = Fauna.MODID, name = Fauna.NAME, version = Fauna.VERSION, dependencies = "required-after:forge@[14.23.3.2655,)", useMetadata = true)
 @Mod.EventBusSubscriber(modid = Fauna.MODID)
-public class Fauna
+public class Fauna implements IGenesisPlugin
 {
     public static final String MODID = "fauna";
     public static final String NAME = "Fauna";
     public static final String VERSION = "1.0";
 
-    //@GenesisPlugin
+    @GenesisPlugin
     public Fauna()
     {
         OBJLoader.INSTANCE.addDomain(MODID);

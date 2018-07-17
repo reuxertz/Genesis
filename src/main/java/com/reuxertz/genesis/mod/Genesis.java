@@ -1,6 +1,6 @@
 package com.reuxertz.genesis.mod;
 
-import com.reuxertz.genesis.api.IGenesisPlugin;
+import com.reuxertz.genesisAPI.IGenesisPlugin;
 import com.reuxertz.genesis.command.GenesisCommand;
 import com.reuxertz.genesis.handlers.ForgeHandler;
 import com.reuxertz.genesis.handlers.GuiHandler;
@@ -8,7 +8,6 @@ import com.reuxertz.genesis.handlers.NetworkHandler;
 import com.reuxertz.genesis.proxy.CommonProxy;
 import com.reuxertz.genesis.registry.*;
 import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.common.MinecraftForge;

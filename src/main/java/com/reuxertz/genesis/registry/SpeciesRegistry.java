@@ -1,13 +1,9 @@
 package com.reuxertz.genesis.registry;
 
-import com.reuxertz.genesis.api.organisms.GeneData;
-import com.reuxertz.genesis.api.organisms.SpeciesFeature;
-import com.reuxertz.genesis.entities.EntityOrganism;
-import com.reuxertz.genesis.organics.GeneHelper;
+import com.reuxertz.genesisAPI.organics.GeneData;
+import com.reuxertz.genesisAPI.organics.SpeciesFeature;
 import com.reuxertz.genesis.organics.Genome;
 import com.reuxertz.genesis.organics.Organism;
-import it.unimi.dsi.fastutil.Hash;
-import scala.collection.immutable.Stream;
 
 import java.util.ArrayList;
 import java.util.HashMap;

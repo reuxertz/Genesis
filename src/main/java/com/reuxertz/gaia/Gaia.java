@@ -1,10 +1,8 @@
 package com.reuxertz.gaia;
 
-import com.reuxertz.genesis.api.GenesisPlugin;
-import com.reuxertz.genesis.api.IGenesisPlugin;
-import com.reuxertz.genesis.api.IGenesisRegistry;
+import com.reuxertz.genesisAPI.IGenesisPlugin;
+import com.reuxertz.genesisAPI.IGenesisRegistry;
 import com.reuxertz.genesis.util.RegistryHelper;
-import net.minecraftforge.fml.common.Mod;
 
 //@Mod(modid = Gaia.MODID, name = Gaia.NAME, version = Gaia.VERSION, dependencies = "required-after:forge@[14.23.3.2655,)", useMetadata = true)
 public class Gaia implements IGenesisPlugin

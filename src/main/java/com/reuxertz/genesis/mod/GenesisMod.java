@@ -1,21 +1,23 @@
 package com.reuxertz.genesis.mod;
 
-import com.reuxertz.fauna.Fauna;
-import com.reuxertz.genesis.api.GenesisPlugin;
-import com.reuxertz.genesis.api.IGenesisPlugin;
-import com.reuxertz.genesis.api.IGenesisRegistry;
-import com.reuxertz.genesis.api.blocks.BlockBase;
-import com.reuxertz.genesis.api.blocks.BlockContainerBase;
-import com.reuxertz.genesis.api.items.ItemBase;
-import com.reuxertz.genesis.api.items.ItemContainerBase;
-import com.reuxertz.genesis.api.tileentities.TileEntityContainerBase;
+import com.reuxertz.genesisAPI.GenesisPlugin;
+import com.reuxertz.genesisAPI.IGenesisPlugin;
+import com.reuxertz.genesisAPI.IGenesisRegistry;
+import com.reuxertz.genesis.block.base.BlockContainerBase;
+import com.reuxertz.genesis.items.base.ItemBase;
+import com.reuxertz.genesis.items.base.ItemContainerBase;
+import com.reuxertz.genesis.tileentities.TileEntityContainerBase;
 import com.reuxertz.genesis.block.BlockGenesisGrass;
 import com.reuxertz.genesis.items.EntitySpawnEgg;
-import net.minecraft.block.material.Material;
-import net.minecraft.creativetab.CreativeTabs;
+import net.minecraftforge.client.model.obj.OBJLoader;
 
-@GenesisPlugin
 public class GenesisMod implements IGenesisPlugin {
+
+    @GenesisPlugin
+    public GenesisMod()
+    {
+
+    }
 
     @Override
     public void register(IGenesisRegistry registry) {

@@ -1,7 +1,7 @@
 package com.reuxertz.genesis.handlers;
 
 
-import com.reuxertz.genesis.api.containers.IGuiContainer;
+import com.reuxertz.genesis.containers.IGuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;

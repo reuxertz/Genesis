@@ -1,7 +1,7 @@
 package com.reuxertz.genesis.organics;
 
-import com.reuxertz.genesis.api.organisms.GeneData;
-import com.reuxertz.genesis.api.organisms.SpeciesFeature;
+import com.reuxertz.genesisAPI.organics.GeneData;
+import com.reuxertz.genesisAPI.organics.SpeciesFeature;
 import com.reuxertz.genesis.util.EnergyHelper;
 import com.reuxertz.genesis.util.MathHelper;
 import com.reuxertz.genesis.util.TickCounter;

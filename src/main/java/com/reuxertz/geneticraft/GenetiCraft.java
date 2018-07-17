@@ -1,8 +1,6 @@
 package com.reuxertz.geneticraft;
-import com.reuxertz.genesis.api.GenesisPlugin;
-import com.reuxertz.genesis.api.IGenesisPlugin;
-import com.reuxertz.genesis.api.IGenesisRegistry;
-import net.minecraftforge.fml.common.Mod;
+import com.reuxertz.genesisAPI.IGenesisPlugin;
+import com.reuxertz.genesisAPI.IGenesisRegistry;
 
 //@Mod(
 //        modid = com.reuxertz.geneticraft.GenetiCraft.MODID,

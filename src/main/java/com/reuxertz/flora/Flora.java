@@ -1,25 +1,10 @@
 package com.reuxertz.flora;
 
 import com.reuxertz.fauna.Fauna;
-import com.reuxertz.genesis.api.GenesisPlugin;
-import com.reuxertz.genesis.api.IGenesisPlugin;
-import com.reuxertz.genesis.api.IGenesisRegistry;
-import com.reuxertz.genesis.api.organisms.GeneData;
-import com.reuxertz.genesis.api.organisms.SpeciesFeature;
-import com.reuxertz.genesis.registry.GenesisRegistry;
+import com.reuxertz.genesisAPI.*;
 import com.reuxertz.genesis.util.RegistryHelper;
-import com.reuxertz.genesis.util.TimeHelper;
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
-import net.minecraftforge.client.event.ModelRegistryEvent;
-import net.minecraftforge.client.model.obj.OBJLoader;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.registry.EntityEntry;
+import com.reuxertz.genesisAPI.organics.GeneData;
+import com.reuxertz.genesisAPI.organics.SpeciesFeature;
 
 import java.util.Arrays;
 
@@ -36,10 +21,10 @@ public class Flora implements IGenesisPlugin
         return;
     }
 
-    public String getModID() { return Flora.MODID; }
+    public String getModID() { return Fauna.MODID; }
     public void register(IGenesisRegistry registry)
     {
-        RegistryHelper.registerCrop("onion", getModID())
+        RegistryHelper.registerCrop("onion", Flora.MODID)
                 .autoRegister()
                 .registerSpecies(
                         Arrays.asList(

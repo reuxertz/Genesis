@@ -1,6 +1,6 @@
 package com.reuxertz.genesis.registry;
 
-import com.reuxertz.genesis.api.IEventHandler;
+import com.reuxertz.genesisAPI.IEventHandler;
 
 import java.util.HashMap;
 

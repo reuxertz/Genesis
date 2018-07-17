@@ -1,7 +1,7 @@
 package com.reuxertz.gaia.items;
 
 import com.google.common.collect.Sets;
-import com.reuxertz.genesis.api.items.IItemBase;
+import com.reuxertz.genesis.items.base.IItemBase;
 import com.reuxertz.genesis.mod.Genesis;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;

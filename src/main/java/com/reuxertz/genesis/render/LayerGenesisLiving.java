@@ -1,8 +1,7 @@
 package com.reuxertz.genesis.render;
 
-import com.reuxertz.genesis.api.entities.EntityGenesisAnimal;
-import com.reuxertz.genesis.api.organisms.GeneData;
-import com.reuxertz.genesis.api.organisms.SpeciesFeature;
+import com.reuxertz.genesis.entities.EntityGenesisAnimal;
+import com.reuxertz.genesisAPI.organics.GeneData;
 import com.reuxertz.genesis.organics.Genome;
 import com.reuxertz.genesis.organics.Organism;
 import com.reuxertz.genesis.registry.RegistryObject;
@@ -11,7 +10,6 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.client.renderer.texture.ITextureObject;
 import net.minecraft.client.renderer.texture.TextureUtil;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 

@@ -1,14 +1,9 @@
 package com.reuxertz.fauna.entities;
 
-import com.reuxertz.genesis.api.entities.EntityGenesisAnimal;
-import com.reuxertz.genesis.entities.EntityOrganism;
+import com.reuxertz.genesis.entities.EntityGenesisAnimal;
 import com.reuxertz.genesis.registry.RegistryObject;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.ai.*;
-import net.minecraft.entity.monster.EntityEvoker;
-import net.minecraft.entity.monster.EntityVex;
-import net.minecraft.entity.monster.EntityVindicator;
-import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 

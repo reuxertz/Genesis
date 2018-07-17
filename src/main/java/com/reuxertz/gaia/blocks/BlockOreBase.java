@@ -1,6 +1,6 @@
 package com.reuxertz.gaia.blocks;
 
-import com.reuxertz.genesis.api.blocks.BlockBase;
+import com.reuxertz.genesis.block.base.BlockBase;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 

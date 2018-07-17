@@ -1,14 +1,14 @@
 package com.reuxertz.genesis.registry;
 
-import com.reuxertz.genesis.api.IEventHandler;
-import com.reuxertz.genesis.api.organisms.GeneData;
-import com.reuxertz.genesis.api.organisms.SpeciesFeature;
+import com.reuxertz.genesisAPI.IEventHandler;
+import com.reuxertz.genesisAPI.organics.GeneData;
+import com.reuxertz.genesisAPI.organics.SpeciesFeature;
 import com.reuxertz.genesis.mod.Genesis;
-import com.reuxertz.genesis.api.IGenesisRegistry;
-import com.reuxertz.genesis.api.blocks.BlockBase;
+import com.reuxertz.genesisAPI.IGenesisRegistry;
+import com.reuxertz.genesis.block.base.BlockBase;
 import com.reuxertz.genesis.organics.Organism;
 import com.reuxertz.genesis.render.RenderGenesisLiving;
-import com.reuxertz.genesis.api.tileentities.TileEntityCropBase;
+import com.reuxertz.genesis.tileentities.TileEntityCropBase;
 import net.minecraft.block.Block;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.entity.Entity;

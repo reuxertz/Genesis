@@ -3,10 +3,10 @@ package com.reuxertz.genesis.util;
 import com.reuxertz.gaia.blocks.BlockMetalBase;
 import com.reuxertz.gaia.blocks.BlockOreBase;
 import com.reuxertz.gaia.items.IngotBase;
-import com.reuxertz.genesis.api.blocks.BlockCropBase;
-import com.reuxertz.genesis.api.items.ItemBase;
+import com.reuxertz.genesis.block.base.BlockCropBase;
+import com.reuxertz.genesis.items.base.ItemBase;
 import com.reuxertz.gaia.items.NuggetBase;
-import com.reuxertz.genesis.api.items.CropSeedBase;
+import com.reuxertz.genesis.items.base.CropSeedBase;
 import com.reuxertz.genesis.mod.Genesis;
 import com.reuxertz.genesis.registry.RegistryObject;
 

@@ -1,6 +1,6 @@
 package com.reuxertz.gaia.items;
 
-import com.reuxertz.genesis.api.items.ItemBase;
+import com.reuxertz.genesis.items.base.ItemBase;
 import net.minecraft.creativetab.CreativeTabs;
 
 public class CoinBase extends ItemBase {

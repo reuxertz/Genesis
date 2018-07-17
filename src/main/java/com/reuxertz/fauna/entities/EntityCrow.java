@@ -1,8 +1,7 @@
 package com.reuxertz.fauna.entities;
 
-import com.reuxertz.genesis.api.entities.EntityGenesisAnimal;
+import com.reuxertz.genesis.entities.EntityGenesisAnimal;
 import com.reuxertz.genesis.registry.RegistryObject;
-import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAIWanderAvoidWaterFlying;
 import net.minecraft.world.World;
 
