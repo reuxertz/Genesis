@@ -4,7 +4,7 @@ import com.reuxertz.genesis.containers.ContainerBase;
 import com.reuxertz.genesis.gui.GuiContainerBase;
 import com.reuxertz.genesis.containers.IGuiContainer;
 import com.reuxertz.genesis.mod.Genesis;
-import com.reuxertz.genesis.util.NBTHelper;
+import com.reuxertz.genesisAPI.util.NBTHelper;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;

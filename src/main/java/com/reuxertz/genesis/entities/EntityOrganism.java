@@ -1,11 +1,11 @@
 package com.reuxertz.genesis.entities;
 
-import com.reuxertz.genesis.mod.Genesis;
-import com.reuxertz.genesis.organics.Genome;
-import com.reuxertz.genesis.organics.IOrganismContainer;
-import com.reuxertz.genesis.organics.Organism;
-import com.reuxertz.genesis.registry.RegistryObject;
-import com.reuxertz.genesis.registry.SpeciesRegistry;
+import com.reuxertz.genesisAPI.organics.Genome;
+import com.reuxertz.genesisAPI.organics.IOrganismContainer;
+import com.reuxertz.genesisAPI.organics.Organism;
+import com.reuxertz.genesisAPI.GenesisAPI;
+import com.reuxertz.genesisAPI.registry.RegistryObject;
+import com.reuxertz.genesisAPI.registry.SpeciesRegistry;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.nbt.NBTTagCompound;
@@ -40,6 +40,7 @@ public abstract class EntityOrganism extends EntityCreature implements IOrganism
 //            name += "_" + subspecies;
 
         if (this.registryObject != null) {
+
             Genome genome = SpeciesRegistry.getSpeciesGenome(this.registryObject.name, subspecies);
             organism = new Organism(this.registryObject.name, genome, age, mass);
             organism.setOrganismContainer(this);
@@ -79,7 +80,7 @@ public abstract class EntityOrganism extends EntityCreature implements IOrganism
         writeEntityToNBT(nbtTagCompound);
 
         if (registryObject == null)
-            registryObject = Genesis.registry.getRegistryObject(nbtTagCompound.getString("name"));
+            registryObject = GenesisAPI.registry.getRegistryObject(nbtTagCompound.getString("name"));
 
         nbtTagCompound.setString("name", registryObject.name);
         ByteBufUtils.writeTag(buffer, nbtTagCompound);
@@ -90,7 +91,7 @@ public abstract class EntityOrganism extends EntityCreature implements IOrganism
 
         NBTTagCompound nbtTagCompound = ByteBufUtils.readTag(additionalData);
         readEntityFromNBT(nbtTagCompound);
-        registryObject = Genesis.registry.getRegistryObject(nbtTagCompound.getString("name"));
+        registryObject = GenesisAPI.registry.getRegistryObject(nbtTagCompound.getString("name"));
     }
 
     public void writeEntityToNBT(NBTTagCompound compound)

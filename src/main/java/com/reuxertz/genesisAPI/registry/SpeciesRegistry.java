@@ -1,9 +1,9 @@
-package com.reuxertz.genesis.registry;
+package com.reuxertz.genesisAPI.registry;
 
 import com.reuxertz.genesisAPI.organics.GeneData;
+import com.reuxertz.genesisAPI.organics.Genome;
+import com.reuxertz.genesisAPI.organics.Organism;
 import com.reuxertz.genesisAPI.organics.SpeciesFeature;
-import com.reuxertz.genesis.organics.Genome;
-import com.reuxertz.genesis.organics.Organism;
 
 import java.util.ArrayList;
 import java.util.HashMap;

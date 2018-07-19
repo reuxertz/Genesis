@@ -1,6 +1,6 @@
 package com.reuxertz.genesis.block.base;
 
-import com.reuxertz.genesis.util.PlantHelper;
+import com.reuxertz.genesisAPI.util.PlantHelper;
 import net.minecraft.block.BlockCrops;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;

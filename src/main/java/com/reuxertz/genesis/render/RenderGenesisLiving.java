@@ -1,7 +1,8 @@
 package com.reuxertz.genesis.render;
 
 import com.reuxertz.genesis.mod.Genesis;
-import com.reuxertz.genesis.registry.RegistryObject;
+import com.reuxertz.genesisAPI.GenesisAPI;
+import com.reuxertz.genesisAPI.registry.RegistryObject;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;
@@ -15,7 +16,7 @@ public abstract class RenderGenesisLiving extends RenderLiving {
     {
         super(renderManager, modelBase, size);
 
-        RegistryObject regobj = Genesis.registry.getRegistryObject(name);
+        RegistryObject regobj = GenesisAPI.registry.getRegistryObject(name);
         List<LayerGenesisLiving> layers = new ArrayList<>();
 
         List<String> keys = new ArrayList<>(regobj.entityLayerResourceMap.keySet());

@@ -1,4 +1,4 @@
-package com.reuxertz.genesis.registry;
+package com.reuxertz.genesisAPI.registry;
 
 import com.reuxertz.genesisAPI.IEventHandler;
 

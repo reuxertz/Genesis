@@ -1,13 +1,10 @@
-package com.reuxertz.genesis.proxy;
+package com.reuxertz.genesisAPI.proxy;
 
-import com.reuxertz.genesis.mod.*;
 import com.reuxertz.genesisAPI.GenesisAPI;
 import com.reuxertz.genesisAPI.internal.GenesisApiHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemModelMesher;
 import net.minecraft.client.renderer.RenderItem;
-import net.minecraft.client.renderer.color.IBlockColor;
-import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.resources.IReloadableResourceManager;
 import net.minecraftforge.fml.common.Mod;
@@ -16,7 +13,7 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.relauncher.Side;
 
-@Mod.EventBusSubscriber(value = Side.CLIENT, modid = Genesis.MODID)
+@Mod.EventBusSubscriber(value = Side.CLIENT, modid = GenesisAPI.MODID)
 public class ClientProxy extends CommonProxy {
     public RenderManager renderManager;
     public RenderItem renderItem;
@@ -44,37 +41,7 @@ public class ClientProxy extends CommonProxy {
 
         ((IReloadableResourceManager) Minecraft.getMinecraft().getResourceManager()).registerReloadListener(resourceManager -> {
             GenesisApiHandler.register();
-            Genesis.logger.info("Reloaded API");
+            GenesisAPI.logger.info("Reloaded API");
         });
-
-        GenesisAPI.registry.iterate((regObj) ->
-        {
-            if (regObj.item instanceof IItemColor)
-                Minecraft.getMinecraft().getItemColors().registerItemColorHandler((IItemColor)regObj.item, regObj.item);
-
-            if (regObj.block instanceof IBlockColor) {
-                Minecraft.getMinecraft().getBlockColors().registerBlockColorHandler((IBlockColor) regObj.block, regObj.block);
-
-                if (!(regObj.item instanceof IItemColor) && regObj.block instanceof IItemColor)
-                    Minecraft.getMinecraft().getItemColors().registerItemColorHandler((IItemColor)regObj.block, regObj.item);
-
-            }
-        });
-
-//        items.registerItemColorHandler(new IItemColor()
-//        {
-//            @Override
-//            public int getColorFromItemstack(ItemStack stack, int tintIndex) {
-//                Item item = stack.getItem();
-//                if (item instanceof IColorable)
-//                {
-//                    return ((IColorable) item).getColorFromItemStack(stack, tintIndex);
-//                }
-//                else
-//                {
-//                    return 0xFFFFFF;
-//                }
-//            }
-//        }, ModItems.enderbag);
     }
 }

@@ -3,7 +3,7 @@ package com.reuxertz.genesis.containers;
 import com.reuxertz.genesis.containers.slots.SlotBase;
 import com.reuxertz.genesis.items.base.ItemBase;
 import com.reuxertz.genesis.tileentities.TileEntityContainerBase;
-import com.reuxertz.genesis.util.NBTHelper;
+import com.reuxertz.genesisAPI.util.NBTHelper;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;

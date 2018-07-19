@@ -1,4 +1,4 @@
-package com.reuxertz.genesis.util;
+package com.reuxertz.genesisAPI.util;
 
 public class TimeHelper {
 

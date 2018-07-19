@@ -1,7 +1,6 @@
 package com.reuxertz.genesis.entities;
 
-import com.reuxertz.genesis.entities.EntityOrganism;
-import com.reuxertz.genesis.registry.RegistryObject;
+import com.reuxertz.genesisAPI.registry.RegistryObject;
 import net.minecraft.world.World;
 
 public abstract class EntityGenesisAnimal extends EntityOrganism {

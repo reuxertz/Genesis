@@ -1,8 +1,6 @@
 package com.reuxertz.genesis.handlers.packets;
 
 import com.reuxertz.genesis.entities.EntityOrganism;
-import com.reuxertz.genesis.organics.Organism;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;

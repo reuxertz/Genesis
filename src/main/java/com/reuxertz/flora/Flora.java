@@ -2,7 +2,8 @@ package com.reuxertz.flora;
 
 import com.reuxertz.fauna.Fauna;
 import com.reuxertz.genesisAPI.*;
-import com.reuxertz.genesis.util.RegistryHelper;
+import com.reuxertz.genesis.registry.MultiRegistryHelper;
+import com.reuxertz.genesisAPI.internal.IGenesisRegistry;
 import com.reuxertz.genesisAPI.organics.GeneData;
 import com.reuxertz.genesisAPI.organics.SpeciesFeature;
 
@@ -24,7 +25,7 @@ public class Flora implements IGenesisPlugin
     public String getModID() { return Fauna.MODID; }
     public void register(IGenesisRegistry registry)
     {
-        RegistryHelper.registerCrop("onion", Flora.MODID)
+        MultiRegistryHelper.registerCrop("onion", Flora.MODID)
                 .autoRegister()
                 .registerSpecies(
                         Arrays.asList(

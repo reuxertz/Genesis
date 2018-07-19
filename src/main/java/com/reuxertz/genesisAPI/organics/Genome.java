@@ -1,6 +1,5 @@
-package com.reuxertz.genesis.organics;
+package com.reuxertz.genesisAPI.organics;
 
-import com.reuxertz.genesisAPI.organics.GeneData;
 import net.minecraft.nbt.NBTTagCompound;
 
 import java.util.*;

@@ -1,7 +1,7 @@
 package com.reuxertz.genesis.block;
 
 import com.reuxertz.genesis.block.base.BlockBase;
-import com.reuxertz.genesis.util.PlantHelper;
+import com.reuxertz.genesisAPI.util.PlantHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockFaceShape;

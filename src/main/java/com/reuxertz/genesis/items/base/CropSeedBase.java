@@ -1,10 +1,10 @@
 package com.reuxertz.genesis.items.base;
 
 import com.reuxertz.genesis.block.base.BlockCropBase;
-import com.reuxertz.genesis.organics.Genome;
-import com.reuxertz.genesis.organics.GenomeHelper;
+import com.reuxertz.genesisAPI.organics.Genome;
+import com.reuxertz.genesisAPI.organics.GenomeHelper;
 import com.reuxertz.genesis.tileentities.TileEntityCropBase;
-import com.reuxertz.genesis.util.PlantHelper;
+import com.reuxertz.genesisAPI.util.PlantHelper;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.BlockCrops;
 import net.minecraft.block.state.IBlockState;

@@ -1,9 +1,4 @@
-package com.reuxertz.genesis.util;
-
-import com.reuxertz.genesis.organics.Genome;
-import com.reuxertz.genesis.organics.IOrganismContainer;
-import com.reuxertz.genesis.organics.Organism;
-import net.minecraft.nbt.NBTTagCompound;
+package com.reuxertz.genesisAPI.util;
 
 import java.util.Random;
 

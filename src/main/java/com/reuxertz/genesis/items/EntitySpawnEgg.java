@@ -1,11 +1,11 @@
 package com.reuxertz.genesis.items;
 
-import com.reuxertz.genesis.mod.Genesis;
 import com.reuxertz.genesis.items.base.ItemBase;
+import com.reuxertz.genesisAPI.GenesisAPI;
 import com.reuxertz.genesisAPI.organics.SpeciesFeature;
 import com.reuxertz.genesis.entities.EntityOrganism;
-import com.reuxertz.genesis.registry.RegistryObject;
-import com.reuxertz.genesis.registry.SpeciesRegistry;
+import com.reuxertz.genesisAPI.registry.RegistryObject;
+import com.reuxertz.genesisAPI.registry.SpeciesRegistry;
 import net.minecraft.block.BlockFence;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.color.IItemColor;
@@ -92,8 +92,11 @@ public class EntitySpawnEgg extends ItemBase implements IItemColor {
     @SideOnly(Side.CLIENT)
     public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> subtypes) {
 
-        Genesis.registry.iterate(registryObject -> {
+        GenesisAPI.registry.iterate(registryObject -> {
             if (registryObject.entityEntry != null) {
+
+                if (!registryObject.autoRegister)
+                    return;
 
                 List<SpeciesRegistry.BreedRegistryObject> breeds = SpeciesRegistry.getBreeds(registryObject.name);
                 Map<String, SpeciesRegistry.StateRegistryObject> stateMap = SpeciesRegistry.getSpeciesStates(registryObject.name);
@@ -177,7 +180,8 @@ public class EntitySpawnEgg extends ItemBase implements IItemColor {
 
             boolean b = this.bFull3D;
 
-            RegistryObject registryObject = Genesis.registry.getRegistryObject(stack.getTagCompound().getString("name"));
+            RegistryObject registryObject = GenesisAPI.registry.getRegistryObject(stack.getTagCompound().getString("name"));
+
             String subspecies = stack.getTagCompound().getString("breed");
 
             Class<? extends EntityOrganism> entityClass = (Class<? extends EntityOrganism>)(registryObject.entityEntry.getEntityClass());

@@ -1,13 +1,10 @@
-package com.reuxertz.genesis.registry;
+package com.reuxertz.genesisAPI.registry;
 
 import com.reuxertz.genesisAPI.IEventHandler;
-import com.reuxertz.genesisAPI.IGenesisRegistry;
-import com.reuxertz.genesis.block.base.IBaseBlock;
-import com.reuxertz.genesis.items.base.IItemBase;
+import com.reuxertz.genesisAPI.internal.IGenesisRegistry;
 import com.reuxertz.genesisAPI.organics.GeneData;
+import com.reuxertz.genesisAPI.organics.Organism;
 import com.reuxertz.genesisAPI.organics.SpeciesFeature;
-import com.reuxertz.genesis.organics.Organism;
-import com.reuxertz.genesis.render.RenderGenesisLiving;
 import net.minecraft.block.Block;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.item.Item;
@@ -32,12 +29,12 @@ public class RegistryObject {
         }
     }
 
-    protected boolean isItemRegistered;
-    protected boolean isBlockRegistered;
-    protected boolean isModelInitialized;
-    protected boolean isEntityRegistered;
-    protected boolean autoRegister = false;
-    protected Set<RegistryObject> registryGroupSet = new HashSet<>();
+    public boolean isItemRegistered;
+    public boolean isBlockRegistered;
+    public boolean isModelInitialized;
+    public boolean isEntityRegistered;
+    public boolean autoRegister = false;
+    public Set<RegistryObject> registryGroupSet = new HashSet<>();
 
     public String name;
     public String modId;
@@ -45,14 +42,12 @@ public class RegistryObject {
 
     public EntityEntry entityEntry;
     public Map<String, LayerResourceLocation> entityLayerResourceMap = new HashMap<>();
-    public RenderGenesisLiving renderGenesisLiving;
     public ModelBase entityModel;
     public int primaryEggColor = Color.BLACK.getRGB();
     public int secondaryEggColor = Color.WHITE.getRGB();
 
     public Block block;
     public Class tileEntityClass;
-
     public Item item;
 
     public RegistryObject autoRegister()
@@ -203,17 +198,5 @@ public class RegistryObject {
     }
 
     //Render
-    public void initModel()
-    {
-        if (isModelInitialized())
-            return;
 
-        if (item != null && item instanceof IItemBase)
-            ((IItemBase)item).initModel();
-
-        if (block != null && block instanceof IBaseBlock)
-            ((IBaseBlock)block).initModel();
-
-        isModelInitialized = true;
-    }
 }

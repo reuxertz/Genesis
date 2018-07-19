@@ -1,17 +1,15 @@
-package com.reuxertz.genesis.organics;
+package com.reuxertz.genesisAPI.organics;
 
-import com.reuxertz.genesisAPI.organics.GeneData;
-import com.reuxertz.genesisAPI.organics.SpeciesFeature;
-import com.reuxertz.genesis.util.EnergyHelper;
-import com.reuxertz.genesis.util.MathHelper;
-import com.reuxertz.genesis.util.TickCounter;
+import com.reuxertz.genesisAPI.util.EnergyHelper;
+import com.reuxertz.genesisAPI.util.MathHelper;
+import com.reuxertz.genesisAPI.util.TickCounter;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 
 import java.util.Random;
 import java.util.UUID;
 
-import static com.reuxertz.genesis.util.EnergyHelper.EnergyStorageDensityPerGram;
+import static com.reuxertz.genesisAPI.util.EnergyHelper.EnergyStorageDensityPerGram;
 
 public class Organism {
 

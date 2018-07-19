@@ -1,7 +1,8 @@
-package com.reuxertz.genesisAPI;
+package com.reuxertz.genesisAPI.internal;
 
-import com.reuxertz.genesis.organics.Organism;
-import com.reuxertz.genesis.registry.RegistryObject;
+import com.reuxertz.genesisAPI.organics.Organism;
+import com.reuxertz.genesisAPI.registry.RegistryObject;
+import com.reuxertz.genesisAPI.IEventHandler;
 import com.reuxertz.genesisAPI.organics.GeneData;
 import com.reuxertz.genesisAPI.organics.SpeciesFeature;
 import net.minecraft.block.Block;
@@ -21,7 +22,6 @@ public interface IGenesisRegistry {
 
     void registerEventHandler(String name, IEventHandler eventHandler);
 
-    //Ecosystem registers
     void registerBreed(String name, List<GeneData> genes);
     void registerBreed(String name, String subspecies, List<GeneData> genes);
     void registerSpecies(String name, List<SpeciesFeature> speciesData);

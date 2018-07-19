@@ -2,9 +2,9 @@ package com.reuxertz.genesis.render;
 
 import com.reuxertz.genesis.entities.EntityGenesisAnimal;
 import com.reuxertz.genesisAPI.organics.GeneData;
-import com.reuxertz.genesis.organics.Genome;
-import com.reuxertz.genesis.organics.Organism;
-import com.reuxertz.genesis.registry.RegistryObject;
+import com.reuxertz.genesisAPI.organics.Genome;
+import com.reuxertz.genesisAPI.organics.Organism;
+import com.reuxertz.genesisAPI.registry.RegistryObject;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;

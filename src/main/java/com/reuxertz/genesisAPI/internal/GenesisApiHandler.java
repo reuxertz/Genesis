@@ -1,5 +1,6 @@
-package com.reuxertz.genesis.mod;
+package com.reuxertz.genesisAPI.internal;
 
+import com.reuxertz.genesisAPI.GenesisAPI;
 import com.reuxertz.genesisAPI.GenesisPlugin;
 import com.reuxertz.genesisAPI.IGenesisPlugin;
 import net.minecraftforge.fml.common.discovery.ASMDataTable;
@@ -21,7 +22,7 @@ public class GenesisApiHandler {
 			IGenesisPlugin instance = asmInstanceClass.newInstance();
 			PLUGINS.add(instance);
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | LinkageError e) {
-			Genesis.logger.error("Failed to load plugin {}: {}", asmData.getClassName(), e.getLocalizedMessage());
+			GenesisAPI.logger.error("Failed to load plugin {}: {}", asmData.getClassName(), e.getLocalizedMessage());
 		}
     }
     public static void register() {
@@ -29,13 +30,13 @@ public class GenesisApiHandler {
 	
 	for(IGenesisPlugin plugin : PLUGINS) {
 	    long time = System.currentTimeMillis();
-	    Genesis.logger.info("Sending registry event to: {}" , plugin.getModID());
+	    GenesisAPI.logger.info("Sending registry event to: {}" , plugin.getModID());
 	    try {
-		plugin.register(Genesis.registry);
+		plugin.register(GenesisAPI.registry);
 	    } catch (Throwable t) {
 		throw new RuntimeException("Exception while loading Genesis plugin :" + plugin.getModID(), t);
 	    }
-	    Genesis.logger.info("Successfully registered Genesis plugin: {} (took {}ms)" , plugin.getModID(), System.currentTimeMillis() - time);
+		GenesisAPI.logger.info("Successfully registered Genesis plugin: {} (took {}ms)" , plugin.getModID(), System.currentTimeMillis() - time);
 
 	}
     }

@@ -1,7 +1,7 @@
 package com.reuxertz.fauna.entities;
 
 import com.reuxertz.genesis.entities.EntityGenesisAnimal;
-import com.reuxertz.genesis.registry.RegistryObject;
+import com.reuxertz.genesisAPI.registry.RegistryObject;
 import net.minecraft.world.World;
 
 public class EntityCrab extends EntityGenesisAnimal {

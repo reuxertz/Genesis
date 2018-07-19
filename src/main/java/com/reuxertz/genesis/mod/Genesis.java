@@ -1,12 +1,20 @@
 package com.reuxertz.genesis.mod;
 
+import com.reuxertz.genesis.block.BlockGenesisGrass;
+import com.reuxertz.genesis.block.base.BlockContainerBase;
+import com.reuxertz.genesis.items.EntitySpawnEgg;
+import com.reuxertz.genesis.items.base.ItemBase;
+import com.reuxertz.genesis.items.base.ItemContainerBase;
+import com.reuxertz.genesis.tileentities.TileEntityContainerBase;
+import com.reuxertz.genesisAPI.GenesisPlugin;
 import com.reuxertz.genesisAPI.IGenesisPlugin;
+import com.reuxertz.genesisAPI.internal.GenesisApiHandler;
 import com.reuxertz.genesis.command.GenesisCommand;
 import com.reuxertz.genesis.handlers.ForgeHandler;
 import com.reuxertz.genesis.handlers.GuiHandler;
 import com.reuxertz.genesis.handlers.NetworkHandler;
 import com.reuxertz.genesis.proxy.CommonProxy;
-import com.reuxertz.genesis.registry.*;
+import com.reuxertz.genesisAPI.internal.IGenesisRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.event.ModelRegistryEvent;
@@ -25,16 +33,11 @@ import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import org.apache.logging.log4j.Logger;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static com.reuxertz.genesis.registry.GenesisRegistry.registerModBlocks;
-import static com.reuxertz.genesis.registry.GenesisRegistry.registerModEntities;
-import static com.reuxertz.genesis.registry.GenesisRegistry.registerModItems;
+import static com.reuxertz.genesis.registry.AutoRegistryHelper.*;
 
 @Mod(modid = Genesis.MODID, name = Genesis.NAME, version = Genesis.VERSION, dependencies = "required-after:forge@[14.23.3.2655,)", useMetadata = true)
 @Mod.EventBusSubscriber(modid = Genesis.MODID)
-public class Genesis
+public class Genesis implements IGenesisPlugin
 {
     public static final String MODID = "genesis";
     public static final String NAME = "Genesis";
@@ -45,10 +48,34 @@ public class Genesis
 
     @Mod.Instance
     public static Genesis instance;
-    public static List<IGenesisPlugin> plugins = new ArrayList();
-    public static GenesisRegistry registry = new GenesisRegistry();
     public static SimpleNetworkWrapper networkInstance = NetworkRegistry.INSTANCE.newSimpleChannel(Genesis.MODID);
     public static Logger logger;
+
+    @Override
+    public String getModID() {
+        return Genesis.MODID;
+    }
+
+    @GenesisPlugin
+    public Genesis()
+    {
+
+    }
+
+    @Override
+    public void register(IGenesisRegistry registry) {
+
+        registry.registerItem("entity_spawn_egg", Genesis.MODID, new EntitySpawnEgg()).autoRegister();
+
+        registry.registerBlock("block_table_test", Genesis.MODID, new BlockContainerBase("block_table_test"), TileEntityContainerBase.class).autoRegister();
+
+        registry.registerBlock("genesis_grass", Genesis.MODID, new BlockGenesisGrass("genesis_grass")).autoRegister();
+
+        registry.registerItem("coin", Genesis.MODID, new ItemBase("coin")).autoRegister();
+        registry.registerItem("item_sack", Genesis.MODID, new ItemContainerBase("item_sack")).autoRegister();
+
+        return;
+    }
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event){
@@ -97,7 +124,7 @@ public class Genesis
     @SubscribeEvent
     public static void registerModels(ModelRegistryEvent event) {
 
-        GenesisRegistry.registerEntityRenderers(null);
-        GenesisRegistry.initModels(null);
+        registerEntityRenderers(null);
+        initModels(null);
     }
 }

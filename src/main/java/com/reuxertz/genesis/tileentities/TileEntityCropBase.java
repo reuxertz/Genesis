@@ -1,13 +1,13 @@
 package com.reuxertz.genesis.tileentities;
 
 import com.reuxertz.genesis.block.base.BlockCropBase;
-import com.reuxertz.genesis.mod.Genesis;
-import com.reuxertz.genesis.organics.IOrganismContainer;
-import com.reuxertz.genesis.organics.Organism;
-import com.reuxertz.genesis.registry.RegistryObject;
-import com.reuxertz.genesis.util.BlockHelper;
-import com.reuxertz.genesis.util.PlantHelper;
-import com.reuxertz.genesis.util.RandomHelper;
+import com.reuxertz.genesisAPI.organics.IOrganismContainer;
+import com.reuxertz.genesisAPI.organics.Organism;
+import com.reuxertz.genesisAPI.GenesisAPI;
+import com.reuxertz.genesisAPI.registry.RegistryObject;
+import com.reuxertz.genesisAPI.util.BlockHelper;
+import com.reuxertz.genesisAPI.util.PlantHelper;
+import com.reuxertz.genesisAPI.util.RandomHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockCrops;
 import net.minecraft.block.BlockFarmland;
@@ -18,7 +18,7 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-import static com.reuxertz.genesis.util.EnergyHelper.SunlightEnergyPerGramTick;
+import static com.reuxertz.genesisAPI.util.EnergyHelper.SunlightEnergyPerGramTick;
 
 public class TileEntityCropBase extends TileEntityBase implements
         ITickable,
@@ -41,7 +41,7 @@ public class TileEntityCropBase extends TileEntityBase implements
         this.organism = organism;
         this.name = name;
 
-        registryObject = Genesis.registry.getRegistryObject(name);
+        registryObject = GenesisAPI.registry.getRegistryObject(name);
     }
 
     @Override
@@ -71,7 +71,7 @@ public class TileEntityCropBase extends TileEntityBase implements
 
         name = nbt.getString("name");
 
-        registryObject = Genesis.registry.getRegistryObject(name);
+        registryObject = GenesisAPI.registry.getRegistryObject(name);
     }
 
     @Override

@@ -8,9 +8,9 @@ import com.reuxertz.fauna.entities.models.ModelAnt;
 import com.reuxertz.genesisAPI.*;
 import com.reuxertz.fauna.entities.EntityAnt;
 import com.reuxertz.fauna.entities.EntityHuman;
-import com.reuxertz.genesis.registry.GenesisRegistry;
-import com.reuxertz.genesis.util.IDHelper;
-import com.reuxertz.genesis.util.TimeHelper;
+import com.reuxertz.genesisAPI.util.IDHelper;
+import com.reuxertz.genesisAPI.util.TimeHelper;
+import com.reuxertz.genesisAPI.internal.IGenesisRegistry;
 import com.reuxertz.genesisAPI.organics.GeneData;
 import com.reuxertz.genesisAPI.organics.SpeciesFeature;
 import net.minecraft.block.Block;
@@ -28,7 +28,9 @@ import net.minecraftforge.fml.common.registry.EntityEntryBuilder;
 import java.awt.*;
 import java.util.Arrays;
 
-//@Mod(modid = Fauna.MODID, name = Fauna.NAME, version = Fauna.VERSION, dependencies = "required-after:forge@[14.23.3.2655,)", useMetadata = true)
+import static com.reuxertz.genesis.registry.AutoRegistryHelper.*;
+
+@Mod(modid = Fauna.MODID, name = Fauna.NAME, version = Fauna.VERSION, dependencies = "required-after:forge@[14.23.3.2655,)", useMetadata = true)
 @Mod.EventBusSubscriber(modid = Fauna.MODID)
 public class Fauna implements IGenesisPlugin
 {
@@ -202,7 +204,7 @@ public class Fauna implements IGenesisPlugin
     @SubscribeEvent
     public static void registerEntities(RegistryEvent.Register<EntityEntry> event) {
 
-        GenesisRegistry.registerModEntities(event, Fauna.MODID);
+        registerModEntities(event, Fauna.MODID);
 
         return;
     }
@@ -210,7 +212,7 @@ public class Fauna implements IGenesisPlugin
     @SubscribeEvent
     public static void registerBlocks(RegistryEvent.Register<Block> event) {
 
-        GenesisRegistry.registerModBlocks(event, Fauna.MODID);
+        registerModBlocks(event, Fauna.MODID);
 
         return;
     }
@@ -218,7 +220,7 @@ public class Fauna implements IGenesisPlugin
     @SubscribeEvent
     public static void registerItems(RegistryEvent.Register<Item> event) {
 
-        GenesisRegistry.registerModItems(event, Fauna.MODID);
+        registerModItems(event, Fauna.MODID);
 
         return;
     }
@@ -226,7 +228,7 @@ public class Fauna implements IGenesisPlugin
     @SubscribeEvent
     public static void registerModels(ModelRegistryEvent event) {
 
-        GenesisRegistry.registerEntityRenderers(Fauna.MODID);
-        GenesisRegistry.initModels(Fauna.MODID);
+        registerEntityRenderers(Fauna.MODID);
+        initModels(Fauna.MODID);
     }
 }

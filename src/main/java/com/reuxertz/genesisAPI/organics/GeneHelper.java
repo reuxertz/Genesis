@@ -1,7 +1,4 @@
-package com.reuxertz.genesis.organics;
-
-
-import com.reuxertz.genesisAPI.organics.GeneData;
+package com.reuxertz.genesisAPI.organics;
 
 import java.util.ArrayList;
 import java.util.HashMap;

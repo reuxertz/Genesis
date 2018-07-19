@@ -1,7 +1,7 @@
 package com.reuxertz.genesis.block.base;
 
-import com.reuxertz.genesis.organics.Genome;
-import com.reuxertz.genesis.organics.Organism;
+import com.reuxertz.genesisAPI.organics.Genome;
+import com.reuxertz.genesisAPI.organics.Organism;
 import com.reuxertz.genesis.tileentities.TileEntityCropBase;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.state.IBlockState;

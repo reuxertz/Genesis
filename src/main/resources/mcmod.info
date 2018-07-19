@@ -1,14 +1,14 @@
 [
 {
-  "modid": "genesis",
-  "name": "Genesis",
-  "description": "Brings life to minecraft.",
+  "modid": "genesisapi",
+  "name": "GenesisAPI",
+  "description": "Lets mods bring life to minecraft.",
   "version": "${version}",
   "mcversion": "${mcversion}",
   "url": "",
   "updateUrl": "",
   "authorList": ["reuxertz"],
-  "credits": "reuxertz, wyn-price",
+  "credits": "reuxertz",
   "logoFile": "",
   "screenshots": [],
   "dependencies": []
