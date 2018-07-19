@@ -1,7 +1,7 @@
 package com.reuxertz.genesisAPI.proxy;
 
-import com.reuxertz.genesisAPI.GenesisAPI;
-import com.reuxertz.genesisAPI.internal.GenesisApiHandler;
+import com.reuxertz.genesisAPI.internal.GenesisAPI;
+import com.reuxertz.genesisAPI.internal.GenesisAPIHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemModelMesher;
 import net.minecraft.client.renderer.RenderItem;
@@ -15,9 +15,6 @@ import net.minecraftforge.fml.relauncher.Side;
 
 @Mod.EventBusSubscriber(value = Side.CLIENT, modid = GenesisAPI.MODID)
 public class ClientProxy extends CommonProxy {
-    public RenderManager renderManager;
-    public RenderItem renderItem;
-    public ItemModelMesher itemModelMesher;
 
     @Override
     public void preInit(FMLPreInitializationEvent event) {
@@ -35,12 +32,8 @@ public class ClientProxy extends CommonProxy {
 
         super.postInit(event);
 
-        renderManager = Minecraft.getMinecraft().getRenderManager();
-        renderItem = Minecraft.getMinecraft().getRenderItem();
-        itemModelMesher = renderItem.getItemModelMesher();
-
         ((IReloadableResourceManager) Minecraft.getMinecraft().getResourceManager()).registerReloadListener(resourceManager -> {
-            GenesisApiHandler.register();
+            GenesisAPIHandler.register();
             GenesisAPI.logger.info("Reloaded API");
         });
     }

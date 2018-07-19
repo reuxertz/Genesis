@@ -1,7 +1,7 @@
 package com.reuxertz.gaia;
 
 import com.reuxertz.genesisAPI.IGenesisPlugin;
-import com.reuxertz.genesisAPI.internal.IGenesisRegistry;
+import com.reuxertz.genesisAPI.registry.IGenesisRegistry;
 import com.reuxertz.genesis.registry.MultiRegistryHelper;
 
 //@Mod(modid = Gaia.MODID, name = Gaia.NAME, version = Gaia.VERSION, dependencies = "required-after:forge@[14.23.3.2655,)", useMetadata = true)

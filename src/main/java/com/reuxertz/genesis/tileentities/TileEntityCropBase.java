@@ -3,7 +3,7 @@ package com.reuxertz.genesis.tileentities;
 import com.reuxertz.genesis.block.base.BlockCropBase;
 import com.reuxertz.genesisAPI.organics.IOrganismContainer;
 import com.reuxertz.genesisAPI.organics.Organism;
-import com.reuxertz.genesisAPI.GenesisAPI;
+import com.reuxertz.genesisAPI.internal.GenesisAPI;
 import com.reuxertz.genesisAPI.registry.RegistryObject;
 import com.reuxertz.genesisAPI.util.BlockHelper;
 import com.reuxertz.genesisAPI.util.PlantHelper;

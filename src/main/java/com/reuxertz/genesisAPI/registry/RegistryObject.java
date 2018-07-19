@@ -1,7 +1,5 @@
 package com.reuxertz.genesisAPI.registry;
 
-import com.reuxertz.genesisAPI.IEventHandler;
-import com.reuxertz.genesisAPI.internal.IGenesisRegistry;
 import com.reuxertz.genesisAPI.organics.GeneData;
 import com.reuxertz.genesisAPI.organics.Organism;
 import com.reuxertz.genesisAPI.organics.SpeciesFeature;

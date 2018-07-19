@@ -1,7 +1,7 @@
 package com.reuxertz.genesis.items;
 
 import com.reuxertz.genesis.items.base.ItemBase;
-import com.reuxertz.genesisAPI.GenesisAPI;
+import com.reuxertz.genesisAPI.internal.GenesisAPI;
 import com.reuxertz.genesisAPI.organics.SpeciesFeature;
 import com.reuxertz.genesis.entities.EntityOrganism;
 import com.reuxertz.genesisAPI.registry.RegistryObject;

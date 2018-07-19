@@ -3,7 +3,7 @@ package com.reuxertz.flora;
 import com.reuxertz.fauna.Fauna;
 import com.reuxertz.genesisAPI.*;
 import com.reuxertz.genesis.registry.MultiRegistryHelper;
-import com.reuxertz.genesisAPI.internal.IGenesisRegistry;
+import com.reuxertz.genesisAPI.registry.IGenesisRegistry;
 import com.reuxertz.genesisAPI.organics.GeneData;
 import com.reuxertz.genesisAPI.organics.SpeciesFeature;
 

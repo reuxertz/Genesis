@@ -10,7 +10,7 @@ import com.reuxertz.fauna.entities.EntityAnt;
 import com.reuxertz.fauna.entities.EntityHuman;
 import com.reuxertz.genesisAPI.util.IDHelper;
 import com.reuxertz.genesisAPI.util.TimeHelper;
-import com.reuxertz.genesisAPI.internal.IGenesisRegistry;
+import com.reuxertz.genesisAPI.registry.IGenesisRegistry;
 import com.reuxertz.genesisAPI.organics.GeneData;
 import com.reuxertz.genesisAPI.organics.SpeciesFeature;
 import net.minecraft.block.Block;

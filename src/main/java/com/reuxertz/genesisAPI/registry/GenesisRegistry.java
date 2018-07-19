@@ -1,11 +1,9 @@
 package com.reuxertz.genesisAPI.registry;
 
-import com.reuxertz.genesisAPI.GenesisAPI;
-import com.reuxertz.genesisAPI.IEventHandler;
+import com.reuxertz.genesisAPI.internal.GenesisAPI;
 import com.reuxertz.genesisAPI.organics.GeneData;
 import com.reuxertz.genesisAPI.organics.Organism;
 import com.reuxertz.genesisAPI.organics.SpeciesFeature;
-import com.reuxertz.genesisAPI.internal.IGenesisRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.item.Item;
@@ -72,14 +70,15 @@ public class GenesisRegistry implements IGenesisRegistry
     {
         return GenesisAPI.registry.registerContent(new RegistryObject(GenesisAPI.registry, modId, name, block, tileEntityClass));
     }
-    //Entities
+    public RegistryObject registerEntity(String name, String modId, EntityEntry entityEntry)
+    {
+        return registerEntity(name, modId, entityEntry, null);
+    }
     public RegistryObject registerEntity(String name, String modId, EntityEntry entityEntry, ModelBase modelBase)
     {
         return registerContent(new RegistryObject(GenesisAPI.registry, modId, name, entityEntry, modelBase));
-
     }
 
-    //Genetics
     public void registerEventHandler(String name, IEventHandler eventHandler)
     {
         EventRegistry.registerEventHandler(name, eventHandler);

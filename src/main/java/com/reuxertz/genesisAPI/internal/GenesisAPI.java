@@ -1,9 +1,7 @@
-package com.reuxertz.genesisAPI;
+package com.reuxertz.genesisAPI.internal;
 
 import com.reuxertz.genesisAPI.proxy.CommonProxy;
 import com.reuxertz.genesisAPI.registry.*;
-import com.reuxertz.genesisAPI.internal.GenesisApiHandler;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.client.model.obj.OBJLoader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -31,7 +29,7 @@ public class GenesisAPI {
     public void preInit(FMLPreInitializationEvent event){
 
         OBJLoader.INSTANCE.addDomain(MODID);
-        GenesisApiHandler.loadPlugins(event.getAsmData());
+        GenesisAPIHandler.loadPlugins(event.getAsmData());
 
         logger = event.getModLog();
         proxy.preInit(event);

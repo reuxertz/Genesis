@@ -1,7 +1,6 @@
 package com.reuxertz.genesis.render;
 
-import com.reuxertz.genesis.mod.Genesis;
-import com.reuxertz.genesisAPI.GenesisAPI;
+import com.reuxertz.genesisAPI.internal.GenesisAPI;
 import com.reuxertz.genesisAPI.registry.RegistryObject;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.entity.RenderLiving;

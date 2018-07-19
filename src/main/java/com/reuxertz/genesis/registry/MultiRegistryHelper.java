@@ -7,8 +7,7 @@ import com.reuxertz.genesis.block.base.BlockCropBase;
 import com.reuxertz.genesis.items.base.ItemBase;
 import com.reuxertz.gaia.items.NuggetBase;
 import com.reuxertz.genesis.items.base.CropSeedBase;
-import com.reuxertz.genesis.mod.Genesis;
-import com.reuxertz.genesisAPI.GenesisAPI;
+import com.reuxertz.genesisAPI.internal.GenesisAPI;
 import com.reuxertz.genesisAPI.registry.RegistryObject;
 
 import java.util.ArrayList;

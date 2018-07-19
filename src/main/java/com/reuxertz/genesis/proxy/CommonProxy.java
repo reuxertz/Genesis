@@ -1,6 +1,5 @@
 package com.reuxertz.genesis.proxy;
 
-import com.reuxertz.genesisAPI.internal.GenesisApiHandler;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;

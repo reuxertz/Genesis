@@ -3,7 +3,7 @@ package com.reuxertz.genesis.entities;
 import com.reuxertz.genesisAPI.organics.Genome;
 import com.reuxertz.genesisAPI.organics.IOrganismContainer;
 import com.reuxertz.genesisAPI.organics.Organism;
-import com.reuxertz.genesisAPI.GenesisAPI;
+import com.reuxertz.genesisAPI.internal.GenesisAPI;
 import com.reuxertz.genesisAPI.registry.RegistryObject;
 import com.reuxertz.genesisAPI.registry.SpeciesRegistry;
 import io.netty.buffer.ByteBuf;

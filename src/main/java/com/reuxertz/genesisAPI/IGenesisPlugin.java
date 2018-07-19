@@ -1,6 +1,6 @@
 package com.reuxertz.genesisAPI;
 
-import com.reuxertz.genesisAPI.internal.IGenesisRegistry;
+import com.reuxertz.genesisAPI.registry.IGenesisRegistry;
 
 public interface IGenesisPlugin {
 

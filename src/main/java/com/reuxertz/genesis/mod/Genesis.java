@@ -8,13 +8,13 @@ import com.reuxertz.genesis.items.base.ItemContainerBase;
 import com.reuxertz.genesis.tileentities.TileEntityContainerBase;
 import com.reuxertz.genesisAPI.GenesisPlugin;
 import com.reuxertz.genesisAPI.IGenesisPlugin;
-import com.reuxertz.genesisAPI.internal.GenesisApiHandler;
+import com.reuxertz.genesisAPI.internal.GenesisAPIHandler;
 import com.reuxertz.genesis.command.GenesisCommand;
 import com.reuxertz.genesis.handlers.ForgeHandler;
 import com.reuxertz.genesis.handlers.GuiHandler;
 import com.reuxertz.genesis.handlers.NetworkHandler;
 import com.reuxertz.genesis.proxy.CommonProxy;
-import com.reuxertz.genesisAPI.internal.IGenesisRegistry;
+import com.reuxertz.genesisAPI.registry.IGenesisRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.event.ModelRegistryEvent;
@@ -81,7 +81,7 @@ public class Genesis implements IGenesisPlugin
     public void preInit(FMLPreInitializationEvent event){
 
         OBJLoader.INSTANCE.addDomain(MODID);
-        GenesisApiHandler.loadPlugins(event.getAsmData());
+        GenesisAPIHandler.loadPlugins(event.getAsmData());
         MinecraftForge.EVENT_BUS.register(new ForgeHandler());
         NetworkHandler.preInit();
 

@@ -1,8 +1,8 @@
 package com.reuxertz.genesis.proxy;
 
 import com.reuxertz.genesis.mod.*;
-import com.reuxertz.genesisAPI.GenesisAPI;
-import com.reuxertz.genesisAPI.internal.GenesisApiHandler;
+import com.reuxertz.genesisAPI.internal.GenesisAPI;
+import com.reuxertz.genesisAPI.internal.GenesisAPIHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemModelMesher;
 import net.minecraft.client.renderer.RenderItem;
@@ -43,7 +43,7 @@ public class ClientProxy extends CommonProxy {
         itemModelMesher = renderItem.getItemModelMesher();
 
         ((IReloadableResourceManager) Minecraft.getMinecraft().getResourceManager()).registerReloadListener(resourceManager -> {
-            GenesisApiHandler.register();
+            GenesisAPIHandler.register();
             Genesis.logger.info("Reloaded API");
         });
 

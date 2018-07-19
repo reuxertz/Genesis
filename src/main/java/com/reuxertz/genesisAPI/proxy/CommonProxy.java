@@ -1,6 +1,6 @@
 package com.reuxertz.genesisAPI.proxy;
 
-import com.reuxertz.genesisAPI.internal.GenesisApiHandler;
+import com.reuxertz.genesisAPI.internal.GenesisAPIHandler;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
@@ -15,19 +15,19 @@ public class CommonProxy {
 
     public void preInit(FMLPreInitializationEvent e) {
 
-        GenesisApiHandler.register();
+        GenesisAPIHandler.register();
 
         File directory = e.getModConfigurationDirectory();
-        config = new Configuration(new File(directory.getPath(), "genesis.cfg"));
-        //config.
+        config = new Configuration(new File(directory.getPath(), "genesisAPI.cfg"));
     }
 
     public void init(FMLInitializationEvent e) {
     }
 
     public void postInit(FMLPostInitializationEvent e) {
-        if (config.hasChanged()) {
+
+        if (config.hasChanged())
             config.save();
-        }
+
     }
 }

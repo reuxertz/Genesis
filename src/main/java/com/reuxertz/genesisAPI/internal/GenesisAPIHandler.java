@@ -1,6 +1,5 @@
 package com.reuxertz.genesisAPI.internal;
 
-import com.reuxertz.genesisAPI.GenesisAPI;
 import com.reuxertz.genesisAPI.GenesisPlugin;
 import com.reuxertz.genesisAPI.IGenesisPlugin;
 import net.minecraftforge.fml.common.discovery.ASMDataTable;
@@ -8,7 +7,7 @@ import net.minecraftforge.fml.common.discovery.ASMDataTable;
 import java.util.ArrayList;
 import java.util.Set;
 
-public class GenesisApiHandler {
+public class GenesisAPIHandler {
     public static final ArrayList<IGenesisPlugin> PLUGINS = new ArrayList<>();
 
     public static void loadPlugins(ASMDataTable table) {

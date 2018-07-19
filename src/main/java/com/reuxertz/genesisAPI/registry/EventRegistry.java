@@ -1,7 +1,5 @@
 package com.reuxertz.genesisAPI.registry;
 
-import com.reuxertz.genesisAPI.IEventHandler;
-
 import java.util.HashMap;
 
 public class EventRegistry {
